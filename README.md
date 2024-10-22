@@ -16,11 +16,13 @@ Glavni cilj TickEx web aplikacije je omogućiti korisnicima jednostavnu kupovinu
 
 -------------------------------------------------------------------
 VLASNIK ULAZNICE
+
 -Stvara oglas za prodaju s detaljima vrsta, naziv, datum i mjesto (obavezno) te opcionalno broj sjedala i vrsta ulaznice
 -Oglas za razmjenu radi s istim detaljima kao i za prodaju uz dodatnu opciju željene karte
 -Ažuriranje i uklanjanje vlastitih postavljanih oglasa
 -------------------------------------------------------------------
 TRAŽITELJ ULAZNICE
+
 -Definiranje događaja/žanrova koji mu se sviđaju.
 -Pregled aktivnih događaja uz opciju filtriranja
 -Mogućnost "lajkanja" oglasa i izbacivanja nezanimljivih iz pregleda.
@@ -28,10 +30,12 @@ TRAŽITELJ ULAZNICE
 -Prikaz mogućih lanaca zamjene
 -------------------------------------------------------------------
 ADMINISTRATOR
+
 -Generiranje izvješća i aktivnostima korisnika, razmjenama i prijavama lažnog oglašavanja
 -Upravljanje korisničkim računima, rješavanje sporova i primjerena deaktivacija računa
 -------------------------------------------------------------------
 ZAMJENA KARATA
+
 -Ukoliko se 2 korisnika slože za zamjenu dobivaju obavijest za konačnu potvrdu(s vrem. ogranicenjem)
 -Obavijest svim korisnicima unutar lanca zamjene
 -------------------------------------------------------------------
