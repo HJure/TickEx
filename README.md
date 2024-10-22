@@ -5,7 +5,7 @@ Glavni cilj TickEx web aplikacije je omogućiti korisnicima jednostavnu kupovinu
 ## FUNKCIONALNI ZAHTJEVI
 -------------------------------------------------------------------
 -Aplikacija prikazuje dostupne događaje i  ulaznice
--Registracija tj. login kao vlasnik/tražitelj i admin (potvrda e-mailom)
+-OAuthentication registracija (potvrda e-mailom)
 -Dohvaćanje podataka o koncertu pomoću javnih usluga (izvođač, žanr, slika izvođača)
 -Dohvaćanje podataka o prognozi za oglas čiji se  događaj odvija unutar 15 dana od danas
 -Praćenje povijesti razmjene i omogućivanje pregleda prošlih transakcija
