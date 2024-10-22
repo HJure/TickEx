@@ -41,4 +41,7 @@ ZAMJENA KARATA
 -------------------------------------------------------------------
 
 ## NEFUNKCIONALNI ZAHTJEVI
--Odgovarajuće sučelje za sve veličine ekrana
+-Responsive design
+-Koristenje OAutentifikacije
+-Koristenje servisa za prognozu 
+-Koristenje servisa za podatke o glazbenicima
