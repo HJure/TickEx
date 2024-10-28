@@ -12,7 +12,7 @@ Glavni cilj TickEx web aplikacije je omogućiti korisnicima jednostavnu kupovinu
 - *Aukcije karata (nema potvrde) uz početnu cijenu i duljinu trajanja, nije moguće brisati aukciju (Upozorenje)*  
 - *Recenzije korisnika 1-5 zvjezdica*  
 - *Korisnici mijenjaju digitalne ulaznice*  
-- *Dodavanje novaca na račun*  
+
 
 #### VLASNIK ULAZNICE
 - Stvara oglas za prodaju s detaljima vrsta, naziv, datum i mjesto (obavezno) te opcionalno broj sjedala i vrsta ulaznice  
