@@ -17,7 +17,7 @@ Glavni cilj TickEx web aplikacije je omogućiti korisnicima jednostavnu kupovinu
 #### VLASNIK ULAZNICE
 - Stvara oglas za prodaju s detaljima vrsta, naziv, datum i mjesto (obavezno) te opcionalno broj sjedala i vrsta ulaznice  
 - Oglas za razmjenu radi s istim detaljima kao i za prodaju uz dodatnu opciju željene karte  
-- Ažuriranje i uklanjanje vlastitih postavljanih oglasa  
+- Ažuriranje i uklanjanje vlastitih postavljanih oglasa  (košarica)
 #### TRAŽITELJ ULAZNICE
 - Definiranje događaja/žanrova koji mu se sviđaju.  
 - Pregled aktivnih događaja uz opciju filtriranja  
@@ -33,6 +33,6 @@ Glavni cilj TickEx web aplikacije je omogućiti korisnicima jednostavnu kupovinu
 
 ## NEFUNKCIONALNI ZAHTJEVI
 - Responsive design  
-- Korištenje OAutentifikacije  
+- Korištenje OAutorizacije
 - Korištenje servisa za prognozu  
 - Korištenje servisa za podatke o glazbenicima  
