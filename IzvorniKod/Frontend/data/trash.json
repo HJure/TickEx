@@ -1,0 +1,11 @@
+{
+  "trash": [
+    {
+      "id": "1",
+      "title": "Dinamo vs Hajduk",
+      "author": "me",
+      "genre": "sport",
+      "event_picture": "/pictures/dinamohajduk.jpeg"
+    }
+  ]
+}

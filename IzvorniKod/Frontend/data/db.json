@@ -1,0 +1,32 @@
+{
+  "tickets": [
+    {
+      "title": "Louvre",
+      "author": "me",
+      "genre": "museum",
+      "event_picture": "/pictures/louvre.jpeg",
+      "id": "3"
+    },
+    {
+      "id": "5",
+      "title": "Thompson",
+      "author": "me",
+      "genre": "music",
+      "event_picture": "/pictures/thompson.jpeg"
+    },
+    {
+      "id": "2",
+      "title": "Đoković",
+      "author": "me",
+      "genre": "sport",
+      "event_picture": "/pictures/dokovic.jpeg"
+    },
+    {
+      "id": "4",
+      "title": "Taylor Swift",
+      "author": "me",
+      "genre": "music",
+      "event_picture": "/pictures/taylor.jpeg"
+    }
+  ]
+}

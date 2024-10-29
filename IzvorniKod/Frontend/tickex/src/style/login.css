@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap');
+
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 110vh;
+    background-color: #F2E7FE; 
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
+    border-radius: 10px;
+}
+
+.login-image {
+    width: 400px; 
+    height: 400px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-heading {
+    max-width: 300px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #4A148C;
+    margin-top: 60px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 50px;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Kanit', sans-serif;
+}
+
+.login-button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.login-button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+.login-button:hover {
+    background-color: #781D9B; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.login-button:hover span {
+    padding-right: 25px;
+}
+  
+.login-button:hover span:after {
+opacity: 1;
+right: 0;
+}
+
+.next-icon {
+    margin-left: 10px; 
+    margin-top: 20px;
+    width: 40px; 
+    height: 50px;
+    transition: transform 0.3s ease; 
+}
+
+.next-icon:hover {
+    transform: scale(1.1);
+}
+
+
