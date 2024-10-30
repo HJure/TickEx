@@ -11,7 +11,7 @@ CREATE TABLE KORISNIK
 CREATE TABLE VRSTA_DOGADAJA
 (
   idDog SERIAL,
-  nazVrDos VARCHAR(50) NOT NULL,
+  nazVrDog VARCHAR(50) NOT NULL,
   PRIMARY KEY (idDog)
 );
 
@@ -31,6 +31,25 @@ CREATE TABLE OGLAS
   FOREIGN KEY (idProdavac) REFERENCES KORISNIK(idKor),
   FOREIGN KEY (idDog) REFERENCES VRSTA_DOGADAJA(idDog)
 );
+
+INSERT INTO KORISNIK(email) VALUES ('anaanic143@gmail.com') , ('karlobasic184@gmail.com');
+
+INSERT INTO VRSTA_DOGADAJA (nazVrDog) VALUES ('Glazba'),('Nogomet'),('Kazaliste'),('Kino'),('Tenis');
+
+INSERT INTO OGLAS(nazDog,mjesto,datum,brSje,vrsUla,cijena,idProdavac,idDog) 
+VALUES ('Taylor Swift koncert', 'Ljubljana','12.12.2024',15,'Normal',150,1,1);
+
+INSERT INTO OGLAS(nazDog,mjesto,datum,brSje,vrsUla,cijena,idProdavac,idDog) 
+VALUES ('Orasar', 'Zagreb','5.12.2024',7,'Normal',30,1,3);
+
+INSERT INTO OGLAS(nazDog,mjesto,datum,brSje,vrsUla,cijena,idProdavac,idDog) 
+VALUES ('Avengers', 'Zagreb','23.12.2024',35,'Normal',24,1,4);
+
+INSERT INTO OGLAS(nazDog,mjesto,datum,brSje,cijena,idProdavac,idDog) 
+VALUES ('Real Madrid vs Barcelona', 'Madrid','25.11.2024',654,73,2,2);
+
+
+
 
 
 
