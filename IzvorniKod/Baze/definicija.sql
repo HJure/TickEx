@@ -48,6 +48,8 @@ VALUES ('Avengers', 'Zagreb','23.12.2024',35,'Normal',24,1,4);
 INSERT INTO OGLAS(nazDog,mjesto,datum,brSje,cijena,idProdavac,idDog) 
 VALUES ('Real Madrid vs Barcelona', 'Madrid','25.11.2024',654,73,2,2);
 
+INSERT INTO OGLAS(nazDog,mjesto,datum,cijena,idProdavac,idDog) 
+VALUES ('Federer vs Nadal', 'London','12.11.2024',146,2,5);
 
 
 
