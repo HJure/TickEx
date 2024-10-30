@@ -5,43 +5,48 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tickets")
+@Table(name = "oglas")
 public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name ="idogl",nullable = false, unique = true)
+    private int id;
 
-    @Column(nullable = false)
+    @Column(name="vrsdog", nullable = false)
     private String eventType;
 
-    @Column(nullable = false)
+    @Column(name="cijena", nullable = false)
+    private int price;
+
+    @Column(name="nazdog", nullable = false)
     private String eventName;
 
-    @Column(nullable = false)
+    @Column(name="datum", nullable = false)
     private LocalDateTime eventDate;
 
-    @Column(nullable = false)
+    @Column(name="mjesto", nullable = false)
     private String location;
 
-    private String seatNumber;
+    @Column(name="brsje", nullable = true)
+    private int seatNumber;
 
-    @Column(nullable = false)
+    @Column(name="vrsula", nullable = true)
     private String ticketType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(name = "idkor", nullable = false)
     private User owner;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private boolean isExchangeAvailable;
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -77,11 +82,11 @@ public class Ticket {
         this.location = location;
     }
 
-    public String getSeatNumber() {
+    public int getSeatNumber() {
         return seatNumber;
     }
 
-    public void setSeatNumber(String seatNumber) {
+    public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
 
@@ -107,6 +112,14 @@ public class Ticket {
 
     public void setExchangeAvailable(boolean exchangeAvailable) {
         isExchangeAvailable = exchangeAvailable;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
 

@@ -18,8 +18,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Optional<User> findById(int id) {
+        return userRepository.findById((long) id);
     }
 
     /*public User findByOauthId(String oauthId) {
@@ -34,8 +34,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(int id) {
+        userRepository.deleteById((long) id);
     }
 }
 

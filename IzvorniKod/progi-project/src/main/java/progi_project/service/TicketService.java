@@ -18,8 +18,8 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public Optional<Ticket> findById(Long id) {
-        return ticketRepository.findById(id);
+    public Optional<Ticket> findById(int id) {
+        return ticketRepository.findById((long) id);
     }
 
     public List<Ticket> getAllTickets() {
@@ -30,7 +30,7 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public void deleteTicket(Long id) {
-        ticketRepository.deleteById(id);
+    public void deleteTicket(int id) {
+        ticketRepository.deleteById((long) id);
     }
 }
