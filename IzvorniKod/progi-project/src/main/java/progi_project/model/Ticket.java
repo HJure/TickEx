@@ -13,8 +13,9 @@ public class Ticket {
     @Column(name ="idogl",nullable = false, unique = true)
     private int id;
 
-    @Column(name="vrsdog", nullable = false)
-    private String eventType;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "iddog", nullable = false)
+    private Vrsta_Dogadaja eventTypeId;
 
     @Column(name="cijena", nullable = false)
     private int price;
@@ -34,7 +35,7 @@ public class Ticket {
     @Column(name="vrsula", nullable = true)
     private String ticketType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idkor", nullable = false)
     private User owner;
 
@@ -50,12 +51,12 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getEventType() {
-        return eventType;
+    public Vrsta_Dogadaja getEventTypeId() {
+        return eventTypeId;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public void setEventTypeId(Vrsta_Dogadaja eventType) {
+        this.eventTypeId = eventType;
     }
 
     public String getEventName() {

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import progi_project.model.Ticket;
 import progi_project.model.User;
+import progi_project.model.Vrsta_Dogadaja;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,8 +23,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     Optional<Ticket> findByOwnerId(int ownerId);
 
     // Find tickets by event type
-    //@Query("SELECT t FROM Ticket t WHERE t.eventType = :eventType")
-    Optional<Ticket> findByEventType(String eventType);
+    //@Query("SELECT t FROM Ticket t WHERE t.eventTypeId = :eventType")
+    Optional<Ticket> findByEventTypeId(Vrsta_Dogadaja eventTypeId);
 
     // Find tickets by event date
     //@Query("SELECT t FROM Ticket t WHERE t.eventDate = :eventDate")
