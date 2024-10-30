@@ -8,10 +8,16 @@ CREATE TABLE KORISNIK
   UNIQUE (email)
 );
 
+CREATE TABLE VRSTA_DOGAĐAJA
+(
+  idDog SERIAL,
+  nazVrDos VARCHAR(50) NOT NULL,
+  PRIMARY KEY (idDog)
+);
+
 CREATE TABLE OGLAS
 (
   idOgl SERIAL,
-  vrsDog VARCHAR(50) NOT NULL,
   nazDog VARCHAR(50) NOT NULL,
   mjesto VARCHAR(50) NOT NULL,
   datum DATE NOT NULL,
@@ -19,12 +25,11 @@ CREATE TABLE OGLAS
   vrsUla VARCHAR(50),
   status BOOLEAN DEFAULT FALSE NOT NULL, /*false znaci da jos nije prodan */
   cijena INT NOT NULL,
-  kupujeidKor INT,
-  prodajeidKor INT NOT NULL,
+  idProdavac INT NOT NULL,
+  idDog INT NOT NULL,
   PRIMARY KEY (idOgl),
-  FOREIGN KEY (kupujeidKor) REFERENCES KORISNIK(idKor),
-  FOREIGN KEY (prodajeidKor) REFERENCES KORISNIK(idKor),
-  CONSTRAINT istiKupacProdavac CHECK (kupujeidKor != prodajeidKor)
+  FOREIGN KEY (idProdavac) REFERENCES KORISNIK(idKor),
+  FOREIGN KEY (idDog) REFERENCES VRSTA_DOGAĐAJA(idDog)
 );
 
 
