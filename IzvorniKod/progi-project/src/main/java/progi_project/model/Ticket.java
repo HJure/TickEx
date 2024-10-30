@@ -36,7 +36,7 @@ public class Ticket {
     private String ticketType;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idkor", nullable = false)
+    @JoinColumn(name = "idprodavac", nullable = false)
     private User owner;
 
     @Column(name = "status", nullable = false)

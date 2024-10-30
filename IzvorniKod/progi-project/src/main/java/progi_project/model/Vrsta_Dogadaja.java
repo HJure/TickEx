@@ -16,6 +16,6 @@ public class Vrsta_Dogadaja {
     @OneToMany(mappedBy = "eventTypeId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ticket> tickets;
 
-    @Column(name ="nazvrsdog",nullable = false, unique = true)
+    @Column(name ="nazvrdog",nullable = false, unique = true)
     private String nazVrDog;
 }
