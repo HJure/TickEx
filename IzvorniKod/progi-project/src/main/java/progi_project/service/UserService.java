@@ -1,12 +1,13 @@
 package progi_project.service;
 
-import progi_project.model.User;
-import progi_project.repository.UserRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import progi_project.model.User;
+import progi_project.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -36,6 +37,10 @@ public class UserService {
 
     public void deleteUser(int id) {
         userRepository.deleteById((long) id);
+    }
+
+    public boolean emailExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 }
 
