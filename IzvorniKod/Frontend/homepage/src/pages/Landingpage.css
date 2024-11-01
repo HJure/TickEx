@@ -1,0 +1,28 @@
+.landingpage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+.landingpage-content  {
+    position: absolute;
+    color: #fff;  
+    text-align: center;            /* Makes the original text invisible */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Blurs text with shadow */
+    font-size: 36px;
+    font-weight: bold;
+}
+.landingpage-content h3 {
+    font-size: 2rem;
+}
+.imageContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.imageContainer img {
+    height: 100%;
+    width: 100%;
+}
