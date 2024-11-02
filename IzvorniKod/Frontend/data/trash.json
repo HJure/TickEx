@@ -1,11 +1,18 @@
 {
   "trash": [
     {
-      "id": "1",
-      "title": "Dinamo vs Hajduk",
-      "author": "me",
-      "genre": "sport",
-      "event_picture": "/images/dinamohajduk.jpeg"
+
+      "nazDog": "Dinamo vs Hajduk",
+      "mjesto": "Zagreb",
+      "datum": "18.02.2025.",
+      "brSj": "",
+      "vrsUla": "sport",
+      "status": "false",
+      "cijena": "25",
+      "idProdavac": "me",
+      "idDog": "5",
+      "event_picture": "/images/dinamohajduk.jpeg",
+      "idOgl": "1"
     }
   ]
 }

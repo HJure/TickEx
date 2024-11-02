@@ -18,7 +18,7 @@ function Login() {
 
     return (
         <div className="login-container">
-            <img src="/pictures/signup.png" alt="signup" className="login-image" />
+            <img src="/images/signup.png" alt="signup" className="login-image" />
             <p className="login-heading">Get going with your account</p>
             <button onClick={() => login()} className="login-button">
                 <FcGoogle style={{ marginRight: '8px', fontSize: '24px' }} /> 

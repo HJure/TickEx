@@ -1,48 +1,63 @@
 .ticket-details {
-    max-width: 600px; 
+    max-width: 600px;
     margin: 35px auto;
-    padding: 20px; 
-    background: linear-gradient(135deg, rgba(211, 211, 211, 0.8), rgba(205, 173, 240, 0.8),  rgba(124, 41, 233, 0.9));
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(211, 211, 211, 0.8), rgba(205, 173, 240, 0.8), rgba(124, 41, 233, 0.9));
     background-blend-mode: multiply;
-    overflow-y: auto;
     border: 1px solid #e017d6;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.ticket-details h2 { 
-    font-size: 24px; 
-    color: #b535f1; 
-    margin-bottom: 10px; 
+.ticket-details h2 {
+    font-size: 24px;
+    color: #b535f1;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-.ticket-details h6 {
-    font-size: 18px;
-    color: #666;
-    margin: 5px 0;
+.ticket-info {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    margin-top: 15px;
+    text-align: center;
 }
 
-.ticket-details p {
-    font-size: 16px; 
-    color: #333; 
-    margin: 10px 0; 
+.ticket-info span {
+    font-weight: bold;
+    color: #444; 
+}
+
+.ticket-info p {
+    display: inline-block;
+    font-weight: 400;
+    color: #7e0d88; 
+}
+
+.ticket-info p .answer {
+    color: #d14a73; 
 }
 
 .ticket-details img {
-    max-width: 100%; 
+    max-width: 100%;
     height: auto;
     border-radius: 4px;
-    margin: 10px 0; 
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .ticket-details button {
-    background: #b535f1; 
-    color: #fff; 
-    border: none; 
-    padding: 10px 15px; 
+    display: block;
+    margin: 20px auto;
+    background: #b535f1;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease; 
+    font-size: 16px;
+    transition: background 0.3s ease;
 }
 
 .ticket-details button:hover {

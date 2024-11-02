@@ -9,7 +9,7 @@ const Trash = ({ trashes, title }) => {
                 {trashes.map((trash) => (
                     <div className="trash-preview" key={trash.id}>   
                         <Link to={ `/trashes/${trash.id}` }>
-                            <h2>{ trash.title }</h2>
+                            <h2>{ trash.nazDog }</h2>
                         </Link>
                     </div>
                 ))}
