@@ -1,5 +1,5 @@
 import React from 'react';
-import './UpcomingEvents.css';
+import '../style/UpcomingEvents.css';
 import { Events } from '../Data';
 
 function UpcomingEvents(){

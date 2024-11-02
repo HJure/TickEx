@@ -4,7 +4,7 @@
       "title": "Louvre",
       "author": "me",
       "genre": "museum",
-      "event_picture": "/pictures/louvre.jpeg",
+      "event_picture": "/images/louvre.jpeg",
       "id": "3"
     },
     {
@@ -12,21 +12,21 @@
       "title": "Thompson",
       "author": "me",
       "genre": "music",
-      "event_picture": "/pictures/thompson.jpeg"
+      "event_picture": "/images/thompson.jpeg"
     },
     {
       "id": "2",
       "title": "Đoković",
       "author": "me",
       "genre": "sport",
-      "event_picture": "/pictures/dokovic.jpeg"
+      "event_picture": "/images/dokovic.jpeg"
     },
     {
       "id": "4",
       "title": "Taylor Swift",
       "author": "me",
       "genre": "music",
-      "event_picture": "/pictures/taylor.jpeg"
+      "event_picture": "/images/taylor.jpeg"
     }
   ]
 }
