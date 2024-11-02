@@ -1,20 +1,23 @@
 #about {
-    background-color: #fff;
+    background: none;
     color: #000000;
     margin: 5%;
-    position: relative;  
+    position: relative;
+    border-radius: 25px;
 }
 
-.container {
+.ab_container {
     max-width: 1024px;
     max-height: auto;
     margin: auto;
-}
-
-.about-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(167, 133, 204, 0.8), rgba(200, 150, 255, 0.6));
+    background-blend-mode: multiply;
+    overflow-y: auto;
+    border-radius: 25px;
+    padding: 20px; 
 }
 
 .about-content-left {

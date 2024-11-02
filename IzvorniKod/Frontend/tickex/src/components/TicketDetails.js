@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import '../style/ticket-details.css'
 
 const TicketDetails = ({ url }) => {
     const { id } = useParams();

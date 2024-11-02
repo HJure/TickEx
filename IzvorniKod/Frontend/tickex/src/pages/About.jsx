@@ -5,7 +5,7 @@ function About(){
     return(
         <>
         <div id ="about">
-            <div className="container">
+            <div className="ab_container">
                 <div id="about-content-left">
                     <h1>About us</h1>
                     <p className ="about-p">

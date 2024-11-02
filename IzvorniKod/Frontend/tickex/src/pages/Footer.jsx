@@ -8,7 +8,7 @@ function Footer(){
             
         </div>
         <div className="footer">
-            <div className="container">
+            <div className="ft_container">
                <div className="footer-content">
                     <div className="footer-content-logo">
                         <h2>TickEx</h2>

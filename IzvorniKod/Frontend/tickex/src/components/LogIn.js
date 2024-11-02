@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { FcGoogle } from 'react-icons/fc'; 
+import '../style/login.css';
 
 function Login() {
     const navigate = useNavigate();

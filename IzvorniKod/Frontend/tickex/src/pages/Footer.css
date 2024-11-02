@@ -1,15 +1,19 @@
 .footer {
-    background-color: rgba(154, 67, 221, 0.36);
     color: #000000;
+    margin-top: 35px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(167, 133, 204, 0.8), rgba(200, 150, 255, 0.6));
+    background-blend-mode: multiply;
+    overflow-y: auto;
 }
 
-.container {
+.ft_container {
+    max-width: 1024px;
     display: flex;
     justify-content: space-between;
-    max-width: 1200px;
     margin: 0 auto;
     flex-wrap: wrap;
     box-sizing: border-box;
+    background: none;
 }
 
 .footer-content, .footer-content-boxes {

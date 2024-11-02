@@ -1,5 +1,5 @@
 import React from 'react'
-import './Navbar.css'
+import '../style/Navbar.css'
 
 function Navbar(){
     return (
@@ -11,9 +11,9 @@ function Navbar(){
             <nav className ="navigation-menu">
                 <ul>
                     <li><a className = "nav-link nav-link-line"
-                     href="#login">Log in</a></li>
+                     href="profile">Profile</a></li>
                      <li><a className = "nav-link nav-link-line"
-                     href="#signup">Sign up</a></li>
+                     href="signup">Sign up</a></li>
                      <li><a className = "nav-link nav-link-line"
                      href="#about">About</a></li>
                 </ul>

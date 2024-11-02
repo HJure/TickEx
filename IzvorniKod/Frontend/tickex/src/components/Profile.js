@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import TicketList from './TicketList';
 import useFetch from './useFetch';
 import Trash from './Trash';
+import '../style/profile.css';
 
 function Profile() {
     const [profile, setProfile] = useState(null);
@@ -20,7 +21,7 @@ function Profile() {
                         Accept: 'application/json'
                     }
                 })
-                .then((res) => {setProfile(res.data); console.log(res.data);})
+                .then((res) => {setProfile(res.data); console.log(res.data)})
                 .catch((err) => console.log(err));
         }
     }, []);
