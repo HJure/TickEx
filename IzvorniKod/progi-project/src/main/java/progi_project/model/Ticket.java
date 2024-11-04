@@ -1,17 +1,8 @@
 package progi_project.model;
 
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "oglas")
@@ -22,20 +13,21 @@ public class Ticket {
     @Column(name ="idogl",nullable = false, unique = true)
     private int id;
 
-    @Column(name="datum", nullable = false)
-    private LocalDateTime eventDate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "iddog", nullable = false)
+    private Vrsta_Dogadaja eventTypeId;
+
+    @Column(name="cijena", nullable = false)
+    private int price;
 
     @Column(name="nazdog", nullable = false)
     private String eventName;
 
-    @Column(name = "status", nullable = false)
-    private boolean isExchangeAvailable;
+    @Column(name="datum", nullable = false)
+    private LocalDateTime eventDate;
 
     @Column(name="mjesto", nullable = false)
     private String location;
-
-    @Column(name="cijena", nullable = false)
-    private int price;
 
     @Column(name="brsje", nullable = true)
     private int seatNumber;
@@ -44,29 +36,11 @@ public class Ticket {
     private String ticketType;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "iddog", nullable = false)
-    private Vrsta_Dogadaja eventTypeId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idprodavac", nullable = false)
     private User owner;
 
-    // Constructors
-
-    public Ticket() {
-
-    }
-    public Ticket(LocalDateTime eventDate, String eventName, boolean isExchangeAvailable, String location, int price, int seatNumber, String ticketType, Vrsta_Dogadaja eventTypeId, User owner) {
-        this.eventDate = eventDate;
-        this.eventName = eventName;
-        this.isExchangeAvailable = this.isExchangeAvailable;
-        this.location = location;
-        this.price = price;
-        this.seatNumber = seatNumber;
-        this.ticketType = ticketType;
-        this.eventTypeId = eventTypeId;
-        this.owner = owner;
-    }
+    @Column(name = "status", nullable = false)
+    private boolean isExchangeAvailable;
 
 
     public int getId() {
