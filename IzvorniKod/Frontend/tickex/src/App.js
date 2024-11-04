@@ -7,6 +7,7 @@ import TicketDetails from './components/TicketDetails';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Footer from './pages/Footer';
+import Create from './components/Create';
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/tickets/:id" element={<TicketDetails url="http://localhost:8000/tickets/" />} />
                     <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} />
+                    <Route path="/create" element={<Create />} />
                 </Routes>
             <Footer />
             </div>

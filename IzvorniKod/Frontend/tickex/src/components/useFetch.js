@@ -7,7 +7,7 @@ const useFetch = (url) => {
 
     useEffect(() => {
         
-        const formattedUrl = url.replace(/([^:]\/)\/+/g, "$1"); 
+        const formattedUrl = `${url}?timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1");
 
         const abortCont = new AbortController();
 

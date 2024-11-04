@@ -1,20 +1,19 @@
+
 .logo img {
-    width: 198px;
-    height: 50px;
-    margin-left: 5%;
+  width: 198px;
+  height: 50px;
+  margin-left: 5%;
 }
 
 .navigation {
-    height: 70px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    z-index: 100000005;
-    border-bottom: 2px solid #000000;
-    background-color: rgba(154, 67, 221, 0.36);
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 100000005;
+  border-bottom: 2px solid #000000;
+  background-color: rgba(154, 67, 221, 0.36);
 }
-
-/* Sidebar Nav Styling */
 
 .navigation-menu {
   margin-left: auto;
@@ -31,45 +30,45 @@
   transition: all 1s;
 }
 
-.navigation-menu li a {
+.navigation-menu li,
+.navigation-menu li button {
   text-decoration: none;
   font-size: 1.5rem;
-  display: block;
-  width: 100%;
   color: #000000;
   font-weight: bold;
-}
-
-.nav-link {
-  font-weight: bold;
-  font-size: 14px;
   text-transform: uppercase;
-  text-decoration: none;
-  color: #000000;
-  font-weight: bold;
-  padding: 20px 0px;
-  margin: 0px 10px;
+  padding: 20px 0;
+  margin: 0 10px;
   display: inline-block;
   position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: Kanit;
 }
 
-.nav-link:hover {
+.nav-link-line:hover,
+button.nav-link-line:hover {
   opacity: 1;
 }
 
-.nav-link::before {
+.nav-link-line::before,
+button.nav-link-line::before {
   transition: 400ms;
   height: 3px;
   content: "";
   position: absolute;
   background-color: #000000;
-}
-
-.nav-link-line::before {
   width: 0%;
-  bottom: 10px;
+  bottom: 15px;
 }
 
-.nav-link-line:hover::before {
+.nav-link-line:hover::before,
+button.nav-link-line:hover::before {
   width: 100%;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
 }

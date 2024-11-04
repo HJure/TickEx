@@ -48,26 +48,24 @@
 }
 
 .logout-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(90deg, #E57373, #D32F2F);
-    color: white;
-    padding: 12px 24px;
+    background: #7b1fa2; 
+    width: 100px;
+    color: #fff; 
     border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    margin-top: 20px;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
-    transition: all 0.3s ease;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    width: 100%;
-    max-width: 300px;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .logout-button:hover {
-    background-color: #C62828;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    background: #cbaffd;
+    color: #4a148c; 
+    box-shadow: 0 4px 8px rgba(169, 128, 204, 0.3);
 }
 
 .loading-text {
@@ -194,3 +192,23 @@
   .profilediv{
     width: 900px;
   }
+
+ .newBlog{
+    background: #7b1fa2; 
+    color: #fff; 
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newBlog:hover {
+    background: #cbaffd;
+    color: #4a148c; 
+    box-shadow: 0 4px 8px rgba(169, 128, 204, 0.3);
+}

@@ -11,9 +11,9 @@ function UpcomingEvents(){
                 {
                     Events.map((event) => {
                         return(
-                            <button className="moreInfoBtn">
-                                <div key={event.id} className ="card">
-                                    <img className ="card-img" src = {event.image} alt =""></img>
+                            <button key={event.id} className="moreInfoBtn">
+                                <div className="card">
+                                    <img className="card-img" src={event.image} alt=""></img>
                                     <h1>{event.title}</h1>
                                     <h4>{event.description}</h4>
                                     <h2>{event.price}</h2>

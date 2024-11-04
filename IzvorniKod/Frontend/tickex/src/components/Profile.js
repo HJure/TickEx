@@ -6,6 +6,7 @@ import TicketList from './TicketList';
 import useFetch from './useFetch';
 import Trash from './Trash';
 import '../style/profile.css';
+import { Link  } from "react-router-dom";
 
 function Profile() {
     const [profile, setProfile] = useState(null);
@@ -62,7 +63,8 @@ function Profile() {
                 </div>
 
             </div>
-
+            <br/>
+            <Link to="/create" className="newBlog">Add New Blog</Link>
         </div>
     ) : (
         <p className="loading-text">Loading profile...</p>

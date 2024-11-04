@@ -5,52 +5,39 @@
       "mjesto": "Pariz",
       "datum": "12.11.2024.",
       "brSj": "",
-      "vrsUla": "museum",
-      "status": "false",
-      "cijena": "50",
+      "vrsDog": "Muzej",
+      "vrsUla": "Normal",
+      "status": false,
+      "cijena": 50,
       "idProdavac": "me",
       "idDog": "1",
-      "event_picture": "/images/louvre.jpeg",
-      "idOgl": "3"
+      "id": "3"
     },
     {
       "nazDog": "Thompson",
       "mjesto": "Imotski",
       "datum": "06.05.2025.",
       "brSj": "",
-      "vrsUla": "music",
-      "status": "false",
-      "cijena": "25",
+      "vrsDog": "Glazba",
+      "vrsUla": "Normal",
+      "status": false,
+      "cijena": 25,
       "idProdavac": "me",
       "idDog": "2",
-      "event_picture": "/images/thompson.jpeg",
-      "idOgl": "5"
+      "id": "5"
     },
     {
       "nazDog": "Đoković",
       "mjesto": "London",
       "datum": "23.05.2024.",
       "brSj": "",
-      "vrsUla": "sport",
-      "status": "false",
-      "cijena": "30",
+      "vrsDog": "Tenis",
+      "vrsUla": "Normal",
+      "status": false,
+      "cijena": 30,
       "idProdavac": "me",
       "idDog": "3",
-      "event_picture": "/images/dokovic.jpeg",
-      "idOgl": "2"
-    },
-    {
-      "nazDog": "Taylor Swift",
-      "mjesto": "Zagreb",
-      "datum": "31.07.2030.",
-      "brSj": "",
-      "vrsUla": "music",
-      "status": "false",
-      "cijena": "100",
-      "idProdavac": "me",
-      "idDog": "4",
-      "event_picture": "/images/taylor.jpeg",
-      "idOgl": "4"
+      "id": "2"
     }
   ]
 }

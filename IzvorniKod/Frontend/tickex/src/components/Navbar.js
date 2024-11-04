@@ -1,26 +1,41 @@
-import React from 'react'
-import '../style/Navbar.css'
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-function Navbar(){
+function Navbar() {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleAboutClick = () => {
+        if (location.pathname !== "/") {
+            navigate("/");
+        }
+        setTimeout(() => {
+            const aboutSection = document.getElementById("about");
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: "smooth" });
+            }
+        }, 100);
+    };
+
     return (
         <>
           <div className="navigation">
-            <a href="/" className="logo">
-            <img src="./images/logo.png" alt ="logo"></img>
-            </a>
-            <nav className ="navigation-menu">
+            <Link to="/" className="logo">
+                <img src="./images/logo.png" alt="logo" />
+            </Link>
+            <nav className="navigation-menu">
                 <ul>
-                    <li><a className = "nav-link nav-link-line"
-                     href="profile">Profile</a></li>
-                     <li><a className = "nav-link nav-link-line"
-                     href="signup">Sign up</a></li>
-                     <li><a className = "nav-link nav-link-line"
-                     href="#about">About</a></li>
+                    <li className="nav-link nav-link-line" ><Link className="link" to="/profile">Profile</Link></li>
+                    <li className="nav-link nav-link-line" ><Link className="link" to="/signup">Sign up</Link></li>
+                    <li className="nav-link nav-link-line">
+                        <button className="abtbutton" onClick={handleAboutClick} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                            About
+                        </button>
+                    </li>
                 </ul>
             </nav>
-        </div>
+          </div>
         </>
-    )
+    );
 }
 
 export default Navbar;
