@@ -13,9 +13,23 @@ public class Vrsta_Dogadaja {
     @Column(name ="iddog",nullable = false, unique = true)
     private int id;
 
-    //@OneToMany(mappedBy = "eventTypeId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //private List<Ticket> tickets;
 
     @Column(name ="nazvrdog",nullable = false)
     private String nazVrDog;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNazVrDog() {
+        return nazVrDog;
+    }
+
+    public void setNazVrDog(String nazVrDog) {
+        this.nazVrDog = nazVrDog;
+    }
 }
