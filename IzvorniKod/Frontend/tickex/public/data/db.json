@@ -1,0 +1,43 @@
+{
+    "tickets": [
+      {
+        "nazDog": "Louvre",
+        "mjesto": "Pariz",
+        "datum": "12.11.2024.",
+        "brSj": "",
+        "vrsDog": "Muzej",
+        "vrsUla": "Normal",
+        "status": false,
+        "cijena": 50,
+        "idProdavac": "me",
+        "idDog": "1",
+        "id": "3"
+      },
+      {
+        "nazDog": "Thompson",
+        "mjesto": "Imotski",
+        "datum": "06.05.2025.",
+        "brSj": "",
+        "vrsDog": "Glazba",
+        "vrsUla": "Normal",
+        "status": false,
+        "cijena": 25,
+        "idProdavac": "me",
+        "idDog": "2",
+        "id": "5"
+      },
+      {
+        "nazDog": "Đoković",
+        "mjesto": "London",
+        "datum": "23.05.2024.",
+        "brSj": "",
+        "vrsDog": "Tenis",
+        "vrsUla": "Normal",
+        "status": false,
+        "cijena": 30,
+        "idProdavac": "me",
+        "idDog": "3",
+        "id": "2"
+      }
+    ]
+  }

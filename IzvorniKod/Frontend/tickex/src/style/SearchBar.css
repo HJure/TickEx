@@ -1,0 +1,32 @@
+.searchArea{
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+}
+.searchBar{
+    padding: 1%;
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 25%;
+    height: 1.5rem;
+    display: flex;
+    justify-content:center;
+    gap: 0.5em;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+.searchBar img {
+    height: 1.5em;
+    width: 1.5em;
+}
+input{
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    font-size: 1.25rem;
+    border: none;
+}
+input:focus {
+    outline: none;
+}
