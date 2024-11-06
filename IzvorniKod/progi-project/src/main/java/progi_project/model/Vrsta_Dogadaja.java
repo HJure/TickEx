@@ -13,9 +13,9 @@ public class Vrsta_Dogadaja {
     @Column(name ="iddog",nullable = false, unique = true)
     private int id;
 
-    @OneToMany(mappedBy = "eventTypeId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Ticket> tickets;
+    //@OneToMany(mappedBy = "eventTypeId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //private List<Ticket> tickets;
 
-    @Column(name ="nazvrdog",nullable = false, unique = true)
+    @Column(name ="nazvrdog",nullable = false)
     private String nazVrDog;
 }

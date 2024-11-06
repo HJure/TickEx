@@ -1,5 +1,8 @@
 package progi_project.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +22,15 @@ public class User {
     @Column(name ="email",nullable = false, unique = true)
     private String email;
 
+    @Column(name ="imekor",nullable = false)
+    private String imeKor;
+
+    @Column(name ="prezimekor",nullable = false)
+    private String prezimekor;
+
+    @Column(name ="datumula",nullable = false)
+    private LocalDate datumUla = LocalDate.now();
+
     // Constructor
     public User(String email) {
         this.email = email;
@@ -28,14 +40,6 @@ public class User {
     public User() { 
  
     } 
-
-
-
-    /*@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Ticket> tickets;*/
-
-    /*@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ticket> boughtsTickets; */
 
 
     public int getId() {
@@ -54,12 +58,28 @@ public class User {
         this.email = email;
     }
 
-    /*public List<Ticket> getTickets() {
-        return tickets;
+    public String getImeKor() {
+        return imeKor;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }*/
+    public void setImeKor(String imeKor) {
+        this.imeKor = imeKor;
+    }
+
+    public String getPrezimekor() {
+        return prezimekor;
+    }
+
+    public void setPrezimekor(String prezimekor) {
+        this.prezimekor = prezimekor;
+    }
+
+    public LocalDate getDatumUla() {
+        return datumUla;
+    }
+
+    public void setDatumUla(LocalDate datumUla) {
+        this.datumUla = datumUla;
+    }
 }
 

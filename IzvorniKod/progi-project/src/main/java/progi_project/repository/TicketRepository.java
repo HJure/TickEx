@@ -36,7 +36,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     // Find tickets by seat number
     //@Query("SELECT t FROM Ticket t WHERE t.seatNumber = :seatNumber")
-    Optional<Ticket> findBySeatNumber(int seatNumber);
+    Optional<Ticket> findBySeatNumber(Integer seatNumber);
 
     // Find tickets by ticket type
     //@Query("SELECT t FROM Ticket t WHERE t.ticketType = :ticketType")

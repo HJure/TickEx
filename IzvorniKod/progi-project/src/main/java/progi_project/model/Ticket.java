@@ -30,7 +30,7 @@ public class Ticket {
     private String location;
 
     @Column(name="brsje", nullable = true)
-    private int seatNumber;
+    private Integer seatNumber;
 
     @Column(name="vrsula", nullable = true)
     private String ticketType;
@@ -40,7 +40,7 @@ public class Ticket {
     private User owner;
 
     @Column(name = "status", nullable = false)
-    private boolean isExchangeAvailable;
+    private boolean isExchangeAvailable = false;
 
 
     public int getId() {
@@ -83,11 +83,11 @@ public class Ticket {
         this.location = location;
     }
 
-    public int getSeatNumber() {
+    public Integer getSeatNumber() {
         return seatNumber;
     }
 
-    public void setSeatNumber(int seatNumber) {
+    public void setSeatNumber(Integer seatNumber) {
         this.seatNumber = seatNumber;
     }
 
