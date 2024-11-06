@@ -34,7 +34,7 @@ function Profile() {
         navigate('/signup');
     };
 
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8000/tickets");
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     const { data: trashes, isPending: isTrashesPending, error: trashesError } = useFetch("http://localhost:5000/trash");
 
     return profile ? (

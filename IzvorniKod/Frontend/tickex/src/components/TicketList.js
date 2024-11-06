@@ -9,7 +9,7 @@ const TicketList = ({ tickets, title }) => {
                 {tickets.map((ticket) => (
                     <div className="ticket-preview" key={ticket.id}>   
                         <Link to={ `/tickets/${ticket.id}` }>
-                            <h2>{ ticket.nazDog }</h2>
+                            <h2>{ ticket.eventName }</h2>
                         </Link>
                     </div>
                 ))}

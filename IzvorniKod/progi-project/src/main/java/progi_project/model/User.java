@@ -24,6 +24,12 @@ public class User {
         this.email = email;
     }
 
+    //Temporary default constructor
+    public User() { 
+ 
+    } 
+
+
 
     /*@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ticket> tickets;*/

@@ -11,7 +11,7 @@ const useFetch = (url) => {
 
         const abortCont = new AbortController();
 
-        fetch(formattedUrl, { signal: abortCont.signal })
+        fetch(formattedUrl, { signal: abortCont.signal, credentials: "include" })
             .then(res => {
                 if (!res.ok) {
                     throw Error('Could not fetch the data for that resource');
@@ -34,7 +34,6 @@ const useFetch = (url) => {
 
         return () => abortCont.abort();
     }, [url]);
-
     return { data, isPending, error };
 }
 
