@@ -4,6 +4,9 @@ CREATE TABLE KORISNIK
 (
   idKor SERIAL,
   email VARCHAR(320) NOT NULL,
+  imeKor VARCHAR(50) NOT NULL,
+  prezimeKor VARCHAR(50) NOT NULL,
+  datumUla DATE DEFAULT CURRENT_DATE NOT NULL,
   PRIMARY KEY (idKor),
   UNIQUE (email)
 );
@@ -32,7 +35,8 @@ CREATE TABLE OGLAS
   FOREIGN KEY (idDog) REFERENCES VRSTA_DOGADAJA(idDog)
 );
 
-INSERT INTO KORISNIK(email) VALUES ('anaanic143@gmail.com') , ('karlobasic184@gmail.com');
+INSERT INTO KORISNIK(email,imeKor,prezimeKor) VALUES 
+('anaanic143@gmail.com','Ana','Anic') , ('karlobasic184@gmail.com','Karlo','Basic');
 
 INSERT INTO VRSTA_DOGADAJA (nazVrDog) VALUES ('Glazba'),('Nogomet'),('Kazaliste'),('Kino'),('Tenis');
 
