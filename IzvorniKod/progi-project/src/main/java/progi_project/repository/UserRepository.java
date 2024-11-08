@@ -1,5 +1,7 @@
 package progi_project.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,8 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     // Find user by email
-    //@Query("SELECT u FROM User u WHERE u.email = :email")
-    //Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     // Find users by id
     //@Query("SELECT u FROM User u WHERE u.id = :id")

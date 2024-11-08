@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authUserInfo } from '../utils/authUserInfo';
 import '../style/Create.css';
 
 const Create = () => {
@@ -10,18 +11,23 @@ const Create = () => {
     const [vrsUla, setVrsUla] = useState('');
     const [vrsDog, setVrsDog] = useState('');
     const [cijena, setCijena] = useState('');
-    const [status, setStatus] = useState(false);
-    const [idProdavac, setidProdavac] = useState('me');
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const ticket = { nazDog, mjesto, datum, brSj, vrsDog, status, cijena, idProdavac };
+        const access_token = localStorage.getItem("access_token");
+        const email = authUserInfo();
+        
+        const idProdavac = fetch(`http://localhost:8080/api/users/getId?access_token=${access_token}`, {
+            method: 'POST',
+            body: email
+        });
+        const ticket = { nazDog, mjesto, datum, brSj, vrsDog, status: false, cijena, idProdavac };
         
         setIsPending(true);
 
-        fetch('http://localhost:8080/api/tickets', {
+        fetch(`http://localhost:8080/api/tickets?access_token=${access_token}`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(ticket)
