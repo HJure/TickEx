@@ -23,7 +23,7 @@ function Login() {
                     });
                     const userMail = response.data.email;
                     console.log("user email: ", userMail);
-                    navigate('/userform', { replace: true, state: { userEmail:userMail} });
+                    navigate('/register', { replace: true, state: { userEmail:userMail} });
                 }else{
                     navigate('/profile');
                 }

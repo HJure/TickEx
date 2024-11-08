@@ -24,7 +24,7 @@ function App() {
                     <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} />
                     <Route path="/create" element={<Create />} />
                     <Route path="/shop" element={<Shop />} />
-                    <Route path="/userform" element={<UserForm />} />
+                    <Route path="/register" element={<UserForm />} />
                 </Routes>
             <Footer />
             </div>
