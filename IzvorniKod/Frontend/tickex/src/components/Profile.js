@@ -13,6 +13,7 @@ function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
+
         const user = JSON.parse(localStorage.getItem("user"));
         if (user && user.access_token) {
             axios

@@ -1,32 +1,38 @@
 package progi_project.config;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.List;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+
+    @SuppressWarnings({"removal"})
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .cors(withDefaults())  // Enable CORS with default settings
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/").permitAll();
-                    auth.anyRequest().authenticated();
-                })
-                .oauth2Login(withDefaults())
-                .formLogin(withDefaults())
-                .build();
+        http.cors(withDefaults())
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error", "/login").permitAll()
+                                    .requestMatchers("/api/token").authenticated()
+                                    .anyRequest().authenticated()
+                                    ).oauth2Login()
+                                    .successHandler(customOAuth2SuccessHandler)
+                                    .failureUrl("/login?error=true");
+
+        return http.build();
     }
 
     // Define CORS configuration to allow requests from your React app

@@ -1,26 +1,18 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useGoogleLogin } from '@react-oauth/google';
 import { FcGoogle } from 'react-icons/fc'; 
 import '../style/login.css';
 
 function Login() {
-    const navigate = useNavigate();
 
-    const login = useGoogleLogin({
-        onSuccess: (codeResponse) => {
-            localStorage.setItem("user", JSON.stringify(codeResponse));
-            //console.log(codeResponse);
-            navigate('/profile');  
-        },
-        onError: (error) => console.log('Login Failed:', error)
-    });
+    const handleLoginClick = () => {
+        window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    };
 
     return (
         <div className="login-container">
             <img src="/images/signup.png" alt="signup" className="login-image" />
             <p className="login-heading">Get going with your account</p>
-            <button onClick={() => login()} className="login-button">
+            <button onClick={handleLoginClick} className="login-button">
                 <FcGoogle style={{ marginRight: '8px', fontSize: '24px' }} /> 
                 <span>Sign in with Google</span>
             </button>
