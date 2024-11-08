@@ -58,12 +58,12 @@ const TicketDetails = ({ url }) => {
                     <div className="ticket-info">
                         <br/>
                         <p>
-                            <span>Mjesto:</span> <span className="answer">{ticket.mjesto}</span> |
-                            <span> Datum:</span> <span className="answer">{ticket.datum}</span> |
-                            <span> Vrsta ulaznice:</span> <span className="answer">{ticket.vrsUla}</span> |
-                            <span> Status:</span> <span className="answer">{ticket.status ? "u prodaji" : "prodano"}</span> |
-                            <span> Cijena:</span> <span className="answer">{ticket.cijena} €</span> |
-                            <span> ID događaja:</span> <span className="answer">{ticket.idDog}</span> |
+                            <span>Mjesto:</span> <span className="answer">{ticket.location}</span> |
+                            <span> Datum:</span> <span className="answer">{ticket.eventDate}</span> |
+                            <span> Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType}</span> |
+                            <span> Status:</span> <span className="answer">{ticket.isExchangeAvailable ? "u prodaji" : "prodano"}</span> |
+                            <span> Cijena:</span> <span className="answer">{ticket.price} €</span> |
+                            <span> ID događaja:</span> <span className="answer">{ticket.eventTypeId}</span> |
                             <span> ID oglasa:</span> <span className="answer">{ticket.id}</span>
                         </p>
                         <br/>
