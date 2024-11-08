@@ -35,13 +35,13 @@ public class User {
  
     } 
 
-    public User(String email, String imeKor, String prezimeKor) {
+    public User(String email, String imeKor, String prezimeKor, LocalDate datumUla) {
         this.email = email;
         this.imeKor = imeKor;
         this.prezimeKor = prezimeKor;
-        this.datumUla = LocalDate.now();
+        this.datumUla = datumUla;
     }
-
+    
 
     public int getId() {
         return id;
