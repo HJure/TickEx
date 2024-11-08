@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Footer from './pages/Footer';
 import Create from './components/Create';
 import Shop from './components/Shop'
+import UserForm from './components/UserForm';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} />
                     <Route path="/create" element={<Create />} />
                     <Route path="/shop" element={<Shop />} />
+                    <Route path="/userform" element={<UserForm />} />
                 </Routes>
             <Footer />
             </div>

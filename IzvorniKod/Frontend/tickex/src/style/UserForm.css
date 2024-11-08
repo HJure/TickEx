@@ -1,0 +1,70 @@
+.userInfo{
+    width: 40%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f3e5f5; 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    border: 1px solid #7b1fa2;
+}
+.userInfo h2{
+    font-size: 24px;
+    color: #7b1fa2; 
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.userInfo label {
+    text-align: left;
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #4a148c; 
+}
+
+.userInfo input,
+.userInfo textarea,
+.userInfo select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #b39ddb; 
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.userInfo input:focus,
+.userInfo textarea:focus,
+.userInfo select:focus {
+    outline: none;
+    border-color: #7e57c2; 
+    box-shadow: 0 0 5px rgba(126, 87, 194, 0.4);
+}
+
+.userInfo button {
+    background: #7b1fa2; 
+    color: #fff; 
+    border: none;
+    padding: 10px 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.userInfo button:hover {
+    background: #cbaffd;
+    color: #4a148c; 
+    box-shadow: 0 4px 8px rgba(169, 128, 204, 0.3);
+}
+
+.userInfo button:disabled {
+    background: #d1c4e9;
+    cursor: not-allowed;
+    box-shadow: none;
+}
