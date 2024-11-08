@@ -14,12 +14,12 @@ function Profile() {
 
     useEffect(() => {
 
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user && user.access_token) {
+        const access_token = localStorage.getItem("access_token");
+        if (access_token) {
             axios
-                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`, {
                     headers: {
-                        Authorization: `Bearer ${user.access_token}`,
+                        Authorization: `Bearer ${access_token}`,
                         Accept: 'application/json'
                     }
                 })
@@ -30,7 +30,7 @@ function Profile() {
 
     const logOut = () => {
         googleLogout();
-        localStorage.removeItem("user");
+        localStorage.removeItem("access_token");
         setProfile(null);
         navigate('/signup');
     };
