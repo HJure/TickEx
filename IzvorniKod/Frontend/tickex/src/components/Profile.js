@@ -6,14 +6,14 @@ import TicketList from './TicketList';
 import useFetch from './useFetch';
 import Trash from './Trash';
 import '../style/profile.css';
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Profile() {
     const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
+    const [userTickets, setUserTickets] = useState([]);
 
     useEffect(() => {
-
         const access_token = localStorage.getItem("access_token");
         if (access_token) {
             axios
@@ -23,7 +23,10 @@ function Profile() {
                         Accept: 'application/json'
                     }
                 })
-                .then((res) => {setProfile(res.data); console.log(res.data)})
+                .then((res) => { 
+                    setProfile(res.data);
+                    console.log(res.data);
+                })
                 .catch((err) => console.log(err));
         }
     }, []);
@@ -37,6 +40,14 @@ function Profile() {
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     const { data: trashes, isPending: isTrashesPending, error: trashesError } = useFetch("http://localhost:5000/trash");
+
+    // Filter tickets based on the current user's ID
+    useEffect(() => {
+        if (tickets && profile) {
+            const filteredTickets = tickets.filter(ticket => ticket.owner.id === profile.id);
+            setUserTickets(filteredTickets);
+        }
+    }, [tickets, profile]);
 
     return profile ? (
         <div className='profilediv'>
@@ -54,7 +65,7 @@ function Profile() {
                     <div className="my_offers">
                         {ticketsError && <div className="error">{ticketsError}</div>}
                         {isTicketsPending && <div className="loading">Loading tickets...</div>}
-                        {tickets && <TicketList tickets={tickets} title="My offers:" />}
+                        {userTickets && <TicketList tickets={userTickets} title="My offers:" />}
                     </div>
                     <div className="trash">
                         {trashesError && <div className="error">{trashesError}</div>}
@@ -62,9 +73,8 @@ function Profile() {
                         {trashes && <Trash trashes={trashes} title="My trash:" />}
                     </div>
                 </div>
-
             </div>
-            <br/>
+            <br />
             <Link to="/create" className="newBlog">Add New Blog</Link>
         </div>
     ) : (
