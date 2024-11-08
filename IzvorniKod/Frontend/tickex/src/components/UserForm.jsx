@@ -7,23 +7,25 @@ import '../style/UserForm.css'
 const UserForm = () => {
     const [imeKor, setImeKor] = useState('');
     const [prezimeKor, setPrezimeKor] = useState('');
-    const [userMail, setUserMail] = useState('');
+    const [email, setEmail] = useState('');
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
-        if (location.state && location.state.userEmail) {
-            setUserMail(location.state.userEmail);
-        }
-    }, [location.state]);
+        const params = new URLSearchParams(location.search);
+        const emailFromUrl = params.get("email");
+
+        setEmail(emailFromUrl);
+
+    }, [location.search]);
 
     const submitFunction = (e) => {
         e.preventDefault();
-        const user = {userMail, imeKor, prezimeKor};
+        const user = {email, imeKor, prezimeKor};
         setIsPending(true);
 
-        fetch('http://localhost:8080/api/users', {
+        fetch('http://localhost:8080/api/users/register', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
@@ -31,7 +33,7 @@ const UserForm = () => {
             setTimeout(() => { 
                 console.log('new user added');
                 setIsPending(false);
-                navigate('/profile'); 
+                navigate('/'); 
             }, 1500);
         }).catch((err) => {
             console.log(err);
@@ -47,7 +49,7 @@ const UserForm = () => {
                 <label>Email:</label>
                 <input 
                     type="email" 
-                    value={userMail} 
+                    value={email} 
                     readOnly 
                 />
                 <label>Ime:</label>

@@ -1,7 +1,6 @@
 package progi_project.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,20 +25,22 @@ public class User {
     private String imeKor;
 
     @Column(name ="prezimekor",nullable = false)
-    private String prezimekor;
+    private String prezimeKor;
 
     @Column(name ="datumula",nullable = false)
-    private LocalDate datumUla = LocalDate.now();
-
-    // Constructor
-    public User(String email) {
-        this.email = email;
-    }
+    private LocalDate datumUla;
 
     //Temporary default constructor
     public User() { 
  
     } 
+
+    public User(String email, String imeKor, String prezimeKor) {
+        this.email = email;
+        this.imeKor = imeKor;
+        this.prezimeKor = prezimeKor;
+        this.datumUla = LocalDate.now();
+    }
 
 
     public int getId() {
@@ -66,12 +67,12 @@ public class User {
         this.imeKor = imeKor;
     }
 
-    public String getPrezimekor() {
-        return prezimekor;
+    public String getPrezimeKor() {
+        return prezimeKor;
     }
 
-    public void setPrezimekor(String prezimekor) {
-        this.prezimekor = prezimekor;
+    public void setPrezimeKor(String prezimekor) {
+        this.prezimeKor = prezimeKor;
     }
 
     public LocalDate getDatumUla() {

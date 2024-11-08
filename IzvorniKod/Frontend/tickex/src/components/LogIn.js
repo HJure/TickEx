@@ -1,7 +1,5 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc'; 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import '../style/login.css';
 
 function Login() {

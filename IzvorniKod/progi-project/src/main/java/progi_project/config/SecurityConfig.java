@@ -24,9 +24,8 @@ public class SecurityConfig {
     @SuppressWarnings({"removal"})
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors(withDefaults())
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error", "/login").permitAll()
-                                    .requestMatchers("/api/token").authenticated()
+        http.cors(withDefaults()).csrf().disable()
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error", "/api/users/register").permitAll()
                                     .anyRequest().authenticated()
                                     ).oauth2Login()
                                     .successHandler(customOAuth2SuccessHandler)
