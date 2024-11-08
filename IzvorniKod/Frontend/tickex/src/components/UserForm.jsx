@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react';
 import { useLocation, useNavigate} from 'react-router-dom';
-
+import { parseUrlParams } from '../utils/parseUrlParams';
 import '../style/UserForm.css'
 
 const UserForm = () => {
@@ -32,6 +32,8 @@ const UserForm = () => {
             body: JSON.stringify(user)
         }).then(() => {
             setTimeout(() => { 
+                const { accessToken } = parseUrlParams();
+                localStorage.setItem("access_token", accessToken);
                 console.log('new user added');
                 setIsPending(false);
                 navigate('/'); 

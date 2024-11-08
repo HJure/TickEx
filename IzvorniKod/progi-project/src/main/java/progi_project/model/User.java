@@ -71,7 +71,7 @@ public class User {
         return prezimeKor;
     }
 
-    public void setPrezimeKor(String prezimekor) {
+    public void setPrezimeKor(String prezimeKor) {
         this.prezimeKor = prezimeKor;
     }
 
