@@ -23,9 +23,9 @@ function UpcomingEvents(){
                         return(
                             <button key={ticket.id} className="moreInfoBtn">
                                 <div className="card">
-                                    <h1>{ticket.nazDog}</h1>
-                                    <h4>{ticket.datum}</h4>
-                                    <h2>{ticket.cijena}</h2>
+                                    <h1>{ticket.eventName}</h1>
+                                    <h4>{ticket.location}</h4>
+                                    <h2>{ticket.eventDate}</h2>
                                 </div>
                             </button>
                         )
