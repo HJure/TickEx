@@ -24,11 +24,11 @@ function Navbar() {
             </Link>
             <nav className="navigation-menu">
                 <ul>
-                    <li className="nav-link nav-link-line" ><Link className="link" to="/profile">Profile</Link></li>
+                    <li className="nav-link nav-link-line" ><Link className="link" to="/profile">Profil</Link></li>
                     <li className="nav-link nav-link-line" ><Link className="link" to="/signup">Sign up</Link></li>
                     <li className="nav-link nav-link-line">
                         <button className="abtbutton" onClick={handleAboutClick} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                            About
+                            O nama
                         </button>
                     </li>
                 </ul>

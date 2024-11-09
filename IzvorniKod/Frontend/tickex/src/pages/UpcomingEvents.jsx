@@ -1,21 +1,31 @@
 import React from 'react';
+import {useState, useEffect} from 'react';
+import useFetch from '../components/useFetch';
 import '../style/UpcomingEvents.css';
-import { Events } from '../Data';
 
 function UpcomingEvents(){
+    const [Tickets, setTickets] = useState([]);
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
+
+    useEffect(() => {
+        if (tickets){
+            setTickets(tickets);
+        }
+    }, [tickets]);
+
     return(
         <>
         <div className="events-container">
-            <h1>Upcoming events</h1>
+            <h1>Nadolazeći događaji</h1>
             <div className="cards-container-box">
                 {
-                    Events.map((event) => {
+                    Tickets.map((ticket) => {
                         return(
-                            <button key={event.id} className="moreInfoBtn">
+                            <button key={ticket.id} className="moreInfoBtn">
                                 <div className="card">
-                                    <h1>{event.title}</h1>
-                                    <h4>{event.description}</h4>
-                                    <h2>{event.price}</h2>
+                                    <h1>{ticket.nazDog}</h1>
+                                    <h4>{ticket.datum}</h4>
+                                    <h2>{ticket.cijena}</h2>
                                 </div>
                             </button>
                         )
