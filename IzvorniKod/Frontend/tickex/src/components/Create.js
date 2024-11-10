@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import '../style/Create.css';
-import { useEffect } from "react";
 
 const Create = () => {
     const [dogadaji, setDogadaji] = useState([]);
@@ -11,6 +10,7 @@ const Create = () => {
     const [seatNumber, setSeatNumber] = useState(''); 
     const [ticketType, setTicketType] = useState(''); 
     const [nazVrDog, setnazVrDog] = useState(''); 
+    const [eventTypeId, setEventTypeId] = useState(null); 
     const [price, setPrice] = useState(''); 
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
@@ -47,18 +47,16 @@ const Create = () => {
         fetchVrDog();
     }, []);
     
-    console.log("dogadaji", dogadaji);
-    
     const handleSubmit = (e) => {
         e.preventDefault();
     
         const ticket = { 
-            eventTypeId: { id: 1, nazVrDog }, 
+            eventTypeId: { id: eventTypeId },
             eventName, 
             location, 
             eventDate: new Date(eventDate).toISOString(), 
-            seatNumber: seatNumber ? parseInt(seatNumber) : null,
-            ticketType, 
+            seatNumber: seatNumber ? parseInt(seatNumber) : null, 
+            ticketType: ticketType || null, 
             price: parseInt(price), 
             owner: { 
                 id: localStorage.getItem("userID"), 
@@ -69,7 +67,7 @@ const Create = () => {
             },
             isExchangeAvailable
         };
-        
+    
         setIsPending(true);
     
         fetch("http://localhost:8080/api/tickets", {
@@ -93,6 +91,13 @@ const Create = () => {
         });
     };
     
+    const handleEventTypeChange = (e) => {
+        const selectedNazVrDog = e.target.value;
+        setnazVrDog(selectedNazVrDog);
+        
+        const selectedDogadaj = dogadaji.find(dogadaj => dogadaj.nazVrDog === selectedNazVrDog);
+        setEventTypeId(selectedDogadaj ? selectedDogadaj.id : null);
+    };
     
     return ( 
         <div className="create">
@@ -109,7 +114,7 @@ const Create = () => {
                 <label>Vrsta događaja:</label>
                 <select
                     value={nazVrDog}
-                    onChange={(e) => setnazVrDog(e.target.value)}
+                    onChange={handleEventTypeChange} 
                 >
                     <option value="">Odaberite vrstu događaja</option>
                     {dogadaji.map((dogadaj) => (
@@ -151,6 +156,7 @@ const Create = () => {
 
                 <label>Cijena (EUR):</label>
                 <input 
+                    required
                     type="text"  
                     value={price} 
                     onChange={(e) => setPrice(e.target.value)}
@@ -164,4 +170,3 @@ const Create = () => {
 }
 
 export default Create;
-

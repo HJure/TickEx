@@ -19,33 +19,27 @@ const TicketDetails = ({ url }) => {
 
     const handleDelete = () => {
         const deleteUrl = `${url}/${id}`.replace(/([^:]\/)\/+/g, "$1"); 
-
+        const access_token = localStorage.getItem("access_token"); 
+    
         fetch(deleteUrl, {
-            method: 'DELETE'
-        }).then(() => {
-            const trash = { 
-                nazDog: ticket.eventName, 
-                mjesto: ticket.location,
-                datum: ticket.eventDate,
-                brSj: ticket.seatNumber,
-                vrsDog: ticket.eventTypeId.nazVrDog, 
-                vrsUla: ticket.ticketType,
-                status: ticket.exchangeAvailable ? "u prodaji" : "prodano", 
-                cijena: ticket.price,
-                idProdavac: ticket.owner.id, 
-                idDog: ticket.eventTypeId.id, 
-                id: ticket.id 
-            };
-
-            fetch('http://localhost:5000/trash', {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(trash)
-            }).then(() => {
-                navigate('/profile');
-            });
+            method: 'DELETE',
+            headers: { 
+                "Authorization": `Bearer ${access_token}`
+            }
+        })
+        .then(() => {
+            console.log('Ticket deleted');
+            setIsDeleting(true); 
+            setTimeout(() => {
+                navigate('/profile'); 
+            }, 1500);
+        })
+        .catch(error => {
+            console.error("Greška prilikom brisanja karte:", error);
+            setIsDeleting(false);
         });
     };
+    
 
     return (
         <div className="ticket-details">
@@ -59,12 +53,12 @@ const TicketDetails = ({ url }) => {
                         <br/>
                         <p>
                             <span>Mjesto:</span> <span className="answer">{ticket.location}</span> |
-                            <span> Datum:</span> <span className="answer">{ticket.eventDate}</span> |
-                            <span> Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType}</span> |
-                            <span> Status:</span> <span className="answer">{ticket.exchangeAvailable ? "prodano" : "u prodaji"}</span> |
+                            <span> Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span> |
+                            <span> Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType !== null ? ticket.ticketType : "-"}</span> |
+                            <span> Status:</span> <span className="answer">{ticket.exchangeAvailable ? "Prodano" : "U prodaji"}</span> |
                             <span> Cijena:</span> <span className="answer">{ticket.price} €</span> |
                             <span> Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span> |
-                            <span> ID oglasa:</span> <span className="answer">{ticket.id}</span>
+                            <span> Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
                         </p>
                         <br/>
                         <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
