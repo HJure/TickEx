@@ -36,6 +36,7 @@ function UpcomingEvents() {
                                     <div className="card">
                                         <h1>{ticket.eventName}</h1>
                                         <h4>{ticket.location}</h4>
+                                        <h4>{ticket.eventTypeId.nazVrDog}</h4>
                                         <h2>{formatDate(ticket.eventDate)}</h2>
                                     </div>
                                 </button>
