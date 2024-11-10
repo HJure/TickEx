@@ -39,7 +39,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         if (userService.emailExists(email)) {
             // If email exists in db then users account exists, redirect to frontend homepage with the access token
-            response.sendRedirect("http://localhost:3000/?access_token=" + accessToken);
+            response.sendRedirect("http://localhost:3000/profile?access_token=" + accessToken);
         } else {
             // Else user does not exist, redirect to frontend registration page
             response.sendRedirect("http://localhost:3000/register?email=" + email + "&access_token=" + accessToken);

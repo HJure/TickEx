@@ -12,7 +12,16 @@ function Profile() {
     const [email, setEmail] = useState(null);
     const [userID, setUserID] = useState(null);
     const navigate = useNavigate();
-    const access_token = localStorage.getItem("access_token");
+
+    // Check localStorage or URL for access_token
+    let access_token = localStorage.getItem("access_token");
+    if (!access_token) {
+        const urlParams = new URLSearchParams(window.location.search);
+        access_token = urlParams.get("access_token");
+        if (access_token) {
+            localStorage.setItem("access_token", access_token); // Store token in localStorage for future use
+        }
+    }
 
     useEffect(() => {
         if (access_token) {
@@ -102,7 +111,7 @@ function Profile() {
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
-    {/*const { data: trashes, isPending: isTrashesPending, error: trashesError } = useFetch("http://localhost:5000/trash")*/}
+
     return profile ? (
         <div className='profilediv'>
             <div className="profile-container">
@@ -121,13 +130,6 @@ function Profile() {
                         {isTicketsPending && <div className="loading">Učitavam karte...</div>}
                         {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
                     </div>
-                    {/*
-                    <div className="trash">
-                        {trashesError && <div className="error">{trashesError}</div>}
-                        {isTrashesPending && <div className="loading">Učitavam otpad...</div>}
-                        {trashes && <Trash trashes={trashes} title="Moje smeće:" />}
-                    </div>
-                    */}
                 </div>
             </div>
             <br />
