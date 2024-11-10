@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useFetch from '../components/useFetch';
 import '../style/UpcomingEvents.css';
+import { Link } from 'react-router-dom';
 
 function UpcomingEvents() {
     const [Tickets, setTickets] = useState([]);
@@ -32,14 +33,14 @@ function UpcomingEvents() {
                     {
                         Tickets.map((ticket) => {
                             return (
-                                <button key={ticket.id} className="moreInfoBtn">
+                                <Link to={ `/tickets/${ticket.id}` } className='moreInfo'>
                                     <div className="card">
                                         <h1>{ticket.eventName}</h1>
                                         <h4>{ticket.location}</h4>
                                         <h4>{ticket.eventTypeId.nazVrDog}</h4>
                                         <h2>{formatDate(ticket.eventDate)}</h2>
                                     </div>
-                                </button>
+                                </Link>
                             )
                         })
                     }

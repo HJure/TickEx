@@ -24,6 +24,7 @@
     border-radius: 10px;
     background-color: #fff;
     overflow: hidden;
+    text-decoration: none;
 
 }
 
@@ -40,16 +41,17 @@
     font-size: 1.5rem;
     margin: 10px;
 }
-.moreInfoBtn{
+.moreInfo{
     background-color: #fff;
+    text-decoration: none;
 }
-.moreInfoBtn:hover{
+.moreInfo:hover{
     background: transparent;
     transform: scaleY(1.02);
     transform-origin: center;
 
 }
-.moreInfoBtn:hover h1{
+.moreInfo:hover h1{
     transform: scaleY(0.98);
 
 }
