@@ -1,18 +1,15 @@
 package progi_project.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import progi_project.model.Ticket;
-import progi_project.model.User;
 import progi_project.model.Vrsta_Dogadaja;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
+public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     // Find tickets by event name
     //@Query("SELECT t FROM Ticket t WHERE t.nazDog = :eventName")
@@ -48,7 +45,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     // Find tickets by id
     //@Query("SELECT u FROM Ticket t WHERE t.id = :id")
-    Optional<Ticket> findById(int id);
+    Optional<Ticket> findById(long id);
 
 
 }
