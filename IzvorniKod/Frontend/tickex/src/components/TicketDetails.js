@@ -24,16 +24,16 @@ const TicketDetails = ({ url }) => {
             method: 'DELETE'
         }).then(() => {
             const trash = { 
-                nazDog: ticket.nazDog, 
-                mjesto: ticket.mjesto, 
-                datum: ticket.datum, 
-                brSj: ticket.brSj,
-                vrsDog: ticket.vrsDog,
-                vrsUla: ticket.vrsUla,
-                status: ticket.status,
-                cijena: ticket.cijena,
-                idProdavac: ticket.idProdavac,
-                idDog: ticket.idDog, 
+                nazDog: ticket.eventName, 
+                mjesto: ticket.location,
+                datum: ticket.eventDate,
+                brSj: ticket.seatNumber,
+                vrsDog: ticket.eventTypeId.nazVrDog, 
+                vrsUla: ticket.ticketType,
+                status: ticket.exchangeAvailable ? "u prodaji" : "prodano", 
+                cijena: ticket.price,
+                idProdavac: ticket.owner.id, 
+                idDog: ticket.eventTypeId.id, 
                 id: ticket.id 
             };
 
@@ -54,20 +54,20 @@ const TicketDetails = ({ url }) => {
             {error && <div>Error: {error}</div>}
             {ticket && (
                 <div className="ticket-content">
-                    <h2>{ticket.nazDog}</h2>
+                    <h2>{ticket.eventName}</h2> 
                     <div className="ticket-info">
                         <br/>
                         <p>
                             <span>Mjesto:</span> <span className="answer">{ticket.location}</span> |
                             <span> Datum:</span> <span className="answer">{ticket.eventDate}</span> |
                             <span> Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType}</span> |
-                            <span> Status:</span> <span className="answer">{ticket.isExchangeAvailable ? "u prodaji" : "prodano"}</span> |
+                            <span> Status:</span> <span className="answer">{ticket.exchangeAvailable ? "prodano" : "u prodaji"}</span> |
                             <span> Cijena:</span> <span className="answer">{ticket.price} €</span> |
-                            <span> ID događaja:</span> <span className="answer">{ticket.eventTypeId}</span> |
+                            <span> Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span> |
                             <span> ID oglasa:</span> <span className="answer">{ticket.id}</span>
                         </p>
                         <br/>
-                        <p className="ticket-posted-by">Objavio: {ticket.idProdavac}</p>
+                        <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
                     </div>
                     {ima && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
                 </div>

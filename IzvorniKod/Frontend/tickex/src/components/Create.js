@@ -1,44 +1,69 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authUserInfo } from '../utils/authUserInfo';
 import '../style/Create.css';
 
 const Create = () => {
-    const [nazDog, setnazDog] = useState('');
-    const [mjesto, setMjesto] = useState('');
-    const [datum, setDatum] = useState('');
-    const [brSj, setBrSj] = useState('');
-    const [vrsUla, setVrsUla] = useState('');
-    const [vrsDog, setVrsDog] = useState('');
-    const [cijena, setCijena] = useState('');
+    const [eventName, setEventName] = useState(''); 
+    const [location, setLocation] = useState(''); 
+    const [eventDate, setEventDate] = useState('');
+    const [seatNumber, setSeatNumber] = useState(''); 
+    const [ticketType, setTicketType] = useState(''); 
+    const [nazVrDog, setnazVrDog] = useState(''); 
+    const [price, setPrice] = useState(''); 
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+      
         const access_token = localStorage.getItem("access_token");
-        const email = authUserInfo();
-        
-        const idProdavac = fetch(`http://localhost:8080/api/users/getId?access_token=${access_token}`, {
-            method: 'POST',
-            body: email
-        });
-        const ticket = { nazDog, mjesto, datum, brSj, vrsDog, status: false, cijena, idProdavac };
-        
+        const userId = localStorage.getItem("profile_id");
+      
+        if (!userId) {
+            console.error("User ID nije pronađen u localStorage");
+            return;
+        }
+    
+        const ticket = { 
+            id: 6,
+            eventTypeId: { id: 7, nazVrDog },
+            eventName, 
+            location, 
+            eventDate, 
+            seatNumber, 
+            ticketType, 
+            price, 
+            isExchangeAvailable: false, 
+            owner: { 
+                id: userId, 
+                email: "laura.barisic.hr@gmail.com", 
+                imeKor: "Laura", 
+                prezimeKor: "Barišić", 
+                datumUla: "2024-11-08"
+            },
+            exchangeAvailable: false
+        };
+    
         setIsPending(true);
-
+    
         fetch(`http://localhost:8080/api/tickets?access_token=${access_token}`, {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json" },
             body: JSON.stringify(ticket)
         }).then(() => {
             setTimeout(() => { 
-                console.log('new ticket added');
+                console.log('New ticket added');
                 setIsPending(false);
                 navigate('/profile'); 
             }, 1500);
+        }).catch(error => {
+            console.error("Greška prilikom dodavanja karte:", error);
+            setIsPending(false);
         });
     };
+    
+    
 
     return ( 
         <div className="create">
@@ -48,41 +73,41 @@ const Create = () => {
                 <input 
                     type="text" 
                     required 
-                    value={nazDog} 
-                    onChange={(e) => setnazDog(e.target.value)}
+                    value={eventName} 
+                    onChange={(e) => setEventName(e.target.value)}
                 />
 
                 <label>Mjesto:</label>
                 <input 
                     type="text" 
                     required 
-                    value={mjesto} 
-                    onChange={(e) => setMjesto(e.target.value)}
+                    value={location} 
+                    onChange={(e) => setLocation(e.target.value)}
                 />
 
                 <label>Datum:</label>
                 <input 
                     type="date" 
                     required 
-                    value={datum} 
-                    onChange={(e) => setDatum(e.target.value)}
+                    value={eventDate} 
+                    onChange={(e) => setEventDate(e.target.value)}
                 />
 
                 <label>Broj sjedala:</label>
                 <input 
                     type="text"  
-                    value={brSj} 
-                    onChange={(e) => setBrSj(e.target.value)}
+                    value={seatNumber} 
+                    onChange={(e) => setSeatNumber(e.target.value)}
                 />
 
                 <label>Vrsta događaja:</label>
                 <select
-                    value={vrsDog}
-                    onChange={(e) => setVrsDog(e.target.value)}
+                    value={nazVrDog}
+                    onChange={(e) => setnazVrDog(e.target.value)}
                 >
-                    <option value="Glazba">glazba</option>
+                    <option value="Glazba">glazba</option> 
                     <option value="Nogomet">nogomet</option>
-                    <option value="Kazaliste">kazalište</option>
+                    <option value="Kazalište">kazalište</option>
                     <option value="Kino">kino</option>
                     <option value="Tenis">tenis</option>
                     <option value="Muzej">muzej</option>
@@ -90,8 +115,8 @@ const Create = () => {
 
                 <label>Vrsta ulaznice:</label>
                 <select
-                    value={vrsUla}
-                    onChange={(e) => setVrsUla(e.target.value)}
+                    value={ticketType}
+                    onChange={(e) => setTicketType(e.target.value)}
                 >
                     <option value="Normal">normal</option>
                     <option value="VIP">VIP</option>
@@ -101,12 +126,12 @@ const Create = () => {
                 <label>Cijena (EUR):</label>
                 <input 
                     type="text"  
-                    value={cijena} 
-                    onChange={(e) => setCijena(e.target.value)}
+                    value={price} 
+                    onChange={(e) => setPrice(e.target.value)}
                 />
 
-                {!isPending && <button>Add ticket</button>}
-                {isPending && <button disabled>Adding ticket...</button>}
+                {!isPending && <button>Dodaj ulaznicu</button>}
+                {isPending && <button disabled>Dodavanje ulaznice...</button>}
             </form>
         </div>
     );
