@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import useFetch from './useFetch';
 import axios from 'axios'; 
+import Trash from './Trash';
 import TicketList from './TicketList'; 
 import '../style/profile.css';
 import { Link } from "react-router-dom";
@@ -101,31 +102,40 @@ function Profile() {
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
-
+    {/*const { data: trashes, isPending: isTrashesPending, error: trashesError } = useFetch("http://localhost:5000/trash")*/}
     return profile ? (
         <div className='profilediv'>
             <div className="profile-container">
                 <img src={profile.picture} alt="user" className="profile-image" />
-                <h3 className="profile-heading">User Logged In</h3>
-                <p className="profile-info">Name: {profile.name}</p>
-                <p className="profile-info">Email Address: {profile.email}</p>
-                <button onClick={logOut} className="logout-button">Log out</button>
+                <h3 className="profile-heading">Korisnik prijavljen</h3>
+                <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
+                <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
+                <button onClick={logOut} className="logout-button">Odjavi se</button>
             </div>
             <div>
                 {ticketsError && <div className='error'>{ticketsError}</div>}
-                {isTicketsPending && <div className='loading'>Loading tickets...</div>}
+                {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
                 <div className="my_offers_trash_container">
                     <div className="my_offers">
-                        {tickets && <TicketList tickets={filteredTickets} title="My offers:" />}
+                        {ticketsError && <div className="error">{ticketsError}</div>}
+                        {isTicketsPending && <div className="loading">Učitavam karte...</div>}
+                        {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
                     </div>
+                    {/*
+                    <div className="trash">
+                        {trashesError && <div className="error">{trashesError}</div>}
+                        {isTrashesPending && <div className="loading">Učitavam otpad...</div>}
+                        {trashes && <Trash trashes={trashes} title="Moje smeće:" />}
+                    </div>
+                    */}
                 </div>
             </div>
             <br />
             <br />
-            <Link to="/create" className="newBlog">Add New Blog</Link>
+            <Link to="/create" className="newBlog">Dodaj novu ulaznicu</Link>
         </div>
     ) : (
-        <p className="loading-text">Loading profile...</p>
+        <p className="loading-text">Učitavam profil...</p>
     );
 }
 
