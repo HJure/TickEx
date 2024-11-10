@@ -9,9 +9,10 @@ function About(){
                 <div id="about-content-left">
                     <h1>O nama</h1>
                     <p className ="about-p">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sunt voluptas expedita sint harum atque aut, architecto blanditiis deleniti porro cumque ipsam incidunt accusamus, adipisci commodi eveniet. Consequuntur doloremque corporis nemo fugit, ipsa molestiae laborum?
+                        TickEx je aplikacija za brzu i pouzdanu razmjenu te kupnju karata. Omogućuje razmjenu karata s ljudima iz cijelog svijeta za isti ili sasvim drugi događaj. Koncerti, utakmice, festivali i mnogo drugo nikad vam nisu bili dostupniji!
+                        Upoznajte ljude iz cijelog svijeta, iskusite koncert svojih snova baš kako ste zamišljali na intuitivan i siguran način.
                     </p>
-                    <button className="aboutBtn">Learn more</button>
+                    <button className="aboutBtn">Saznaj više</button>
                 </div>
             </div>
         </div>

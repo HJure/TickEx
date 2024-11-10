@@ -4,19 +4,12 @@ import '../style/UpcomingEvents.css';
 
 function UpcomingEvents() {
     const [Tickets, setTickets] = useState([]);
-    useEffect(() => {fetch('/api/tickets', {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" },
-    }).then(response => response.json())
-    .then(data => {
-        if (Array.isArray(data)) {
-            setTickets(data);
-        } else {
-            console.error("Expected an array but received:", data);
-        }
-    })
-    .catch(error => console.error("Error fetching tickets:", error));
-    }, []);
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
+
+    useEffect(() => {if (tickets) {
+        setTickets(tickets);
+    }
+}, [tickets]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);

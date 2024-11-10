@@ -39,33 +39,33 @@ function Profile() {
         <div className='profilediv'>
             <div className="profile-container">
                 <img src={profile.picture} alt="user" className="profile-image" />
-                <h3 className="profile-heading">User Logged In</h3>
-                <p className="profile-info">Name: {profile.name}</p>
-                <p className="profile-info">Email Address: {profile.email}</p>
-                <button onClick={logOut} className="logout-button">Log out</button>
+                <h3 className="profile-heading">Korisnik prijavljen</h3>
+                <p className="profile-info">Ime: {profile.name}</p>
+                <p className="profile-info">Email Adresa: {profile.email}</p>
+                <button onClick={logOut} className="logout-button">Odjavi se</button>
             </div>
             <div>
                 {ticketsError && <div className='error'>{ticketsError}</div>}
-                {isTicketsPending && <div className='loading'>Loading tickets...</div>}
+                {isTicketsPending && <div className='loading'>Učitavam karte...</div>}
                 <div className="my_offers_trash_container">
                     <div className="my_offers">
                         {ticketsError && <div className="error">{ticketsError}</div>}
-                        {isTicketsPending && <div className="loading">Loading tickets...</div>}
+                        {isTicketsPending && <div className="loading">Učitavam karte...</div>}
                         {tickets && <TicketList tickets={tickets} title="My offers:" />}
                     </div>
                     <div className="trash">
                         {trashesError && <div className="error">{trashesError}</div>}
-                        {isTrashesPending && <div className="loading">Loading trash...</div>}
+                        {isTrashesPending && <div className="loading">Učitavam otpad...</div>}
                         {trashes && <Trash trashes={trashes} title="My trash:" />}
                     </div>
                 </div>
             </div>
             <br/>
             <br />
-            <Link to="/create" className="newBlog">Add New Blog</Link>
+            <Link to="/create" className="newBlog">Dodaj novi blog</Link>
         </div>
     ) : (
-        <p className="loading-text">Loading profile...</p>
+        <p className="loading-text">Učitavam profil...</p>
     );
 }
 

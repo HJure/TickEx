@@ -49,9 +49,9 @@ const TicketDetails = ({ url }) => {
 
     return (
         <div className="ticket-details">
-            {isPending && <div>Loading...</div>}
-            {isDeleting && <div>Deleting ticket...</div>}
-            {error && <div>Error: {error}</div>}
+            {isPending && <div>Učitavam...</div>}
+            {isDeleting && <div>Brišem kartu...</div>}
+            {error && <div>Greška: {error}</div>}
             {ticket && (
                 <div className="ticket-content">
                     <h2>{ticket.eventName}</h2> 

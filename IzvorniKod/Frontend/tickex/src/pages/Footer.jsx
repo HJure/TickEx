@@ -15,7 +15,10 @@ function Footer(){
                     </div>
                     <div className="footer-text">
                         <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem pariatur veniam saepe animi, praesentium quasi accusamus omnis aut velit nisi suscipit a excepturi sit voluptates voluptatum hic voluptas eaque officiis aspernatur! Voluptate, harum dolor.
+                            TickEx - iskusite život kako spada.
+                            </p>
+                            <p>
+                            Pratite nas na društvenim mrežama!
                         </p>
                     </div>
                     <div className="footer-socials">
@@ -28,18 +31,18 @@ function Footer(){
 
                <div className="footer-content-boxes">
                     <div className="footer-content-boxes-header">
-                        <h3>Useful Links</h3>
+                        <h3>Korisne informacije</h3>
                     </div>
                     <div className="useful-links-container">
                         <ul>
-                            <li><a href="/">Services</a></li>
+                            <li><a href="/">Usluge</a></li>
                             <li><a href="/">Portfolio</a></li>
-                            <li><a href="/">Contact</a></li>
+                            <li><a href="/">Kontakt</a></li>
                         </ul>
                         <ul>
-                            <li><a href="/">Expert Team</a></li>
-                            <li><a href="/">Contact Us</a></li>
-                            <li><a href="/">Latest News</a></li>
+                            <li><a href="/">Naš tim</a></li>
+                            <li><a href="/">Kontaktirajte nas</a></li>
+                            <li><a href="/">Novnosti</a></li>
                         </ul>
                     </div>
                </div>

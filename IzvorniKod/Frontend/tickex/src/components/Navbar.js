@@ -25,7 +25,7 @@ function Navbar() {
             <nav className="navigation-menu">
                 <ul>
                     <li className="nav-link nav-link-line" ><Link className="link" to="/profile">Profil</Link></li>
-                    <li className="nav-link nav-link-line" ><Link className="link" to="/signup">Sign up</Link></li>
+                    <li className="nav-link nav-link-line" ><Link className="link" to="/signup">Prijavi se</Link></li>
                     <li className="nav-link nav-link-line">
                         <button className="abtbutton" onClick={handleAboutClick} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
                             O nama
