@@ -41,7 +41,7 @@ const UserForm = () => {
 
                 console.log('new user added');
                 setIsPending(false);
-                navigate('/'); 
+                navigate('/profile'); 
             }, 1500);
         })
         .catch((err) => {

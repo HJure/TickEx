@@ -31,18 +31,16 @@ function UpcomingEvents() {
                 <h1>Nadolazeći događaji</h1>
                 <div className="cards-container-box">
                     {
-                        Tickets.map((ticket) => {
-                            return (
-                                <Link to={ `/tickets/${ticket.id}` } className='moreInfo'>
-                                    <div className="card">
-                                        <h1>{ticket.eventName}</h1>
-                                        <h4>{ticket.location}</h4>
-                                        <h4>{ticket.eventTypeId.nazVrDog}</h4>
-                                        <h2>{formatDate(ticket.eventDate)}</h2>
-                                    </div>
-                                </Link>
-                            )
-                        })
+                        Tickets.map((ticket) => (
+                            <Link to={`/tickets/${ticket.id}`} className='moreInfo' key={ticket.id}>
+                                <div className="card">
+                                    <h1>{ticket.eventName}</h1>
+                                    <h4>{ticket.location}</h4>
+                                    <h4>{ticket.eventTypeId.nazVrDog}</h4>
+                                    <h2>{formatDate(ticket.eventDate)}</h2>
+                                </div>
+                            </Link>
+                        ))
                     }
                 </div>
             </div>
