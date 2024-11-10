@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import progi_project.model.User;
@@ -35,10 +36,10 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/getId")
-    public int getUserById(@RequestBody String email) {
+    @GetMapping("/getId")
+    public int getUserById(@RequestParam("email") String email) {
         return userService.getId(email);
-    }
+    }    
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -57,5 +58,6 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
 }
 

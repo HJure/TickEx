@@ -2,8 +2,6 @@ package progi_project.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "vrsta_dogadaja")
 public class Vrsta_Dogadaja {

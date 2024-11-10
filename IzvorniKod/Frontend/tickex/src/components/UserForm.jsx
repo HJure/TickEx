@@ -1,8 +1,7 @@
-import React from 'react'
-import {useState, useEffect} from 'react';
-import { useLocation, useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { parseUrlParams } from '../utils/parseUrlParams';
-import '../style/UserForm.css'
+import '../style/UserForm.css';
 
 const UserForm = () => {
     const [imeKor, setImeKor] = useState('');
@@ -17,38 +16,45 @@ const UserForm = () => {
         const emailFromUrl = params.get("email");
 
         setEmail(emailFromUrl);
-
     }, [location.search]);
 
     const submitFunction = (e) => {
         e.preventDefault();
         const datumUla = new Date().toISOString().split('T')[0];
-        const user = {email, imeKor, prezimeKor, datumUla};
+        const user = { email, imeKor, prezimeKor, datumUla };
         setIsPending(true);
 
         fetch('http://localhost:8080/api/users/register', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
-        }).then(() => {
+        })
+        .then(() => {
             setTimeout(() => { 
+    
                 const { accessToken } = parseUrlParams();
                 localStorage.setItem("access_token", accessToken);
+                localStorage.setItem("user_email", email);
+                localStorage.setItem("user_first_name", imeKor);
+                localStorage.setItem("user_last_name", prezimeKor);
+                localStorage.setItem("user_registration_date", datumUla);
+
                 console.log('new user added');
                 setIsPending(false);
                 navigate('/'); 
             }, 1500);
-        }).catch((err) => {
+        })
+        .catch((err) => {
             console.log(err);
-            setTimeout(1500);
+            setIsPending(false);
             navigate('/signup');
         });
     };
 
-  return (
-    <div className = "userInfo">
-        <h2>Informacije o korisniku</h2>
-        <form onSubmit={submitFunction}>
+    return (
+        <div className="userInfo">
+            <h2>Informacije o korisniku</h2>
+            <form onSubmit={submitFunction}>
                 <label>Email:</label>
                 <input 
                     type="email" 
@@ -56,24 +62,24 @@ const UserForm = () => {
                     readOnly 
                 />
                 <label>Ime:</label>
-                    <input 
-                        type="text" 
-                        required 
-                        value={imeKor} 
-                        onChange={(e) => setImeKor(e.target.value)}
-                    />
-
+                <input 
+                    type="text" 
+                    required 
+                    value={imeKor} 
+                    onChange={(e) => setImeKor(e.target.value)}
+                />
                 <label>Prezime:</label>
-                    <input 
-                        type="text" 
-                        required 
-                        value={prezimeKor} 
-                        onChange={(e) => setPrezimeKor(e.target.value)}
+                <input 
+                    type="text" 
+                    required 
+                    value={prezimeKor} 
+                    onChange={(e) => setPrezimeKor(e.target.value)}
                 />
                 {!isPending && <button>Submit</button>}
                 {isPending && <button disabled>Dodavanje korisnika...</button>}
-        </form>
-    </div>
-  )
+            </form>
+        </div>
+    );
 }
+
 export default UserForm;

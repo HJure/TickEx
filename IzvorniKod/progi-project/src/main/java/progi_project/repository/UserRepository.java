@@ -8,17 +8,11 @@ import org.springframework.stereotype.Repository;
 import progi_project.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-
-    // Find user by email
+    // Find user by email, Spring Data JPA will automatically implement this based on the method name
     Optional<User> findByEmail(String email);
 
-    // Find users by id
-    //@Query("SELECT u FROM User u WHERE u.id = :id")
-    //Optional<User> findById(int id);
-
-    // Find if email exists in database
+    // Check if email exists in the database
     boolean existsByEmail(String email);
 }
-

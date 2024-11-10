@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../style/Create.css';
+import { useEffect } from "react";
 
 const Create = () => {
+    const [dogadaji, setDogadaji] = useState([]);
     const [eventName, setEventName] = useState(''); 
     const [location, setLocation] = useState(''); 
     const [eventDate, setEventDate] = useState('');
@@ -13,58 +15,85 @@ const Create = () => {
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
 
+    const email = localStorage.getItem("user_email");
+    const access_token = localStorage.getItem("access_token");
+    const imeKor = localStorage.getItem("user_first_name");
+    const prezimeKor = localStorage.getItem("user_last_name");
+    const datumUla = localStorage.getItem("user_registration_date");
+    const isExchangeAvailable = false;
+        
+    useEffect(() => {
+        const fetchVrDog = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/vrsta-dogadaja`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Error while fetching VrDog data');
+                }
+        
+                const data = await response.json();
+                setDogadaji(data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchVrDog();
+    }, []);
+    
+    console.log("dogadaji", dogadaji);
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-      
-        const access_token = localStorage.getItem("access_token");
-        const userId = localStorage.getItem("profile_id");
-      
-        if (!userId) {
-            console.error("User ID nije pronađen u localStorage");
-            return;
-        }
     
         const ticket = { 
-            id: 6,
-            eventTypeId: { id: 7, nazVrDog },
+            eventTypeId: { id: 1, nazVrDog }, 
             eventName, 
             location, 
-            eventDate, 
-            seatNumber, 
+            eventDate: new Date(eventDate).toISOString(), 
+            seatNumber: seatNumber ? parseInt(seatNumber) : null,
             ticketType, 
-            price, 
-            isExchangeAvailable: false, 
+            price: parseInt(price), 
             owner: { 
-                id: userId, 
-                email: "laura.barisic.hr@gmail.com", 
-                imeKor: "Laura", 
-                prezimeKor: "Barišić", 
-                datumUla: "2024-11-08"
+                id: localStorage.getItem("userID"), 
+                email, 
+                imeKor, 
+                prezimeKor, 
+                datumUla
             },
-            exchangeAvailable: false
+            isExchangeAvailable
         };
-    
+        
         setIsPending(true);
     
-        fetch(`http://localhost:8080/api/tickets?access_token=${access_token}`, {
+        fetch("http://localhost:8080/api/tickets", {
             method: 'POST',
             headers: { 
-                "Content-Type": "application/json" },
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${access_token}`
+            },
             body: JSON.stringify(ticket)
-        }).then(() => {
+        })
+        .then(() => {
             setTimeout(() => { 
                 console.log('New ticket added');
                 setIsPending(false);
                 navigate('/profile'); 
             }, 1500);
-        }).catch(error => {
+        })
+        .catch(error => {
             console.error("Greška prilikom dodavanja karte:", error);
             setIsPending(false);
         });
     };
     
     
-
     return ( 
         <div className="create">
             <h2>Dodaj novu ulaznicu</h2>
@@ -76,6 +105,19 @@ const Create = () => {
                     value={eventName} 
                     onChange={(e) => setEventName(e.target.value)}
                 />
+
+                <label>Vrsta događaja:</label>
+                <select
+                    value={nazVrDog}
+                    onChange={(e) => setnazVrDog(e.target.value)}
+                >
+                    <option value="">Odaberite vrstu događaja</option>
+                    {dogadaji.map((dogadaj) => (
+                        <option key={dogadaj.id} value={dogadaj.nazVrDog}>
+                            {dogadaj.nazVrDog}
+                        </option>
+                    ))}
+                </select>
 
                 <label>Mjesto:</label>
                 <input 
@@ -93,35 +135,19 @@ const Create = () => {
                     onChange={(e) => setEventDate(e.target.value)}
                 />
 
+                <label>Vrsta ulaznice:</label>
+                <input 
+                    type="text"  
+                    value={ticketType} 
+                    onChange={(e) => setTicketType(e.target.value)}
+                />
+
                 <label>Broj sjedala:</label>
                 <input 
                     type="text"  
                     value={seatNumber} 
                     onChange={(e) => setSeatNumber(e.target.value)}
                 />
-
-                <label>Vrsta događaja:</label>
-                <select
-                    value={nazVrDog}
-                    onChange={(e) => setnazVrDog(e.target.value)}
-                >
-                    <option value="Glazba">glazba</option> 
-                    <option value="Nogomet">nogomet</option>
-                    <option value="Kazalište">kazalište</option>
-                    <option value="Kino">kino</option>
-                    <option value="Tenis">tenis</option>
-                    <option value="Muzej">muzej</option>
-                </select>
-
-                <label>Vrsta ulaznice:</label>
-                <select
-                    value={ticketType}
-                    onChange={(e) => setTicketType(e.target.value)}
-                >
-                    <option value="Normal">normal</option>
-                    <option value="VIP">VIP</option>
-                    <option value="Fan Pit">Fan Pit</option>
-                </select>
 
                 <label>Cijena (EUR):</label>
                 <input 
@@ -138,3 +164,4 @@ const Create = () => {
 }
 
 export default Create;
+

@@ -21,8 +21,9 @@ public class UserService {
     }
 
     public Optional<User> findById(int id) {
-        return userRepository.findById((long) id);
+        return userRepository.findById(id); // Provjeri je li ovo ispravno postavljeno
     }
+    
 
     /*public User findByOauthId(String oauthId) {
         return userRepository.findByOauthId(oauthId);
@@ -45,9 +46,9 @@ public class UserService {
     }
 
     public int getId(String email) {
-    return userRepository.findByEmail(email)
-            .map(User::getId)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-}
+        return userRepository.findByEmail(email)
+                .map(User::getId)  
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));  // If user is not found, throws an exception
+    }
 }
 
