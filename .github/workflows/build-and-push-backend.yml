@@ -47,7 +47,7 @@ jobs:
         with:
           context: ./IzvorniKod/progi-project
           push: true
-          tags: ghcr.io/${{ github.repository }}/backend:latest
+          tags: ghcr.io/hjure/tickex/backend:latest
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}
