@@ -23,6 +23,18 @@ function Profile() {
         }
     }
 
+    const logOut = useCallback(() => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("userID");
+        localStorage.removeItem("user_email");
+        localStorage.removeItem("user_first_name");
+        localStorage.removeItem("user_last_name");
+        localStorage.removeItem("user_registration_date");
+
+        setProfile(null);
+        navigate('/signup');
+    }, [navigate]);
+
     useEffect(() => {
         if (access_token) {
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`, {
@@ -112,18 +124,7 @@ function Profile() {
         return () => clearTimeout(timer); 
     }, [profile]);
 
-    const logOut = () => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("userID");
-        localStorage.removeItem("user_email");
-        localStorage.removeItem("user_first_name");
-        localStorage.removeItem("user_last_name");
-        localStorage.removeItem("user_registration_date");
-
-        setProfile(null);
-        navigate('/signup');
-    };
-
+    
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
