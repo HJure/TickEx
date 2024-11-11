@@ -17,9 +17,9 @@ const SearchBar = ({ setResult }) => {
   const fetchData = (value) => {
     if (data) {
       const results = data.filter((item) =>
-        (item.eventName?.toLowerCase().includes(value.toLowerCase()) ||
+        ((item.eventName?.toLowerCase().includes(value.toLowerCase()) ||
         item.ticketType?.toLowerCase().includes(value.toLowerCase()) ||
-        item.location?.toLowerCase().includes(value.toLowerCase()) && item.owner.id !== ID)
+        item.location?.toLowerCase().includes(value.toLowerCase())) && item.owner.id !== ID)
       );
       setResult(results);
       console.log(results);

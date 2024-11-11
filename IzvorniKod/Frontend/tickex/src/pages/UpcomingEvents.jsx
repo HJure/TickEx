@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 function UpcomingEvents() {
     const [Tickets, setTickets] = useState([]);
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
+    //const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
+    const { data: tickets} = useFetch("http://localhost:8080/api/tickets");
     
     useEffect(() => {
         if (tickets) {

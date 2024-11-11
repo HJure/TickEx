@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 import axios from 'axios';
-import Trash from './Trash';
+//import Trash from './Trash';
 import TicketList from './TicketList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
@@ -42,7 +42,7 @@ function Profile() {
                 }
             });
         }
-    }, [access_token]);
+    }, [access_token,logOut]);
 
     useEffect(() => {
         const fetchUserID = async () => {
