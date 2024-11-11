@@ -23,7 +23,7 @@ function Profile() {
         }
     }
 
-    const logOut = useCallback(() => {
+    const logOut = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("userID");
         localStorage.removeItem("user_email");
@@ -33,7 +33,7 @@ function Profile() {
 
         setProfile(null);
         navigate('/signup');
-    }, [navigate]);
+    };
 
     useEffect(() => {
         if (access_token) {
