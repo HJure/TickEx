@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 import axios from 'axios';
@@ -23,7 +23,7 @@ function Profile() {
         }
     }
 
-    const logOut = () => {
+    const logOut = useCallback(() => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("userID");
         localStorage.removeItem("user_email");
@@ -31,9 +31,9 @@ function Profile() {
         localStorage.removeItem("user_last_name");
         localStorage.removeItem("user_registration_date");
 
-        setProfile(null);
-        navigate('/signup');
-    };
+        setProfile(null);  // Reset profile state
+        navigate('/signup'); // Redirect to signup page
+    }, [navigate]);
 
     useEffect(() => {
         if (access_token) {
