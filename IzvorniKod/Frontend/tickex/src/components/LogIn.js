@@ -5,7 +5,7 @@ import '../style/login.css';
 function Login() {
 
     const handleLoginClick = () => {
-        const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        const backendUrl = process.env.BACKEND_URL;
         window.location.href = `${backendUrl}/oauth2/authorization/google`;
     };
 
