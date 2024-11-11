@@ -5,7 +5,8 @@ import '../style/login.css';
 function Login() {
 
     const handleLoginClick = () => {
-        window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+        const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        window.location.href = `${backendUrl}/oauth2/authorization/google`;
     };
 
     return (
