@@ -11,10 +11,10 @@ function Login() {
     return (
         <div className="login-container">
             <img src="/images/signup.png" alt="signup" className="login-image" />
-            <p className="login-heading">Get going with your account</p>
+            <p className="login-heading">Ulogiraj se i započni s razmjenom karata!</p>
             <button onClick={handleLoginClick} className="login-button">
                 <FcGoogle style={{ marginRight: '8px', fontSize: '24px' }} /> 
-                <span>Sign in with Google</span>
+                <span>Prijava Google računom</span>
             </button>
         </div>
     );
