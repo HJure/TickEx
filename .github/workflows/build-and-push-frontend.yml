@@ -3,7 +3,7 @@ name: Build and Push Frontend Image
 on:
   push:
     branches:
-      - master
+      - Deployment
     paths:
       - 'IzvorniKod/Frontend/**'      # Trigger only on changes in the /frontend directory
   workflow_dispatch:
