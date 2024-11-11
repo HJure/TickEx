@@ -9,13 +9,15 @@ const TicketDetails = ({ url }) => {
     const { data: ticket, error, isPending } = useFetch(`${url}/${id}`);
     const [isDeleting, setIsDeleting] = useState(false);
     const navigate = useNavigate();
-    const [ima, setIma] = useState(true);
+
+    const [canDelete, setCanDelete] = useState(false);
 
     useEffect(() => {
-        if (url === "http://localhost:5000/trash/") {
-            setIma(false);
+        const userID = localStorage.getItem("userID"); 
+        if (ticket && userID) {
+            setCanDelete(ticket.owner.id === parseInt(userID));
         }
-    }, [url]);
+    }, [url, ticket]); 
 
     const handleDelete = () => {
         const deleteUrl = `${url}/${id}`.replace(/([^:]\/)\/+/g, "$1"); 
@@ -63,7 +65,7 @@ const TicketDetails = ({ url }) => {
                         <br/>
                         <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
                     </div>
-                    {ima && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
+                    {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
                 </div>
             )}
         </div>

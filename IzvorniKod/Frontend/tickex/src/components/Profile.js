@@ -135,6 +135,7 @@ function Profile() {
             <br />
             <br />
             <Link to="/create" className="newBlog">Dodaj novu ulaznicu</Link>
+            <Link to="/shop" className="newBlog">Kupuj!</Link>
         </div>
     ) : (
         <p className="loading-text">Učitavam profil...</p>
