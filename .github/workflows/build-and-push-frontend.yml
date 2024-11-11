@@ -49,7 +49,7 @@ jobs:
         with:
           context: ./IzvorniKod/Frontend/tickex
           push: true
-          tags: ghcr.io/${{ github.repository }}/frontend:latest
+          tags: ghcr.io/${{ github.repository }}/IzvorniKod/Frontend/tickex:latest
 
       - name: Trigger release
         if: ${{ env.FRONTEND_DEPLOY_HOOK }}
