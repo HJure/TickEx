@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'; 
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
-import axios from 'axios'; 
+import axios from 'axios';
 import Trash from './Trash';
-import TicketList from './TicketList'; 
+import TicketList from './TicketList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
 
@@ -11,15 +11,15 @@ function Profile() {
     const [profile, setProfile] = useState(null);
     const [email, setEmail] = useState(null);
     const [userID, setUserID] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
     const navigate = useNavigate();
 
-    // Check localStorage or URL for access_token
     let access_token = localStorage.getItem("access_token");
     if (!access_token) {
         const urlParams = new URLSearchParams(window.location.search);
         access_token = urlParams.get("access_token");
         if (access_token) {
-            localStorage.setItem("access_token", access_token); // Store token in localStorage for future use
+            localStorage.setItem("access_token", access_token);
         }
     }
 
@@ -36,14 +36,13 @@ function Profile() {
             }).catch((err) => {
                 if (err.response && err.response.status === 401) {
                     console.log("Token might be expired or invalid. Logging out...");
-                    logOut(); 
+                    logOut();
                 } else {
                     console.error("Error fetching profile:", err);
                 }
             });
         }
     }, [access_token]);
-    
 
     useEffect(() => {
         const fetchUserID = async () => {
@@ -92,10 +91,10 @@ function Profile() {
                     }
             
                     const data = await response.json();
-                    localStorage.setItem("user_email", data.email); 
-                    localStorage.setItem("user_first_name", data.imeKor); 
-                    localStorage.setItem("user_last_name", data.prezimeKor); 
-                    localStorage.setItem("user_registration_date", data.datumUla);  
+                    localStorage.setItem("user_email", data.email);
+                    localStorage.setItem("user_first_name", data.imeKor);
+                    localStorage.setItem("user_last_name", data.prezimeKor);
+                    localStorage.setItem("user_registration_date", data.datumUla);
                 } catch (error) {
                     console.error('Error:', error);
                 }
@@ -104,6 +103,14 @@ function Profile() {
 
         fetchUserData();
     }, [userID, access_token]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoaded(true);
+        }, 500);
+
+        return () => clearTimeout(timer); 
+    }, [profile]);
 
     const logOut = () => {
         localStorage.removeItem("access_token");
@@ -120,7 +127,7 @@ function Profile() {
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
-    return profile ? (
+    return isLoaded && profile ? (
         <div className='profilediv'>
             <div className="profile-container">
                 <img src={profile.picture} alt="user" className="profile-image" />
