@@ -33,9 +33,17 @@ function Profile() {
             }).then((res) => {
                 setProfile(res.data);
                 setEmail(res.data.email);
-            }).catch((err) => console.log(err));
+            }).catch((err) => {
+                if (err.response && err.response.status === 401) {
+                    console.log("Token might be expired or invalid. Logging out...");
+                    logOut(); 
+                } else {
+                    console.error("Error fetching profile:", err);
+                }
+            });
         }
     }, [access_token]);
+    
 
     useEffect(() => {
         const fetchUserID = async () => {
