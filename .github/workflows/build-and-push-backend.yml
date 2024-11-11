@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'backend/**'      # Trigger only on changes in the /backend directory
+      - 'IzvorniKod/progi-project/**'      # Trigger only on changes in the /backend directory
   workflow_dispatch:
 
 jobs:
@@ -26,11 +26,11 @@ jobs:
           distribution: 'temurin'
           architecture: x64
           cache: 'maven'
-          cache-dependency-path: 'backend/pom.xml'
+          cache-dependency-path: 'IzvorniKod/progi-project/pom.xml'
 
       - name: Maven build
         run: mvn clean package
-        working-directory: backend
+        working-directory: IzvorniKod/progi-project
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -45,7 +45,7 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
-          context: ./backend
+          context: ./IzvorniKod/progi-project
           push: true
           tags: ghcr.io/${{ github.repository }}/backend:latest
 
