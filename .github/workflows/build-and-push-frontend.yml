@@ -1,13 +1,13 @@
 name: Build and Push Frontend Image
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - Deployment
     paths:
       - 'IzvorniKod/Frontend/tickex/**'      # Trigger only on changes in the /frontend directory
-  workflow_dispatch:
-
+      
 jobs:
   build-and-push-frontend:
     name: Build and Push Frontend
@@ -49,7 +49,7 @@ jobs:
         with:
           context: ./IzvorniKod/Frontend/tickex
           push: true
-          tags: ghcr.io/${{ github.repository }}/IzvorniKod/Frontend/tickex:latest
+          tags: ghcr.io/hjure/tickex/frontend:latest
 
       - name: Trigger release
         if: ${{ env.FRONTEND_DEPLOY_HOOK }}
