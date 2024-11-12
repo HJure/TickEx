@@ -5,7 +5,7 @@ import '../style/login.css';
 function Login() {
 
     const handleLoginClick = () => {
-        window.location.href = `https://backend-3qyr.onrender.com/oauth2/authorization/google/provjera`;
+        window.location.href = `https://backend-3qyr.onrender.com/oauth2/authorization/google`;
     };
 
     return (
