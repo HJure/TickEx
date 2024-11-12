@@ -29,12 +29,9 @@ jobs:
       - name: Yarn install
         run: yarn install
         working-directory: IzvorniKod/Frontend/tickex
-      - name: Search for dist folder
-        run: |
-          echo "Searching for dist folder..."
-          find . -type d -name "dist" | tee dist_folder_locations.txt
-          echo "Dist folder locations:"
-          cat dist_folder_locations.txt  
+
+      - name: List contents of tickex folder
+        run: ls -R IzvorniKod/Frontend/tickex
 
       - name: Yarn build
         run: yarn run build
