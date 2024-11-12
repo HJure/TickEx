@@ -60,7 +60,7 @@ function Profile() {
         const fetchUserID = async () => {
             if (email) {
                 try {
-                    const response = await fetch(`http://localhost:8080/api/users/getId?email=${email}`, {
+                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/getId?email=${email}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${access_token}`,
@@ -89,7 +89,7 @@ function Profile() {
         const fetchUserData = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`http://localhost:8080/api/users/${userID}`, {
+                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/${userID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ function Profile() {
     }, [profile]);
 
     
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("https://backend-3qyr.onrender.com/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
     return isLoaded && profile ? (
