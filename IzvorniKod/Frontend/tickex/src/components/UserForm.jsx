@@ -24,7 +24,7 @@ const UserForm = () => {
         const user = { email, imeKor, prezimeKor, datumUla };
         setIsPending(true);
 
-        fetch('http://localhost:8080/api/users/register', {
+        fetch('https://backend-3qyr.onrender.com/api/users/register', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
