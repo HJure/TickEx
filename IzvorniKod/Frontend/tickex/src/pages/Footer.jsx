@@ -15,7 +15,7 @@ function Footer(){
                     </div>
                     <div className="footer-text">
                         <p>
-                            TickEx - iskusite život kako spada!
+                            TickEx - iskusite život kako spada.
                             </p>
                             <p>
                             Pratite nas na društvenim mrežama!
