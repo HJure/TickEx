@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 # Kopira dist folder sadržaj sa stroja u nginx folder u Docker containeru
-COPY dist /usr/share/nginx/html
+COPY build /usr/share/nginx/html
 
 # Izlozi port
 EXPOSE 80
