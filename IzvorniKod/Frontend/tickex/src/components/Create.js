@@ -25,7 +25,7 @@ const Create = () => {
     useEffect(() => {
         const fetchVrDog = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/vrsta-dogadaja`, {
+                const response = await fetch(`https://backend-3qyr.onrender.com/api/vrsta-dogadaja`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const Create = () => {
     
         setIsPending(true);
     
-        fetch("http://localhost:8080/api/tickets", {
+        fetch("https://backend-3qyr.onrender.com/api/tickets", {
             method: 'POST',
             headers: { 
                 "Content-Type": "application/json",
