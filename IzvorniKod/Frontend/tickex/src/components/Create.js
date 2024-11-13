@@ -70,7 +70,7 @@ const Create = () => {
     
         setIsPending(true);
     
-        fetch("https://backend-3qyr.onrender.com/api/tickets", {
+        fetch("https://backend-3qyr.onrender.com/api/api/tickets", {
             method: 'POST',
             headers: { 
                 "Content-Type": "application/json",
