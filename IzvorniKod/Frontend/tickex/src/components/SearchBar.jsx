@@ -6,7 +6,7 @@ const SearchBar = ({ setResult }) => {
   const ID = localStorage.getItem("userID");
 
   useEffect(() => {
-    fetch('https://backend-3qyr.onrender.com/api/tickets')
+    fetch('https://backend-3qyr.onrender.com/api/api/tickets')
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.error('Error fetching data:', error));
