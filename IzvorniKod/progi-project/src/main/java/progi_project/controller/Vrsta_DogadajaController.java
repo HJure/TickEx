@@ -9,7 +9,7 @@ import progi_project.service.Vrsta_DogadajaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/vrsta-dogadaja")
+@RequestMapping("/vrsta-dogadaja")
 public class Vrsta_DogadajaController {
 
     private final Vrsta_DogadajaService vrstaDogadajaService;

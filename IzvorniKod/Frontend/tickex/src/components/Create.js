@@ -25,7 +25,7 @@ const Create = () => {
     useEffect(() => {
         const fetchVrDog = async () => {
             try {
-                const response = await fetch(`https://backend-3qyr.onrender.com/api/api/vrsta-dogadaja`, {
+                const response = await fetch(`https://backend-3qyr.onrender.com/api/vrsta-dogadaja`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

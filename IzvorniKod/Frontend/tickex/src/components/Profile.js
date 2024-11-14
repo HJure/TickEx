@@ -125,7 +125,7 @@ function Profile() {
     }, [profile]);
 
     
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("https://backend-3qyr.onrender.com/api/api/tickets");
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("https://backend-3qyr.onrender.com/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
     return isLoaded && profile ? (
