@@ -34,10 +34,6 @@ jobs:
         run: yarn run build
         working-directory: IzvorniKod/Frontend/tickex
 
-      - name: List contents of tickex folder
-        run: ls -R IzvorniKod/Frontend/tickex
-
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
