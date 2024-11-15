@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - Deployment
+      - master
     paths:
       - 'IzvorniKod/Frontend/tickex/**'      # Trigger only on changes in the /frontend directory
       
