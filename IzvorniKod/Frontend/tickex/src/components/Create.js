@@ -21,7 +21,8 @@ const Create = () => {
     const prezimeKor = localStorage.getItem("user_last_name");
     const datumUla = localStorage.getItem("user_registration_date");
     const isExchangeAvailable = false;
-        
+    
+    
     useEffect(() => {
         const fetchVrDog = async () => {
             try {

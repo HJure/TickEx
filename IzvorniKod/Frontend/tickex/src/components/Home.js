@@ -5,6 +5,7 @@ import About from '../pages/About';
 import UpcomingEvents from '../pages/UpcomingEvents';
 import { parseUrlParams } from '../utils/parseUrlParams';
 
+
 function Home(){
     useEffect(() => {
         const { accessToken } = parseUrlParams();

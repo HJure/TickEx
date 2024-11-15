@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../style/SearchBar.css'
 
+
 const SearchBar = ({ setResult }) => {
   const [data, setData] = useState(null);
   const ID = localStorage.getItem("userID");

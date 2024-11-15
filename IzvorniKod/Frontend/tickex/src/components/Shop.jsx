@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import SearchResultsList from "./SearchResultsList";
 
+
 function Shop() {
   const [results, setResult] = useState([]);
 

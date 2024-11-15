@@ -7,6 +7,7 @@ import TicketList from './TicketList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
 
+
 function Profile() {
     const [profile, setProfile] = useState(null);
     const [email, setEmail] = useState(null);

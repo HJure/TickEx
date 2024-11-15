@@ -1,6 +1,7 @@
 import React from 'react';
 import '../style/SearchResultsList.css'
 
+
 const SearchResultsList = ({ results }) => {
   if (!Array.isArray(results)) {
     console.error("array doesn't exist");
