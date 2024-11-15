@@ -76,3 +76,9 @@
     box-shadow: none;
 }
 
+.warning {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
