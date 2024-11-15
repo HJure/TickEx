@@ -3,7 +3,7 @@ name: Build and Push Backend Image
 on:
   push:
     branches:
-      - Deployment
+      - master
     paths:
       - 'IzvorniKod/progi-project/**'      # Trigger only on changes in the /backend directory
   workflow_dispatch:
