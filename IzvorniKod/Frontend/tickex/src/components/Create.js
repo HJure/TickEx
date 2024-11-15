@@ -12,6 +12,7 @@ const Create = () => {
     const [nazVrDog, setnazVrDog] = useState(''); 
     const [eventTypeId, setEventTypeId] = useState(null); 
     const [price, setPrice] = useState(''); 
+    const [warnings, setWarnings] = useState({});
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
 
@@ -47,8 +48,31 @@ const Create = () => {
         fetchVrDog();
     }, []);
     
+    const validatePrice = (value) => {
+        const intPrice = parseInt(value, 10);
+        if (isNaN(intPrice) || intPrice < 0 || intPrice > Number.MAX_SAFE_INTEGER) {
+            return 'Cijena mora biti broj između 0 i broja 2147483647.';
+        }
+        return '';
+    };
+
+    const validateSeatNumber = (value) => {
+        if (value && isNaN(parseInt(value, 10))) {
+            return 'Broj sjedala mora biti cijeli broj ili ostavite prazno.';
+        }
+        return '';
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const priceWarning = validatePrice(price);
+        const seatNumberWarning = validateSeatNumber(seatNumber);
+
+        if (priceWarning || seatNumberWarning) {
+            setWarnings({ price: priceWarning, seatNumber: seatNumberWarning });
+            return;
+        }
     
         const ticket = { 
             eventTypeId: { id: eventTypeId },
@@ -151,16 +175,24 @@ const Create = () => {
                 <input 
                     type="text"  
                     value={seatNumber} 
-                    onChange={(e) => setSeatNumber(e.target.value)}
+                    onChange={(e) => {
+                        setSeatNumber(e.target.value);
+                        setWarnings(prev => ({ ...prev, seatNumber: validateSeatNumber(e.target.value) }));
+                    }}
                 />
+                {warnings.seatNumber && <p className="warning">{warnings.seatNumber}</p>}
 
                 <label>Cijena (EUR):</label>
                 <input 
                     required
                     type="text"  
                     value={price} 
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => {
+                        setPrice(e.target.value);
+                        setWarnings(prev => ({ ...prev, price: validatePrice(e.target.value) }));
+                    }}
                 />
+                {warnings.price && <p className="warning">{warnings.price}</p>}
 
                 {!isPending && <button>Dodaj ulaznicu</button>}
                 {isPending && <button disabled>Dodavanje ulaznice...</button>}
