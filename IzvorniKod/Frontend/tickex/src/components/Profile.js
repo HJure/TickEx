@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 import axios from 'axios';
-//import Trash from './Trash';
 import TicketList from './TicketList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
-
 
 function Profile() {
     const [profile, setProfile] = useState(null);
     const [email, setEmail] = useState(null);
     const [userID, setUserID] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isProfileReady, setIsProfileReady] = useState(false); 
     const navigate = useNavigate();
 
     let access_token = localStorage.getItem("access_token");
@@ -32,15 +31,15 @@ function Profile() {
         localStorage.removeItem("user_last_name");
         localStorage.removeItem("user_registration_date");
 
-        setProfile(null);  // Reset profile state
-        navigate('/signup'); // Redirect to signup page
+        setProfile(null);  
+        navigate('/signup'); 
     }, [navigate]);
 
     useEffect(() => {
         if (access_token) {
-            axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`, {
+            axios.get(https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}, {
                 headers: {
-                    Authorization: `Bearer ${access_token}`,
+                    Authorization: Bearer ${access_token},
                     Accept: 'application/json'
                 }
             }).then((res) => {
@@ -55,25 +54,25 @@ function Profile() {
                 }
             });
         }
-    }, [access_token,logOut]);
+    }, [access_token, logOut]);
 
     useEffect(() => {
         const fetchUserID = async () => {
             if (email) {
                 try {
-                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/getId?email=${email}`, {
+                    const response = await fetch(https://backend-3qyr.onrender.com/api/users/getId?email=${email}, {
                         method: 'GET',
                         headers: {
-                            'Authorization': `Bearer ${access_token}`,
+                            'Authorization': Bearer ${access_token},
                             'Content-Type': 'application/json',
                         },
                         credentials: 'include',
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Error while fetching user ID');
                     }
-            
+
                     const data = await response.json();
                     setUserID(data);
                     localStorage.setItem("userID", data); 
@@ -90,24 +89,26 @@ function Profile() {
         const fetchUserData = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/${userID}`, {
+                    const response = await fetch(https://backend-3qyr.onrender.com/api/users/${userID}, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${access_token}`,
+                            'Authorization': Bearer ${access_token},
                         },
                         credentials: 'include',
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Error while fetching user data');
                     }
-            
+
                     const data = await response.json();
                     localStorage.setItem("user_email", data.email);
                     localStorage.setItem("user_first_name", data.imeKor);
                     localStorage.setItem("user_last_name", data.prezimeKor);
                     localStorage.setItem("user_registration_date", data.datumUla);
+
+                    setIsProfileReady(true);
                 } catch (error) {
                     console.error('Error:', error);
                 }
@@ -122,14 +123,13 @@ function Profile() {
             setIsLoaded(true);
         }, 500);
 
-        return () => clearTimeout(timer); 
+        return () => clearTimeout(timer);
     }, [profile]);
 
-    
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("https://backend-3qyr.onrender.com/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
-    return isLoaded && profile ? (
+    return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
             <div className="profile-container">
                 <img src={profile.picture} alt="user" className="profile-image" />
@@ -143,8 +143,6 @@ function Profile() {
                 {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
                 <div className="my_offers_trash_container">
                     <div className="my_offers">
-                        {ticketsError && <div className="error">{ticketsError}</div>}
-                        {isTicketsPending && <div className="loading">Učitavam karte...</div>}
                         {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
                     </div>
                 </div>
