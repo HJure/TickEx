@@ -38,7 +38,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);  // Allow cookies and authorization headers
-        config.setAllowedOrigins(List.of("https://frontend-k90t.onrender.com"));  // React app URL
+        config.setAllowedOrigins(List.of("https://aplikacija.onrender.com"));  // React app URL
         config.setAllowedHeaders(List.of("*"));  // Allow all headers
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // Allowed methods
 
