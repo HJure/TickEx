@@ -1,6 +1,6 @@
 # Programsko inženjerstvo
 
-
+# [TickEx stranica](https://aplikacija.onrender.com/)
 # Opis projekta
 Ovaj projekt je rezultat timskog rada u sklopu projektnog zadatka kolegija [Programsko inženjerstvo](https://www.fer.unizg.hr/predmet/proinz) na Fakultetu elektrotehnike i računarstva Sveučilišta u Zagrebu. 
 
