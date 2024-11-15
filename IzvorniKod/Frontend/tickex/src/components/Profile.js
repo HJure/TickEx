@@ -37,9 +37,9 @@ function Profile() {
 
     useEffect(() => {
         if (access_token) {
-            axios.get(https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}, {
+            axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`, {
                 headers: {
-                    Authorization: Bearer ${access_token},
+                    Authorization: `Bearer ${access_token}`,
                     Accept: 'application/json'
                 }
             }).then((res) => {
@@ -60,10 +60,10 @@ function Profile() {
         const fetchUserID = async () => {
             if (email) {
                 try {
-                    const response = await fetch(https://backend-3qyr.onrender.com/api/users/getId?email=${email}, {
+                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/getId?email=${email}`, {
                         method: 'GET',
                         headers: {
-                            'Authorization': Bearer ${access_token},
+                            'Authorization': `Bearer ${access_token}`,
                             'Content-Type': 'application/json',
                         },
                         credentials: 'include',
@@ -89,11 +89,11 @@ function Profile() {
         const fetchUserData = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(https://backend-3qyr.onrender.com/api/users/${userID}, {
+                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/${userID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': Bearer ${access_token},
+                            'Authorization': `Bearer ${access_token}`,
                         },
                         credentials: 'include',
                     });
