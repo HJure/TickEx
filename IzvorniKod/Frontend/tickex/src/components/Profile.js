@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 import axios from 'axios';
-import Trash from './Trash';
 import TicketList from './TicketList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
@@ -12,6 +11,7 @@ function Profile() {
     const [email, setEmail] = useState(null);
     const [userID, setUserID] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isProfileReady, setIsProfileReady] = useState(false); 
     const navigate = useNavigate();
 
     let access_token = localStorage.getItem("access_token");
@@ -22,6 +22,18 @@ function Profile() {
             localStorage.setItem("access_token", access_token);
         }
     }
+
+    const logOut = useCallback(() => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("userID");
+        localStorage.removeItem("user_email");
+        localStorage.removeItem("user_first_name");
+        localStorage.removeItem("user_last_name");
+        localStorage.removeItem("user_registration_date");
+
+        setProfile(null);  
+        navigate('/signup'); 
+    }, [navigate]);
 
     useEffect(() => {
         if (access_token) {
@@ -42,7 +54,7 @@ function Profile() {
                 }
             });
         }
-    }, [access_token]);
+    }, [access_token, logOut]);
 
     useEffect(() => {
         const fetchUserID = async () => {
@@ -56,11 +68,11 @@ function Profile() {
                         },
                         credentials: 'include',
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Error while fetching user ID');
                     }
-            
+
                     const data = await response.json();
                     setUserID(data);
                     localStorage.setItem("userID", data); 
@@ -85,16 +97,18 @@ function Profile() {
                         },
                         credentials: 'include',
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Error while fetching user data');
                     }
-            
+
                     const data = await response.json();
                     localStorage.setItem("user_email", data.email);
                     localStorage.setItem("user_first_name", data.imeKor);
                     localStorage.setItem("user_last_name", data.prezimeKor);
                     localStorage.setItem("user_registration_date", data.datumUla);
+
+                    setIsProfileReady(true);
                 } catch (error) {
                     console.error('Error:', error);
                 }
@@ -109,25 +123,13 @@ function Profile() {
             setIsLoaded(true);
         }, 500);
 
-        return () => clearTimeout(timer); 
+        return () => clearTimeout(timer);
     }, [profile]);
-
-    const logOut = () => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("userID");
-        localStorage.removeItem("user_email");
-        localStorage.removeItem("user_first_name");
-        localStorage.removeItem("user_last_name");
-        localStorage.removeItem("user_registration_date");
-
-        setProfile(null);
-        navigate('/signup');
-    };
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
-    return isLoaded && profile ? (
+    return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
             <div className="profile-container">
                 <img src={profile.picture} alt="user" className="profile-image" />
@@ -141,8 +143,6 @@ function Profile() {
                 {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
                 <div className="my_offers_trash_container">
                     <div className="my_offers">
-                        {ticketsError && <div className="error">{ticketsError}</div>}
-                        {isTicketsPending && <div className="loading">Učitavam karte...</div>}
                         {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
                     </div>
                 </div>
@@ -157,4 +157,4 @@ function Profile() {
     );
 }
 
-export default Profile;
+export default Profile;
