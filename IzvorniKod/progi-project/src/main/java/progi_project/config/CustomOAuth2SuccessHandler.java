@@ -39,10 +39,10 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         if (userService.emailExists(email)) {
             // If email exists in db then users account exists, redirect to frontend homepage with the access token
-            response.sendRedirect("https://frontend-k90t.onrender.com/profile?access_token=" + accessToken);
+            response.sendRedirect("https://aplikacija.onrender.com/profile?access_token=" + accessToken);
         } else {
             // Else user does not exist, redirect to frontend registration page
-            response.sendRedirect("https://frontend-k90t.onrender.com/register?email=" + email + "&access_token=" + accessToken);
+            response.sendRedirect("https://aplikacija.onrender.com/register?email=" + email + "&access_token=" + accessToken);
         }
     }
 }
