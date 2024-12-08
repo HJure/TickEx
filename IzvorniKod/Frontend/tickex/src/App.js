@@ -13,7 +13,7 @@ import UserForm from './components/UserForm';
 
 
 function App() {
-    const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
 
     return (
         <Router>

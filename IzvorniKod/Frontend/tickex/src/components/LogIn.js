@@ -4,7 +4,7 @@ import '../style/login.css';
 
 
 function Login() {
-    const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
 
     const handleLoginClick = () => {
         window.location.href = `${backendUrl}/api/oauth2/authorization/google`;

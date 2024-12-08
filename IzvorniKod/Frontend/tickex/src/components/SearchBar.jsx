@@ -6,7 +6,7 @@ const SearchBar = ({ setResult }) => {
   const [data, setData] = useState(null);
   const ID = localStorage.getItem("userID");
 
-  const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+  const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
 
   useEffect(() => {
     fetch(`${backendUrl}/api/tickets`)
