@@ -13,6 +13,8 @@ import UserForm from './components/UserForm';
 
 
 function App() {
+    const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+
     return (
         <Router>
             <div className="App">
@@ -21,7 +23,7 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/signup" element={<Login />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/tickets/:id" element={<TicketDetails url="https://backend-3qyr.onrender.com/api/tickets/" />} />
+                    <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
                     {/* <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} /> */}
                     <Route path="/create" element={<Create />} />
                     <Route path="/shop" element={<Shop />} />

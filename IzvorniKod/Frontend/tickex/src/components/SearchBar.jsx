@@ -6,8 +6,10 @@ const SearchBar = ({ setResult }) => {
   const [data, setData] = useState(null);
   const ID = localStorage.getItem("userID");
 
+  const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+
   useEffect(() => {
-    fetch('https://backend-3qyr.onrender.com/api/tickets')
+    fetch(`${backendUrl}/api/tickets`)
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.error('Error fetching data:', error));

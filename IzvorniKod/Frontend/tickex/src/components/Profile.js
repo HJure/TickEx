@@ -14,6 +14,8 @@ function Profile() {
     const [isProfileReady, setIsProfileReady] = useState(false); 
     const navigate = useNavigate();
 
+    const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+
     let access_token = localStorage.getItem("access_token");
     if (!access_token) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -60,7 +62,7 @@ function Profile() {
         const fetchUserID = async () => {
             if (email) {
                 try {
-                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/getId?email=${email}`, {
+                    const response = await fetch(`${backendUrl}/api/users/getId?email=${email}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${access_token}`,
@@ -89,7 +91,7 @@ function Profile() {
         const fetchUserData = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/${userID}`, {
+                    const response = await fetch(`${backendUrl}/api/users/${userID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -126,7 +128,7 @@ function Profile() {
         return () => clearTimeout(timer);
     }, [profile]);
 
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("https://backend-3qyr.onrender.com/api/tickets");
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
     return isLoaded && profile && isProfileReady ? (

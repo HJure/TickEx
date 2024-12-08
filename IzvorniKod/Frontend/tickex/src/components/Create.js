@@ -23,10 +23,12 @@ const Create = () => {
     const datumUla = localStorage.getItem("user_registration_date");
     const isExchangeAvailable = false;
 
+    const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+
     useEffect(() => {
         const fetchVrDog = async () => {
             try {
-                const response = await fetch(`https://backend-3qyr.onrender.com/api/vrsta-dogadaja`, {
+                const response = await fetch(`${backendUrl}/api/vrsta-dogadaja`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -96,7 +98,7 @@ const Create = () => {
 
         setIsPending(true);
 
-        fetch("https://backend-3qyr.onrender.com/api/tickets", {
+        fetch(`${backendUrl}/api/tickets`, {
             method: 'POST',
             headers: { 
                 "Content-Type": "application/json",

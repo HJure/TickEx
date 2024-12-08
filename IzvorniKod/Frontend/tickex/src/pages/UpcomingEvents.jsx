@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 function UpcomingEvents() {
     const [Tickets, setTickets] = useState([]);
     //const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
-    const { data: tickets} = useFetch("https://backend-3qyr.onrender.com/api/tickets");
+    
+    const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+
+    const { data: tickets} = useFetch(`${backendUrl}/api/tickets`);
     
     useEffect(() => {
         if (tickets) {

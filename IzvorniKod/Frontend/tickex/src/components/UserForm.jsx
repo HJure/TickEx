@@ -12,6 +12,8 @@ const UserForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const backendUrl = 'http://localhost:8080' || process.env.BACKEND_URL;
+
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const emailFromUrl = params.get("email");
@@ -25,7 +27,7 @@ const UserForm = () => {
         const user = { email, imeKor, prezimeKor, datumUla };
         setIsPending(true);
 
-        fetch('https://backend-3qyr.onrender.com/api/users/register', {
+        fetch(`${backendUrl}/api/users/register`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
