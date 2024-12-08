@@ -3,6 +3,7 @@ package progi_project.config;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -16,6 +17,9 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	@Value("${FRONTEND_URL:}")  
+	private String FRONTEND_URL;
 
     @Autowired
     private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
@@ -24,7 +28,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(withDefaults()).csrf().disable()
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error", "users/register", "tickets/**", "users/**", "vrsta-dogadaja").permitAll()
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error", "/users/register", "/tickets/**", "/users/**", "/vrsta-dogadaja").permitAll()
                                     .anyRequest().authenticated()
                                     ).oauth2Login()
                                     .successHandler(customOAuth2SuccessHandler)
@@ -38,7 +42,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);  // Allow cookies and authorization headers
-        config.setAllowedOrigins(List.of("https://aplikacija.onrender.com"));  // React app URL
+        config.setAllowedOrigins(List.of(FRONTEND_URL, "http://localhost:3000"));  // React app URLs
         config.setAllowedHeaders(List.of("*"));  // Allow all headers
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // Allowed methods
 
