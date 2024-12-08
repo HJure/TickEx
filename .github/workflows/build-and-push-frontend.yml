@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - Deployment
     paths:
       - 'IzvorniKod/Frontend/tickex/**'      # Trigger only on changes in the /frontend directory
       
