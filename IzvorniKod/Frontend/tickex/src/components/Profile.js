@@ -85,7 +85,7 @@ function Profile() {
         };
 
         fetchUserID();
-    }, [email, access_token]);
+    }, [email, access_token, backendUrl]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -118,7 +118,7 @@ function Profile() {
         };
 
         fetchUserData();
-    }, [userID, access_token]);
+    }, [userID, access_token, backendUrl]);
 
     useEffect(() => {
         const timer = setTimeout(() => {

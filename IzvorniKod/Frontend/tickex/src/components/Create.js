@@ -41,7 +41,7 @@ const Create = () => {
             }
         };
         fetchVrDog();
-    }, []);
+    }, [backendUrl]);
 
     const validatePrice = (value) => {
         const intPrice = parseInt(value, 10);
