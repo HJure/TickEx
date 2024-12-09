@@ -14,6 +14,8 @@ function Profile() {
     const [isProfileReady, setIsProfileReady] = useState(false); 
     const navigate = useNavigate();
 
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
     let access_token = localStorage.getItem("access_token");
     if (!access_token) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -60,7 +62,7 @@ function Profile() {
         const fetchUserID = async () => {
             if (email) {
                 try {
-                    const response = await fetch(`http://localhost:8080/api/users/getId?email=${email}`, {
+                    const response = await fetch(`${backendUrl}/api/users/getId?email=${email}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${access_token}`,
@@ -83,13 +85,13 @@ function Profile() {
         };
 
         fetchUserID();
-    }, [email, access_token]);
+    }, [email, access_token, backendUrl]);
 
     useEffect(() => {
         const fetchUserData = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`http://localhost:8080/api/users/${userID}`, {
+                    const response = await fetch(`${backendUrl}/api/users/${userID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -116,7 +118,7 @@ function Profile() {
         };
 
         fetchUserData();
-    }, [userID, access_token]);
+    }, [userID, access_token, backendUrl]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -126,7 +128,7 @@ function Profile() {
         return () => clearTimeout(timer);
     }, [profile]);
 
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
 
     return isLoaded && profile && isProfileReady ? (
@@ -157,4 +159,4 @@ function Profile() {
     );
 }
 
-export default Profile;
+export default Profile;

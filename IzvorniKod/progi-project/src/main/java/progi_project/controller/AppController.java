@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AppController {
 
-    @GetMapping("/api/user")
+    @GetMapping("/user")
     public Map<String, Object> getUserInfo(@AuthenticationPrincipal OAuth2User oAuth2User) {
         return oAuth2User.getAttributes();
     }

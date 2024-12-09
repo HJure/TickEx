@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { parseUrlParams } from '../utils/parseUrlParams';
 import '../style/UserForm.css';
 
+
 const UserForm = () => {
     const [imeKor, setImeKor] = useState('');
     const [prezimeKor, setPrezimeKor] = useState('');
@@ -10,6 +11,8 @@ const UserForm = () => {
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -24,7 +27,7 @@ const UserForm = () => {
         const user = { email, imeKor, prezimeKor, datumUla };
         setIsPending(true);
 
-        fetch('http://localhost:8080/api/users/register', {
+        fetch(`${backendUrl}/api/users/register`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)

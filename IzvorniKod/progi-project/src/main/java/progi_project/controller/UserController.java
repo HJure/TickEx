@@ -18,7 +18,7 @@ import progi_project.model.User;
 import progi_project.service.UserService;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired

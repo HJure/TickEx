@@ -11,7 +11,10 @@ import Create from './components/Create';
 import Shop from './components/Shop'
 import UserForm from './components/UserForm';
 
+
 function App() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
     return (
         <Router>
             <div className="App">
@@ -20,8 +23,8 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/signup" element={<Login />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/tickets/:id" element={<TicketDetails url="http://localhost:8080/api/tickets/" />} />
-                    <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} />
+                    <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
+                    {/* <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} /> */}
                     <Route path="/create" element={<Create />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/register" element={<UserForm />} />

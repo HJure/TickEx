@@ -3,6 +3,7 @@ package progi_project.config;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -17,6 +18,10 @@ import progi_project.service.UserService;
 
 @Component
 public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+	
+	
+	@Value("${FRONTEND_URL:}")  
+	private String FRONTEND_URL;
 
     @Autowired
     private UserService userService;
@@ -37,12 +42,17 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
 
+        String frontendUrl = request.getServerName().equals("localhost") ? "http://localhost:3000" : FRONTEND_URL;
+        
+        String redirectUrl;
         if (userService.emailExists(email)) {
             // If email exists in db then users account exists, redirect to frontend homepage with the access token
-            response.sendRedirect("http://localhost:3000/profile?access_token=" + accessToken);
+        	redirectUrl = frontendUrl + "/profile?access_token=" + accessToken;
         } else {
             // Else user does not exist, redirect to frontend registration page
-            response.sendRedirect("http://localhost:3000/register?email=" + email + "&access_token=" + accessToken);
+        	redirectUrl = frontendUrl + "/register?email=" + email + "&access_token=" + accessToken;
         }
+        
+        response.sendRedirect(redirectUrl);
     }
 }

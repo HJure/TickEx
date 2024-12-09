@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import '../style/ticket-details.css';
 
+
 const TicketDetails = ({ url }) => {
     const { id } = useParams();
     const { data: ticket, error, isPending } = useFetch(`${url}/${id}`);

@@ -1,6 +1,7 @@
 import React from 'react';
 import '../style/Landingpage.css';
 
+
 function Landingpage(){
     return (
         <>

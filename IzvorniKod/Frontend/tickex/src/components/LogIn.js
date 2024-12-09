@@ -2,10 +2,12 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc'; 
 import '../style/login.css';
 
+
 function Login() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     const handleLoginClick = () => {
-        window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+        window.location.href = `${backendUrl}/api/oauth2/authorization/google`;
     };
 
     return (
