@@ -14,7 +14,7 @@ function Profile() {
     const [isProfileReady, setIsProfileReady] = useState(false); 
     const navigate = useNavigate();
 
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     let access_token = localStorage.getItem("access_token");
     if (!access_token) {

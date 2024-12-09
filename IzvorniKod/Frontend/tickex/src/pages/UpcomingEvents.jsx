@@ -8,7 +8,7 @@ function UpcomingEvents() {
     const [Tickets, setTickets] = useState([]);
     //const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("http://localhost:8080/api/tickets");
     
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     const { data: tickets} = useFetch(`${backendUrl}/api/tickets`);
     

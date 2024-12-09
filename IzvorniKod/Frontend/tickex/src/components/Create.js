@@ -23,7 +23,7 @@ const Create = () => {
     const datumUla = localStorage.getItem("user_registration_date");
     const isExchangeAvailable = false;
 
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     useEffect(() => {
         const fetchVrDog = async () => {

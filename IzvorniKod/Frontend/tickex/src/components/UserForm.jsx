@@ -12,7 +12,7 @@ const UserForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
