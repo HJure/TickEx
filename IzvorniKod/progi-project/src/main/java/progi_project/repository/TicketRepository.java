@@ -1,12 +1,13 @@
 package progi_project.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import progi_project.model.Ticket;
-import progi_project.model.Vrsta_Dogadaja;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import progi_project.model.Ticket;
+import progi_project.model.Vrsta_Dogadaja;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
@@ -47,5 +48,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     //@Query("SELECT u FROM Ticket t WHERE t.id = :id")
     Optional<Ticket> findById(long id);
 
-
+    // Delete ticket by id
+    Optional<Ticket> deleteById(long id);
 }

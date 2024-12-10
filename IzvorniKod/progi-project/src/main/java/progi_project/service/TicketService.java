@@ -1,12 +1,13 @@
 package progi_project.service;
 
-import progi_project.model.Ticket;
-import progi_project.repository.TicketRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import progi_project.model.Ticket;
+import progi_project.repository.TicketRepository;
 
 @Service
 public class TicketService {
@@ -18,8 +19,8 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public Optional<Ticket> findById(int id) {
-        return ticketRepository.findById((int) id);
+    public Optional<Ticket> findById(Long id) {
+        return ticketRepository.findById(id);
     }
 
     public List<Ticket> getAllTickets() {
@@ -30,7 +31,7 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public void deleteTicket(int id) {
-        ticketRepository.deleteById((int) id);
+    public void deleteTicket(Long id) {
+        ticketRepository.deleteById(id);
     }
 }

@@ -1,17 +1,26 @@
 package progi_project.model;
 
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "oglas")
-public class Ticket {
+public class Ticket extends Exchange{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="idogl",nullable = false, unique = true)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "iddog", nullable = false)
@@ -42,12 +51,13 @@ public class Ticket {
     @Column(name = "status", nullable = false)
     private boolean isExchangeAvailable = false;
 
-
-    public int getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    @Override
+    public void setId(Long id) {
         this.id = id;
     }
 
