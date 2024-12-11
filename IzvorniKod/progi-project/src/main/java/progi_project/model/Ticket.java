@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "oglas")
-public class Ticket extends Exchange{
+public class Ticket{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,12 +51,10 @@ public class Ticket extends Exchange{
     @Column(name = "status", nullable = false)
     private boolean isExchangeAvailable = false;
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }
