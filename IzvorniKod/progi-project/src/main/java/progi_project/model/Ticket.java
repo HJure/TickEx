@@ -26,9 +26,6 @@ public class Ticket{
     @JoinColumn(name = "iddog", nullable = false)
     private Vrsta_Dogadaja eventTypeId;
 
-    @Column(name="cijena", nullable = false)
-    private int price;
-
     @Column(name="nazdog", nullable = false)
     private String eventName;
 
@@ -121,14 +118,6 @@ public class Ticket{
 
     public void setExchangeAvailable(boolean exchangeAvailable) {
         isExchangeAvailable = exchangeAvailable;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }
 
