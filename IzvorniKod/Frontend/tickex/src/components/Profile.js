@@ -109,6 +109,7 @@ function Profile() {
                     localStorage.setItem("user_first_name", data.imeKor);
                     localStorage.setItem("user_last_name", data.prezimeKor);
                     localStorage.setItem("user_registration_date", data.datumUla);
+                    data.ocjena !== 0.0 ? localStorage.setItem("user_rating", data.ocjena) : localStorage.setItem("user_rating", "nema ocjenu");
 
                     setIsProfileReady(true);
                 } catch (error) {
@@ -138,6 +139,7 @@ function Profile() {
                 <h3 className="profile-heading">Korisnik prijavljen</h3>
                 <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
                 <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
+                <p className="profile-info">Ocjena: {localStorage.getItem("user_rating")}</p>
                 <button onClick={logOut} className="logout-button">Odjavi se</button>
             </div>
             <div>

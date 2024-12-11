@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import progi_project.model.Exchange;
 import progi_project.model.Sale;
+import progi_project.service.SaleService;
 
 @RestController
 @RequestMapping("/shop")
@@ -20,8 +20,7 @@ public class SaleController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Sale> updateSale(@PathVariable Long id, @RequestBody Sale sale) {
-        sale.setIdOgl(id);
-        Sale updatedSale = saleService.updateSale(sale);
+        Sale updatedSale = saleService.updateSale(id, sale);
         return ResponseEntity.ok(updatedSale);
     }
     

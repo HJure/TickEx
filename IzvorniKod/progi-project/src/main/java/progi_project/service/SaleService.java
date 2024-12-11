@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import progi_project.model.Sale;
 import progi_project.repository.SaleRepository;
 
@@ -27,12 +28,13 @@ public class SaleService {
         return saleRepository.findById(id);
     }
 
-    public Sale updateSale(Long id, Sale updatedSale) {
-        if (saleRepository.existsById(id)) {
-            updatedSale.setId(id);
-            return saleRepository.save(updatedSale);
-        }
-        return null;
+    public Sale updateSale(Long id, Sale sale) {
+        Sale existingSale = saleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Sale not found with ID: " + id));
+
+        existingSale.setBuyer(null); // treba staviti id kupca
+
+        return saleRepository.save(existingSale);
     }
 
     public void deleteSale(Long id) {
