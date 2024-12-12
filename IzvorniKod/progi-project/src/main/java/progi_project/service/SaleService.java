@@ -8,13 +8,18 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import progi_project.model.Sale;
+import progi_project.model.User;
 import progi_project.repository.SaleRepository;
+import progi_project.repository.UserRepository;
 
 @Service
 public class SaleService {
 
     @Autowired
     private SaleRepository saleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Sale createSale(Sale sale) {
         return saleRepository.save(sale);
@@ -28,11 +33,14 @@ public class SaleService {
         return saleRepository.findById(id);
     }
 
+    // When customer buy ticket customerID and sale object are passed
+    // Find that sale in db and update buyer from null to customerID
     public Sale updateSale(Long id, Sale sale) {
-        Sale existingSale = saleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Sale not found with ID: " + id));
+        Sale existingSale = saleRepository.findById(sale.getId())
+            .orElseThrow(() -> new EntityNotFoundException("Sale not found with ID: " + sale.getId()));
+        User buyer = userRepository.findById(id);
 
-        existingSale.setBuyer(null); // treba staviti id kupca
+        existingSale.setBuyer(buyer); 
 
         return saleRepository.save(existingSale);
     }

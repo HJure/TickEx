@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/SearchResultsList.css'
+import '../utils/buyButton.js'
 
 
 const SearchResultsList = ({ results }) => {
@@ -13,30 +14,37 @@ const SearchResultsList = ({ results }) => {
     <>
       <div className="results-list">
         {results.map((result) => (
-          <form
-            key={result.id}
-            method="POST"
-            action={`http://localhost:8080/shop/${result.id}`}
-          >
-            <div className="result-item">
-              <h4>{result.eventName}</h4>
-              <span>Mjesto: {result.location}</span> |
-              <span> Datum: {result.eventDate.split('T')[0]}</span> |
-              <span> Vrsta ulaznice: {result.ticketType}</span> |
-              <span> Status:</span>{' '}
-              <span className="answer">
-                {result.exchangeAvailable ? 'Prodano' : 'U prodaji'}
-              </span>{' '} |
-              <span> Cijena: {result.price} EUR</span> |
-              <span> Vrsta događaja:</span>{' '}
-              <span className="answer">{result.eventTypeId.nazVrDog}</span> |
-              <span> Broj sjedala:</span>{' '}
-              <span className="answer">{result.seatNumber !== null ? result.seatNumber : '-'}</span>
-              <br />
-              <br />
-              <button type="submit" className="btn-buy">Kupi</button>
-            </div>
-          </form>
+          <div key={result.id} className="result-item">
+            <h4>{result.eventName}</h4>
+            <span>Mjesto: {result.location}</span> |
+            <span> Datum: {result.eventDate.split('T')[0]}</span> |
+            <span> Vrsta ulaznice: {result.ticketType}</span> |
+            <span> Status:</span>{' '}
+            <span className="answer">
+              {result.exchangeAvailable ? 'Prodano' : 'U prodaji'}
+            </span>{' '}
+            |
+            <span> Cijena: {result.price} EUR</span> |
+            <span> Vrsta događaja:</span>{' '}
+            <span className="answer">{result.eventTypeId.nazVrDog}</span> |
+            <span> Broj sjedala:</span>{' '}
+            <span className="answer">
+              {result.seatNumber !== null ? result.seatNumber : '-'}
+            </span>
+            <br />
+            <br />
+            <button className="btn-buy" onClick={() =>
+                  handleBuyClick({
+                  idOgl: result.idOgl,
+                  cijena: result.cijena,
+                  idKor: result.idKor,
+                  kupujeidKor: result.kupujeidKor,
+                  })
+                }
+            >
+              Kupi
+            </button>
+          </div>
         ))}
       </div>
     </>
