@@ -47,7 +47,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     // Find tickets by id
     //@Query("SELECT u FROM Ticket t WHERE t.id = :id")
-    Optional<Ticket> findById(long id);
+    Ticket findById(int id);
 
     // Delete ticket by id
     Optional<Ticket> deleteById(long id);

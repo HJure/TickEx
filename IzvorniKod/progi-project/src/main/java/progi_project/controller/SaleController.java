@@ -19,7 +19,7 @@ public class SaleController {
     private SaleService saleService;
 
     @PutMapping("/{id}")
-    public ResponseEntity<Sale> updateSale(@PathVariable Long id, @RequestBody Sale sale) {
+    public ResponseEntity<Sale> updateSale(@PathVariable int id, @RequestBody Sale sale) {
         Sale updatedSale = saleService.updateSale(id, sale);
         return ResponseEntity.ok(updatedSale);
     }

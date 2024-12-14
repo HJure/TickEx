@@ -19,7 +19,7 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public Optional<Ticket> findById(Long id) {
+    public Ticket findById(int id) {
         return ticketRepository.findById(id);
     }
 
@@ -33,5 +33,11 @@ public class TicketService {
 
     public void deleteTicket(Long id) {
         ticketRepository.deleteById(id);
+    }
+    
+    public void updateTicketStatus(int id, String status) {
+        Ticket ticket = ticketRepository.findById(id);
+        ticket.setExchangeAvailable(status);  //"obrisano"
+        ticketRepository.save(ticket);
     }
 }

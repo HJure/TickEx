@@ -20,7 +20,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> findById(int id) {
+    public User findById(int id) {
         return userRepository.findById(id); // Provjeri je li ovo ispravno postavljeno
     }
     

@@ -29,13 +29,13 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
-    public Optional<Sale> getSaleById(Long id) {
+    public Optional<Sale> getSaleById(int id) {
         return saleRepository.findById(id);
     }
 
     // When customer buy ticket customerID and sale object are passed
     // Find that sale in db and update buyer from null to customerID
-    public Sale updateSale(Long id, Sale sale) {
+    public Sale updateSale(int id, Sale sale) {
         Sale existingSale = saleRepository.findById(sale.getId())
             .orElseThrow(() -> new EntityNotFoundException("Sale not found with ID: " + sale.getId()));
         User buyer = userRepository.findById(id);

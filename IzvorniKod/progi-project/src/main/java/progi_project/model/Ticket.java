@@ -23,7 +23,7 @@ public class Ticket{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="idogl",nullable = false, unique = true)
-    private Long id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "iddog", nullable = false)
@@ -49,13 +49,13 @@ public class Ticket{
     private User owner;
 
     @Column(name = "status", nullable = false)
-    private TicketState isExchangeAvailable = TicketState.NEPOZNATO;
+    private String isExchangeAvailable;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -115,11 +115,11 @@ public class Ticket{
         this.owner = owner;
     }
 
-    public TicketState isExchangeAvailable() {
+    public String getisExchangeAvailable() {
         return isExchangeAvailable;
     }
 
-    public void setExchangeAvailable(TicketState exchangeAvailable) {
+    public void setExchangeAvailable(String exchangeAvailable) {
         isExchangeAvailable = exchangeAvailable;
     }
 }

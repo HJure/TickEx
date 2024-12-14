@@ -21,14 +21,16 @@ const TicketDetails = ({ url }) => {
     }, [url, ticket]); 
 
     const handleDelete = () => {
-        const deleteUrl = `${url}/${id}`.replace(/([^:]\/)\/+/g, "$1"); 
+        const deleteUrl = `${url}/${id}/status`.replace(/([^:]\/)\/+/g, "$1"); 
         const access_token = localStorage.getItem("access_token"); 
     
         fetch(deleteUrl, {
-            method: 'DELETE',
+            method: 'PUT',
             headers: { 
-                "Authorization": `Bearer ${access_token}`
-            }
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ status: "obrisano" })
         })
         .then(() => {
             console.log('Ticket deleted');

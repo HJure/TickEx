@@ -130,7 +130,10 @@ function Profile() {
     }, [profile]);
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
-    const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
+    const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
+                                    && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
+    const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
+                                    && ticket.isExchangeAvailable === "obrisano") : [];
 
     return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
@@ -148,6 +151,9 @@ function Profile() {
                 <div className="my_offers_trash_container">
                     <div className="my_offers">
                         {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
+                    </div>
+                    <div className="my_offers">
+                        {tickets && <TicketList tickets={deletedTickets} title="Obrisano:" />}
                     </div>
                 </div>
             </div>

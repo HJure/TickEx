@@ -346,10 +346,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/*
 CREATE TRIGGER trg_remove_invalid_svida
 AFTER UPDATE OF status ON OGLAS
 FOR EACH ROW
 EXECUTE FUNCTION remove_invalid_svida_entries();
+*/
 
 INSERT INTO svida(idKor,idOgl) VALUES (1,4);
 

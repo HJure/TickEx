@@ -27,13 +27,13 @@ public class User {
     @Column(name ="imekor",nullable = false)
     private String imeKor;
 
-    @Column(name ="prezimekor",nullable = false)
+    @Column(name ="prezkor",nullable = false)
     private String prezimeKor;
 
     @Column(name ="datumula",nullable = false)
     private LocalDate datumUla;
 
-    @Column(name ="statusKor",nullable = false)
+    @Column(name ="statuskor",nullable = false)
     private boolean statusKor;
 
     @Column(name ="ocjena",nullable = false)

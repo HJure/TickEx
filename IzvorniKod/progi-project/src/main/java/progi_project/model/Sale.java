@@ -1,5 +1,7 @@
 package progi_project.model;
 
+import java.util.Optional;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -9,14 +11,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "prodaja")
-@PrimaryKeyJoinColumn(name = "idOgl")
+@PrimaryKeyJoinColumn(name = "idogl")
 public class Sale extends Ticket {
 
     @Column(name = "cijena", nullable = false)
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "idKupac")
+    @JoinColumn(name = "idkupac", nullable = true)
     private User buyer;
 
     public int getPrice() {

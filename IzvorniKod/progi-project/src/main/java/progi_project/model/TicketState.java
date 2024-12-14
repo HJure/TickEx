@@ -5,7 +5,7 @@ public enum TicketState {
     AUKCIJA,
     RAZMJENA,
     NEPOZNATO,
-    IZBRISANO,
+    OBRISANO,
     ISTEKLO,
     PRODANO
 }
