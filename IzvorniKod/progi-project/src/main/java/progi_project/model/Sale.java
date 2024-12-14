@@ -16,7 +16,7 @@ public class Sale extends Ticket {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "kupujeidKor")
+    @JoinColumn(name = "idKupac")
     private User buyer;
 
     public int getPrice() {

@@ -38,7 +38,7 @@ const SearchResultsList = ({ results }) => {
                   idOgl: result.idOgl,
                   cijena: result.cijena,
                   idKor: result.idKor,
-                  kupujeidKor: result.kupujeidKor,
+                  idKupac: result.idKupac,
                   })
                 }
             >

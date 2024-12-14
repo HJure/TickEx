@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import progi_project.model.Ticket;
+import progi_project.model.TicketState;
 import progi_project.model.Vrsta_Dogadaja;
 
 @Repository
@@ -42,7 +43,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     // Find tickets by exchange availability
     //@Query("SELECT t FROM Ticket t WHERE t.isExchangeAvailable = :exchangeAvailable")
-    Optional<Ticket> findByIsExchangeAvailable(boolean exchangeAvailable);
+    Optional<Ticket> findByIsExchangeAvailable(TicketState exchangeAvailable);
 
     // Find tickets by id
     //@Query("SELECT u FROM Ticket t WHERE t.id = :id")
