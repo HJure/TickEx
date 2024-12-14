@@ -21,7 +21,6 @@ const Create = () => {
     const imeKor = localStorage.getItem("user_first_name");
     const prezimeKor = localStorage.getItem("user_last_name");
     const datumUla = localStorage.getItem("user_registration_date");
-    const isExchangeAvailable = "u prodaji";
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
@@ -93,7 +92,7 @@ const Create = () => {
             ticketType: ticketType || null,
             price: parseInt(price),
             owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla },
-            isExchangeAvailable,
+            isExchangeAvailable: "u prodaji"
         };
 
         setIsPending(true);

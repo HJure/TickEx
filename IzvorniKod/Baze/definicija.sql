@@ -66,6 +66,7 @@ CREATE TABLE OGLAS
   brSje INT,
   vrsUla VARCHAR(50),
   status VARCHAR(20) DEFAULT 'nepoznato' NOT NULL,
+  vrijemeObrisano TIMESTAMP DEFAULT NULL,
   idDog INT NOT NULL,
   idKor INT NOT NULL,
   PRIMARY KEY (idOgl),

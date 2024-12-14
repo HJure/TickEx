@@ -129,11 +129,39 @@ function Profile() {
         return () => clearTimeout(timer);
     }, [profile]);
 
+    useEffect(() => {
+        const fetchUserTickets = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/users/${userID}/tickets`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${access_token}`,
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error while fetching user tickets');
+                    }
+    
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        };
+    
+        fetchUserTickets();
+    }, [userID, access_token, backendUrl]);
+
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
                                     && ticket.isExchangeAvailable === "obrisano") : [];
+    const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
+                                    && ticket.isExchangeAvailable === "isteklo") : [];
 
     return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
@@ -154,6 +182,9 @@ function Profile() {
                     </div>
                     <div className="my_offers">
                         {tickets && <TicketList tickets={deletedTickets} title="Obrisano:" />}
+                    </div>
+                    <div className="my_offers">
+                        {tickets && <TicketList tickets={expiredTickets} title="Isteklo:" />}
                     </div>
                 </div>
             </div>

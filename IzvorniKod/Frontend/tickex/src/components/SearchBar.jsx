@@ -20,9 +20,13 @@ const SearchBar = ({ setResult }) => {
   const fetchData = (value) => {
     if (data) {
       const results = data.filter((item) =>
-        ((item.eventName?.toLowerCase().includes(value.toLowerCase()) ||
-        item.ticketType?.toLowerCase().includes(value.toLowerCase()) ||
-        item.location?.toLowerCase().includes(value.toLowerCase())) && item.owner.id !== ID)
+        item.owner.id !== parseInt(ID) && 
+        ["u prodaji", "aukcija", "razmjena"].includes(item.isExchangeAvailable) && 
+        (
+          item.eventName?.toLowerCase().includes(value.toLowerCase()) ||
+          item.ticketType?.toLowerCase().includes(value.toLowerCase()) ||
+          item.location?.toLowerCase().includes(value.toLowerCase())
+        )
       );
       setResult(results);
       console.log(results);

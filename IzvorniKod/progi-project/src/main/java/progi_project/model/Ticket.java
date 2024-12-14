@@ -1,6 +1,5 @@
 package progi_project.model;
 
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -50,12 +49,23 @@ public class Ticket{
 
     @Column(name = "status", nullable = false)
     private String isExchangeAvailable;
+    
+    @Column(name = "vrijemeobrisano", nullable = true)
+    private LocalDateTime ObrisanoTime;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public LocalDateTime getObrisanoTime() {
+		return ObrisanoTime;
+	}
+
+	public void setObrisanoTime(LocalDateTime obrisanoTime) {
+		ObrisanoTime = obrisanoTime;
+	}
+
+	public void setId(int id) {
         this.id = id;
     }
 

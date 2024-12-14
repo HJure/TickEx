@@ -1,6 +1,8 @@
 package progi_project.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +54,13 @@ public class TicketController {
     }
     
     @PutMapping("/{id}/status")
-    public ResponseEntity<Void> updateTicketStatus(@PathVariable int id) {
-        ticketService.updateTicketStatus(id, "obrisano");
+    public ResponseEntity<Void> updateTicketStatus(@PathVariable int id, @RequestBody Map<String, String> statusMap) {
+    	String status = statusMap.get("status");
+    	if(status.equals("obrisano")) {
+    		Ticket ticket = getTicketById(id);
+    		ticket.setObrisanoTime(LocalDateTime.now());
+    	}
+    	ticketService.updateTicketStatus(id, status);
         return ResponseEntity.noContent().build();
     }
 }

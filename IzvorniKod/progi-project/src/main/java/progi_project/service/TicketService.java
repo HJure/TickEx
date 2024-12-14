@@ -37,7 +37,11 @@ public class TicketService {
     
     public void updateTicketStatus(int id, String status) {
         Ticket ticket = ticketRepository.findById(id);
-        ticket.setExchangeAvailable(status);  //"obrisano"
+        ticket.setExchangeAvailable(status);
         ticketRepository.save(ticket);
+    }
+
+    public List<Ticket> getTicketsByUser(int userId) {
+        return ticketRepository.findAllByOwnerId(userId);
     }
 }
