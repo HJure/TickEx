@@ -16,10 +16,6 @@ public class Sale extends Ticket {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "idKor")
-    private User seller;
-
-    @ManyToOne
     @JoinColumn(name = "kupujeidKor")
     private User buyer;
 
@@ -29,14 +25,6 @@ public class Sale extends Ticket {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public User getSeller() {
-        return seller;
-    }
-
-    public void setSeller(User seller) {
-        this.seller = seller;
     }
 
     public User getBuyer() {

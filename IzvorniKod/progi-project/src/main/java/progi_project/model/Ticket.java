@@ -45,11 +45,11 @@ public class Ticket{
     private String ticketType;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idprodavac", nullable = false)
+    @JoinColumn(name = "idkor", nullable = false)
     private User owner;
 
     @Column(name = "status", nullable = false)
-    private boolean isExchangeAvailable = false;
+    private TicketState isExchangeAvailable = TicketState.NEPOZNATO;
 
     public Long getId() {
         return id;
@@ -115,11 +115,11 @@ public class Ticket{
         this.owner = owner;
     }
 
-    public boolean isExchangeAvailable() {
+    public TicketState isExchangeAvailable() {
         return isExchangeAvailable;
     }
 
-    public void setExchangeAvailable(boolean exchangeAvailable) {
+    public void setExchangeAvailable(TicketState exchangeAvailable) {
         isExchangeAvailable = exchangeAvailable;
     }
 }

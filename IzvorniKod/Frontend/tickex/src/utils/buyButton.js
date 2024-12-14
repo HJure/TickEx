@@ -1,9 +1,10 @@
 export function handleBuyClick(data) {
     const email = localStorage.getItem("email");
-    const id = null;
+    var id = null;
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     // First get userID by his email
-    fetch(`http://localhost:8080/users/getId?email=${email}`, {
+    fetch(`${backendUrl}/users/getId?email=${email}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json'
@@ -18,7 +19,7 @@ export function handleBuyClick(data) {
     });
 
     // Buy ticket
-    fetch(`http://localhost:8080/shop/${id}`, {
+    fetch(`${backendUrl}/shop/${id}`, {
         method: "PUT",
         headers: {
         "Content-Type": "application/json",

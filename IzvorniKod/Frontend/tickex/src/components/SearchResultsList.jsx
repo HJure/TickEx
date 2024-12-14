@@ -1,6 +1,6 @@
 import React from 'react';
 import '../style/SearchResultsList.css'
-import '../utils/buyButton.js'
+import { handleBuyClick} from '../utils/buyButton.js'
 
 
 const SearchResultsList = ({ results }) => {
