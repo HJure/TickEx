@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/LogIn';
 import Profile from './components/Profile';
 import TicketDetails from './components/TicketDetails';
+import SaleDetails from './components/SaleDetails';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Footer from './pages/Footer';
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/signup" element={<Login />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
+                    <Route path="/sales/:id" element={<SaleDetails url={`${backendUrl}/api/sales/`} />} />
                     {/* <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} /> */}
                     <Route path="/create" element={<Create />} />
                     <Route path="/shop" element={<Shop />} />

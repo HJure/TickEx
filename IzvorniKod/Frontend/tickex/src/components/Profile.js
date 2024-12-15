@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 import axios from 'axios';
 import TicketList from './TicketList';
+import SaleList from './SaleList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
 
@@ -130,8 +131,10 @@ function Profile() {
     }, [profile]);
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
+    const { data: sales} = useFetch(`${backendUrl}/api/sales`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
+    const purchasedTickets = Array.isArray(sales) ? sales.filter(sale => sale.buyer?.id === parseInt(userID)) : [];
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
                                     && ticket.isExchangeAvailable === "obrisano") : [];
 
@@ -151,6 +154,9 @@ function Profile() {
                 <div className="my_offers_trash_container">
                     <div className="my_offers">
                         {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
+                    </div>
+                    <div className="my_offers">
+                        {sales && <SaleList sales={purchasedTickets} title="Kupljeno:" />}
                     </div>
                     <div className="my_offers">
                         {tickets && <TicketList tickets={deletedTickets} title="Obrisano:" />}

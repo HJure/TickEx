@@ -51,6 +51,16 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @PostMapping("/rate")
+    public boolean canRateUser(@RequestBody User buyer, @RequestBody User owner, @RequestBody int rating) {
+        if(userService.canRateUser(buyer, owner)){
+            userService.rateUser(buyer, owner, rating);
+            return true;
+        }
+
+        return false;
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
         userService.deleteUser(id);

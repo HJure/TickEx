@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Application",
+      "request": "launch",
+      "mainClass": "progi_project.Application",
+      "projectName": "progi-project"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/Korisnik/Documents/GitHub/TickEx/IzvorniKod/Frontend/tickex/src/style",
+      "program": "c:/Users/Korisnik/Documents/GitHub/TickEx/IzvorniKod/Frontend/tickex/src/style/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
