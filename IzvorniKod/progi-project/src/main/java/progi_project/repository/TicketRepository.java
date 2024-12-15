@@ -1,6 +1,7 @@
 package progi_project.repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,10 +17,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     // Find tickets by event name
     //@Query("SELECT t FROM Ticket t WHERE t.nazDog = :eventName")
     Optional<Ticket> findByEventName(String eventName);
-
-    // Find tickets by owner
-    //@Query("SELECT t FROM Ticket t WHERE t.owner.id = :ownerId")
-    Optional<Ticket> findByOwnerId(int ownerId);
 
     // Find tickets by event type
     //@Query("SELECT t FROM Ticket t WHERE t.eventTypeId = :eventType")
@@ -51,4 +48,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     // Delete ticket by id
     Optional<Ticket> deleteById(long id);
+
+	List<Ticket> findAllByOwnerId(int userId);
 }

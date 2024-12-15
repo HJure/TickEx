@@ -16,9 +16,18 @@ const TicketDetails = ({ url }) => {
     useEffect(() => {
         const userID = localStorage.getItem("userID"); 
         if (ticket && userID) {
-            setCanDelete(ticket.owner.id === parseInt(userID));
+            setCanDelete(ticket.owner.id === parseInt(userID) && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable));
         }
-    }, [url, ticket]); 
+    }, [url, ticket]);
+
+    const [canBringBack, setBringBack] = useState(false);
+
+    useEffect(() => {
+        const userID = localStorage.getItem("userID"); 
+        if (ticket && userID) {
+            setBringBack(ticket.owner.id === parseInt(userID) && ticket.isExchangeAvailable === "obrisano");
+        }
+    }, [url, ticket]);    
 
     const handleDelete = () => {
         const deleteUrl = `${url}/${id}/status`.replace(/([^:]\/)\/+/g, "$1"); 
@@ -44,6 +53,41 @@ const TicketDetails = ({ url }) => {
             setIsDeleting(false);
         });
     };
+
+    const handleBack = () => {
+        let newStatus = "u prodaji";
+
+        if (ticket.price > 0) {
+            newStatus = "u prodaji";
+        } else if (ticket.wantedNameEvent) {
+            newStatus = "razmjena";
+        } else if (ticket.startPrice > 0) {
+            newStatus = "aukcija";
+        }
+     
+        const updateUrl = `${url}/${id}/status`.replace(/([^:]\/)\/+/g, "$1"); 
+        const access_token = localStorage.getItem("access_token"); 
+    
+        fetch(updateUrl, {
+            method: 'PUT',
+            headers: { 
+                "Authorization": `Bearer ${access_token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(() => {
+            console.log('Ticket status updated');
+            setIsDeleting(true); 
+            setTimeout(() => {
+                navigate('/profile'); 
+            }, 1500);
+        })
+        .catch(error => {
+            console.error("Greška prilikom ažuriranja karte:", error);
+            setIsDeleting(false);
+        });
+    };
     
 
     return (
@@ -60,15 +104,17 @@ const TicketDetails = ({ url }) => {
                             <span>Mjesto:</span> <span className="answer">{ticket.location}</span> |
                             <span> Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span> |
                             <span> Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType !== null ? ticket.ticketType : "-"}</span> |
-                            <span> Status:</span> <span className="answer">{ticket.exchangeAvailable ? "Prodano" : "U prodaji"}</span> |
+                            <span> Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span> |
                             <span> Cijena:</span> <span className="answer">{ticket.price} €</span> |
                             <span> Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span> |
                             <span> Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
+                            <span> Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
                         </p>
                         <br/>
                         <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
                     </div>
                     {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
+                    {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
                 </div>
             )}
         </div>

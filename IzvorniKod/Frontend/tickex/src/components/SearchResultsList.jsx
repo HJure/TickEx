@@ -21,7 +21,7 @@ const SearchResultsList = ({ results }) => {
             <span> Vrsta ulaznice: {result.ticketType}</span> |
             <span> Status:</span>{' '}
             <span className="answer">
-              {result.exchangeAvailable ? 'Prodano' : 'U prodaji'}
+              {result.isExchangeAvailable}
             </span>{' '}
             |
             <span> Cijena: {result.price} EUR</span> |
