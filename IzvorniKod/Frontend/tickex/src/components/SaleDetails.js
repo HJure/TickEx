@@ -8,6 +8,7 @@ const SaleDetails = ({ url }) => {
     const { data: sale, error, isPending } = useFetch(`${url}/${id}`);
     const [rating, setRating] = useState(0);
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+    const access_token = localStorage.getItem("access_token"); 
 
     const handleRating = async () => {
 
@@ -18,9 +19,10 @@ const SaleDetails = ({ url }) => {
         };
 
         try {
-            const response = await fetch(`${backendUrl}/users/rate`, {
+            const response = await fetch(`${backendUrl}/api/users/rate`, {
                 method: 'POST',
                 headers: {
+                    "Authorization": `Bearer ${access_token}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(requestData)
@@ -53,7 +55,7 @@ const SaleDetails = ({ url }) => {
                             <span> Status:</span> <span className="answer">{sale.exchangeAvailable ? "Prodano" : "U prodaji"}</span> |
                             <span> Cijena:</span> <span className="answer">{sale.price} €</span> |
                             <span> Vrsta događaja:</span> <span className="answer">{sale.eventTypeId.nazVrDog}</span> |
-                            <span> Broj sjedala:</span> <span className="answer">{sale.seatNumber !== null ? sale.seatNumber : "-"}</span> |
+                            <span> Broj sjedala:</span> <span className="answer">{sale.seatNumber !== null ? sale.seatNumber : "-"}</span> 
                         </p>
                         <br />
                         <p className="ticket-posted-by">

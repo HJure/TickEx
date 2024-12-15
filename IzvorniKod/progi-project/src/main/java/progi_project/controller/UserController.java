@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import progi_project.model.RatingRequest;
 import progi_project.model.Ticket;
 import progi_project.model.User;
 import progi_project.service.TicketService;
@@ -62,13 +63,17 @@ public class UserController {
     }
 
     @PostMapping("/rate")
-    public boolean canRateUser(@RequestBody User buyer, @RequestBody User owner, @RequestBody int rating) {
-        if(userService.canRateUser(buyer, owner)){
-            userService.rateUser(buyer, owner, rating);
-            return true;
-        }
+    public boolean canRateUser(@RequestBody RatingRequest ratingRequest) {
+    User buyer = ratingRequest.getBuyer();
+    User owner = ratingRequest.getOwner();
+    int rating = ratingRequest.getRating();
 
-        return false;
+    if (!userService.canRateUser(buyer, owner)) {
+        userService.rateUser(buyer, owner, rating);
+        return true;
+    }
+
+    return false;
     }
 
     @DeleteMapping("/{id}")

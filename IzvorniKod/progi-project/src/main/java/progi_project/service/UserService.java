@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+import progi_project.model.Rate;
+import progi_project.model.RateId;
 import progi_project.model.User;
-import progi_project.repository.Rate;
 import progi_project.repository.RateRepository;
 import progi_project.repository.UserRepository;
 
@@ -22,26 +24,15 @@ public class UserService {
     private RateRepository rateRepository;
 
     public boolean canRateUser(User buyer, User owner) {
-        Optional<Rate> existingRate = rateRepository.findByBuyerIDAndOwnerID(buyer.getId(), owner.getId());
-        if(existingRate.isPresent()) {
-            return false;
-        }
+    RateId rateId = new RateId(buyer.getId(), owner.getId());
+    Optional<Rate> existingRate = rateRepository.findById(rateId);
+    return !existingRate.isPresent();
+    }   
 
-        return true;
-    }
-
+    @Transactional
     public void rateUser(User buyer, User owner, int rating) {
-        //nadji korisnika
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(owner.getId()));
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setOcjena(rating);
-            userRepository.save(user);
-            
-            //napravi zapis o ocjenjivanju korisnika
-            Rate rate = new Rate(owner, buyer);
-            rateRepository.save(rate);
-        }
+        Rate rate = new Rate(buyer, owner, rating);
+        rateRepository.save(rate);
     }
 
     public User registerUser(User user) {
