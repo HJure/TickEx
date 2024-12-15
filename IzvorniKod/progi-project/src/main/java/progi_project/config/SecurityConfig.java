@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(withDefaults()).csrf().disable()
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error", "/users/register", "/tickets/**", "/users/**", "/vrsta-dogadaja").permitAll()
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/shop/**","/", "/error", "/users/register", "/tickets/**", "/users/**", "/vrsta-dogadaja").permitAll()
                                     .anyRequest().authenticated()
                                     ).oauth2Login()
                                     .successHandler(customOAuth2SuccessHandler)

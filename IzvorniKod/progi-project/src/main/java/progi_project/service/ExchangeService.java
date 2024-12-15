@@ -1,12 +1,13 @@
 package progi_project.service;
 
-import progi_project.model.Exchange;
-import progi_project.repository.ExchangeRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import progi_project.model.Exchange;
+import progi_project.repository.ExchangeRepository;
 
 @Service
 public class ExchangeService {

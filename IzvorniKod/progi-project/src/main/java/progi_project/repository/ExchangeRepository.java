@@ -1,10 +1,12 @@
 package progi_project.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import progi_project.model.Exchange;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import progi_project.model.Exchange;
 
 @Repository
 public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
@@ -35,6 +37,8 @@ public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
 
     // Find exchanges by created timestamp within a certain range
     List<Exchange> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+    Exchange findById(int id);
 }
 
 

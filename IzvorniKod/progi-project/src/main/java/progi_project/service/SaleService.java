@@ -1,6 +1,7 @@
 package progi_project.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,22 +24,20 @@ public class SaleService {
         return saleRepository.save(sale);
     }
 
-    public Sale findById(int id) {
-        return saleRepository.findById(id);
-    }
-
     public List<Sale> getAllSales() {
         return saleRepository.findAll();
     }
 
     // When customer buy ticket customerID and sale object are passed
     // Find that sale in db and update buyer from null to customerID
-    public Sale updateSale(int id, Sale sale) {
-        Sale existingSale = saleRepository.findById(sale.getId());
+    public Sale updateSale(Sale sale, int id) {
+        Optional<Sale> optionalSale = saleRepository.findById(sale.getId());
+        if (optionalSale.isEmpty()) {
+            return null;
+        }
+        Sale existingSale = optionalSale.get();
         User buyer = userRepository.findById(id);
-
-        existingSale.setBuyer(buyer); 
-
+        existingSale.setBuyer(buyer);
         return saleRepository.save(existingSale);
     }
 

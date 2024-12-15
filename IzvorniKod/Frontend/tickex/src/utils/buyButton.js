@@ -1,30 +1,17 @@
 export function handleBuyClick(data) {
-    const email = localStorage.getItem("email");
-    var id = null;
+    const id = localStorage.getItem("userID");
+    const access_token = localStorage.getItem("access_token");
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
-
-    // First get userID by his email
-    fetch(`${backendUrl}/users/getId?email=${email}`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json'
-        }
-    })
-    .then((idKor) => {
-        console.log("User ID from backend:", idKor);
-        id = idKor;
-    })
-    .catch((error) => {
-        console.error("Error fetching user ID:", error);
-    });
+    console.log(data)
 
     // Buy ticket
-    fetch(`${backendUrl}/shop/${id}`, {
-        method: "PUT",
+    fetch(`${backendUrl}/api/shop/${id}`, {
+        method: "POST",
         headers: {
-        "Content-Type": "application/json",
+            "Authorization": `Bearer ${access_token}`,
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
     })
     .then((response) => {
     if (response.ok) {

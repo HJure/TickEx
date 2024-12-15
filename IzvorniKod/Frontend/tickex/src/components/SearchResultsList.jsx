@@ -8,7 +8,6 @@ const SearchResultsList = ({ results }) => {
     console.error("array doesn't exist");
     return null;
   }
-  console.log(results);
 
   return (
     <>
@@ -33,15 +32,7 @@ const SearchResultsList = ({ results }) => {
             </span>
             <br />
             <br />
-            <button className="btn-buy" onClick={() =>
-                  handleBuyClick({
-                  idOgl: result.idOgl,
-                  cijena: result.cijena,
-                  idKor: result.idKor,
-                  idKupac: result.idKupac,
-                  })
-                }
-            >
+            <button className="btn-buy" onClick={() => handleBuyClick(result)}>
               Kupi
             </button>
           </div>

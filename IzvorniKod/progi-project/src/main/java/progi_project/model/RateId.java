@@ -1,35 +1,36 @@
 package progi_project.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class RateId implements Serializable {
-    private int ocjenjujeIdKor;
-    private int ocijenjenIdKor;
+    private int ocjenjujeidkor;
+    private int ocijenjenidkor;
 
     public RateId() {}
 
     public RateId(int ocjenjujeIdKor, int ocijenjenIdKor) {
-        this.ocjenjujeIdKor = ocjenjujeIdKor;
-        this.ocijenjenIdKor = ocijenjenIdKor;
+        this.ocjenjujeidkor = ocjenjujeIdKor;
+        this.ocijenjenidkor = ocijenjenIdKor;
     }
 
     public int getOcjenjujeIdKor() {
-        return ocjenjujeIdKor;
+        return ocjenjujeidkor;
     }
 
     public void setOcjenjujeIdKor(int ocjenjujeIdKor) {
-        this.ocjenjujeIdKor = ocjenjujeIdKor;
+        this.ocjenjujeidkor = ocjenjujeIdKor;
     }
 
     public int getOcijenjenIdKor() {
-        return ocijenjenIdKor;
+        return ocijenjenidkor;
     }
 
     public void setOcijenjenIdKor(int ocijenjenIdKor) {
-        this.ocijenjenIdKor = ocijenjenIdKor;
+        this.ocijenjenidkor = ocijenjenIdKor;
     }
 
     @Override
@@ -37,11 +38,11 @@ public class RateId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RateId rateId = (RateId) o;
-        return ocjenjujeIdKor == rateId.ocjenjujeIdKor && ocijenjenIdKor == rateId.ocijenjenIdKor;
+        return ocjenjujeidkor == rateId.ocjenjujeidkor && ocijenjenidkor == rateId.ocijenjenidkor;
     }
 
     @Override
     public int hashCode() {
-        return 613 * ocjenjujeIdKor + ocijenjenIdKor;
+        return Objects.hash(ocjenjujeidkor, ocijenjenidkor);
     }
 }

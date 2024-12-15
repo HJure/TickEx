@@ -11,11 +11,11 @@ public class Rate {
     private RateId id;
 
     @ManyToOne
-    @JoinColumn(name = "ocjenjujeidkor")
+    @JoinColumn(name = "ocjenjujeidkor", insertable = false, updatable = false)
     private User buyer;
 
     @ManyToOne
-    @JoinColumn(name = "ocijenjenidkor")
+    @JoinColumn(name = "ocijenjenidkor", insertable = false, updatable = false)
     private User owner;
 
     private int ocjena;
