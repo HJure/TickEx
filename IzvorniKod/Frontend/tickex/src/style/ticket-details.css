@@ -14,7 +14,12 @@
     color: #b535f1;
     margin-bottom: 15px;
     text-align: center;
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    align-items: center;
 }
+
 
 .ticket-info {
     font-size: 16px;
@@ -62,4 +67,10 @@
 
 .ticket-details button:hover {
     background: #9a2ce1;
+}
+
+.like {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
 }

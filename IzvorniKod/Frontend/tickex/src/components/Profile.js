@@ -6,9 +6,9 @@ import TicketList from './TicketList';
 import SaleList from './SaleList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
+import StarRate from './StarRate';
 
-function Profile() {
-    const [profile, setProfile] = useState(null);
+function Profile({profile, setProfile}) {
     const [email, setEmail] = useState(null);
     const [userID, setUserID] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -35,7 +35,7 @@ function Profile() {
         localStorage.removeItem("user_registration_date");
 
         setProfile(null);  
-        navigate('/signup'); 
+        navigate('/'); 
     }, [navigate]);
 
     useEffect(() => {
@@ -170,11 +170,10 @@ function Profile() {
         <div className='profilediv'>
             <div className="profile-container">
                 <img src={profile.picture} alt="user" className="profile-image" />
-                <h3 className="profile-heading">Korisnik prijavljen</h3>
                 <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
                 <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
                 <p className="profile-info">Ocjena: {localStorage.getItem("user_rating")}</p>
-                <button onClick={logOut} className="logout-button">Odjavi se</button>
+                <StarRate ocjena={localStorage.getItem("user_rating")}/>
             </div>
             <div>
                 {ticketsError && <div className='error'>{ticketsError}</div>}
@@ -197,7 +196,6 @@ function Profile() {
             <br />
             <br />
             <Link to="/create" className="newBlog">Dodaj novu ulaznicu</Link>
-            <Link to="/shop" className="newBlog">Kupuj!</Link>
         </div>
     ) : (
         <p className="loading-text">Učitavam profil...</p>

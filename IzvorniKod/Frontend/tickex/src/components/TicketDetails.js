@@ -3,6 +3,7 @@ import useFetch from "./useFetch";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import '../style/ticket-details.css';
+import StarRate from "./StarRate";
 
 
 const TicketDetails = ({ url }) => {
@@ -10,24 +11,19 @@ const TicketDetails = ({ url }) => {
     const { data: ticket, error, isPending } = useFetch(`${url}/${id}`);
     const [isDeleting, setIsDeleting] = useState(false);
     const navigate = useNavigate();
-
     const [canDelete, setCanDelete] = useState(false);
+    const [canBringBack, setBringBack] = useState(false);
+
+    // State for like button image
+    const [likeImage, setLikeImage] = useState("../images/unlike.png");
 
     useEffect(() => {
         const userID = localStorage.getItem("userID"); 
         if (ticket && userID) {
             setCanDelete(ticket.owner.id === parseInt(userID) && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable));
-        }
-    }, [url, ticket]);
-
-    const [canBringBack, setBringBack] = useState(false);
-
-    useEffect(() => {
-        const userID = localStorage.getItem("userID"); 
-        if (ticket && userID) {
             setBringBack(ticket.owner.id === parseInt(userID) && ticket.isExchangeAvailable === "obrisano");
         }
-    }, [url, ticket]);    
+    }, [ticket]);
 
     const handleDelete = () => {
         const deleteUrl = `${url}/${id}/status`.replace(/([^:]\/)\/+/g, "$1"); 
@@ -56,7 +52,6 @@ const TicketDetails = ({ url }) => {
 
     const handleBack = () => {
         let newStatus = "u prodaji";
-
         if (ticket.price > 0) {
             newStatus = "u prodaji";
         } else if (ticket.wantedNameEvent) {
@@ -88,7 +83,11 @@ const TicketDetails = ({ url }) => {
             setIsDeleting(false);
         });
     };
-    
+
+    // Handle like button click
+    const handleLikeClick = () => {
+        setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
+    };
 
     return (
         <div className="ticket-details">
@@ -97,7 +96,16 @@ const TicketDetails = ({ url }) => {
             {error && <div>Greška: {error}</div>}
             {ticket && (
                 <div className="ticket-content">
-                    <h2>{ticket.eventName}</h2> 
+                    <h2>
+                        {ticket.eventName} 
+                        <img 
+                            className="like" 
+                            src={likeImage} 
+                            alt="like" 
+                            onClick={handleLikeClick} // Add click event handler here
+                        />
+                    </h2>
+
                     <div className="ticket-info">
                         <br/>
                         <p>
@@ -112,6 +120,7 @@ const TicketDetails = ({ url }) => {
                         </p>
                         <br/>
                         <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
+                        <StarRate ocjena={ticket.owner.ocjena} />
                     </div>
                     {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
                     {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}

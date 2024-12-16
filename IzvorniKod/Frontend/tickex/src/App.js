@@ -11,19 +11,19 @@ import Footer from './pages/Footer';
 import Create from './components/Create';
 import Shop from './components/Shop'
 import UserForm from './components/UserForm';
-
+import { useState } from "react";
 
 function App() {
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
-
+    const [profile, setProfile] = useState(null);
     return (
         <Router>
             <div className="App">
-            <Navbar />
+            <Navbar profile={profile} setProfile={setProfile}/>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/signup" element={<Login />} />
-                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile" element={<Profile profile={profile} setProfile={setProfile}/>} />
                     <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
                     <Route path="/sales/:id" element={<SaleDetails url={`${backendUrl}/api/sales/`} />} />
                     {/* <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} /> */}
