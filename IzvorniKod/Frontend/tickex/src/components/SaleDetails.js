@@ -1,92 +1,109 @@
 import { useParams } from "react-router-dom"; 
-import useFetch from "./useFetch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import '../style/ticket-details.css';
 
 const SaleDetails = ({ url }) => {
     const { id } = useParams();
-    const { data: sale, error, isPending } = useFetch(`${url}/${id}`);
+    const [ticket, setTicket] = useState(null);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [rating, setRating] = useState(0);
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
-    const access_token = localStorage.getItem("access_token"); 
+    const access_token = localStorage.getItem("access_token");
 
-    const handleRating = async () => {
+    useEffect(() => {
+        const fetchTicket = async () => {
+            try {
+                const response = await fetch(`${url}${id}`, {
+                    method: 'GET',
+                    headers: { 
+                        "Authorization": `Bearer ${access_token}`,
+                        "Content-Type": "application/json"
+                    },
+                });
 
-        const requestData = {
-            buyer: sale.buyer,
-            owner: sale.owner,
-            rating: rating
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Ticket data fetched:', data);
+                setTicket(data);
+            } catch (err) {
+                console.error("Error fetching ticket:", err);
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
+        fetchTicket();
+    }, [url, id, access_token]);
+
+    const handleRating = async () => {
         try {
-            const response = await fetch(`${backendUrl}/api/users/rate`, {
+            const response = await fetch(`${backendUrl}/api/users/rate/${rating}`, {
                 method: 'POST',
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(requestData)
+                body: JSON.stringify(ticket)
             });
-    
-            if (response.ok) {
-                alert('Rating submitted successfully!');
+
+            const isRated = await response.json();
+
+            if (isRated) {
+                alert("Rating submitted successfully!");
             } else {
-                alert('Failed to submit rating!');
+                alert("You have already rated this user.");
             }
         } catch (error) {
-            console.error('Error occurred while submitting rating:', error);
-            alert('An error occurred while submitting the rating.');
+            console.error("Error occurred while submitting rating:", error);
+            alert("An error occurred while submitting the rating.");
         }
     };
 
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
     return (
         <div className="ticket-details">
-            {isPending && <div>Učitavam...</div>}
-            {error && <div>Greška: {error}</div>}
-            {sale ? (
-                <div className="ticket-content">
-                    <h2>{sale.eventName}</h2>
-                    <div className="ticket-info">
-                        <br />
-                        <p>
-                            <span>Mjesto:</span> <span className="answer">{sale.location}</span> |
-                            <span> Datum:</span> <span className="answer">{sale.eventDate.split('T')[0]}</span> |
-                            <span> Vrsta ulaznice:</span> <span className="answer">{sale.ticketType !== null ? sale.ticketType : "-"}</span> |
-                            <span> Status:</span> <span className="answer">{sale.exchangeAvailable ? "Prodano" : "U prodaji"}</span> |
-                            <span> Cijena:</span> <span className="answer">{sale.price} €</span> |
-                            <span> Vrsta događaja:</span> <span className="answer">{sale.eventTypeId.nazVrDog}</span> |
-                            <span> Broj sjedala:</span> <span className="answer">{sale.seatNumber !== null ? sale.seatNumber : "-"}</span> 
-                        </p>
-                        <br />
-                        <p className="ticket-posted-by">
-                            Objavio: {sale.owner.imeKor} {sale.owner.prezimeKor}
-                        </p>
-                        <br />
-                        <p className="ticket-posted-by">
-                            Email: {sale.owner.email}
-                        </p>
-                        <br />
-                        <div className="ticket-rating">
-                            <div className="stars">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <span 
-                                        key={star} 
-                                        className={`star ${star <= rating ? 'selected' : ''}`}
-                                        onClick={() => setRating(star)}
-                                        style={{ cursor: 'pointer', fontSize: '24px', color: star <= rating ? 'purple' : 'gray' }}
-                                    >
-                                        ★
-                                    </span>
-                                ))}
-                            </div>
-                            <button onClick={handleRating}>Submit Rating</button>
-                        </div>
+            <div className="ticket-info">
+                <p>
+                    <span>Mjesto:</span> <span className="answer">{ticket.location}</span> |
+                    <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span> |
+                    <span>Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType || "-"}</span> |
+                    <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable ? "Yes" : "No"}</span> |
+                    <span>Cijena:</span> <span className="answer">{ticket.price} €</span> |
+                    <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span> |
+                    <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber || "-"}</span>
+                </p>
+                <p className="ticket-posted-by">
+                    Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}
+                </p>
+                <br/>
+                <p className="ticket-posted-by">
+                    Email: {ticket.owner.email}
+                </p>
+                <div className="ticket-rating">
+                    <div className="stars">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <span 
+                                key={star} 
+                                className={`star ${star <= rating ? 'selected' : ''}`}
+                                onClick={() => setRating(star)}
+                                style={{ cursor: 'pointer', fontSize: '24px', color: star <= rating ? 'yellow' : 'lightgray' }}
+                            >
+                                ★
+                            </span>
+                        ))}
                     </div>
+                    <button onClick={handleRating}>Submit Rating</button>
                 </div>
-            ) : ( <div>Sale not found.</div>)
-            }
+            </div>
         </div>
     );
-}
+};
 
 export default SaleDetails;

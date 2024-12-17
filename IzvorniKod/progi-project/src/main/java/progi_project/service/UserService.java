@@ -24,15 +24,19 @@ public class UserService {
     private RateRepository rateRepository;
 
     public boolean canRateUser(User buyer, User owner) {
-    RateId rateId = new RateId(buyer.getId(), owner.getId());
-    Optional<Rate> existingRate = rateRepository.findById(rateId);
-    return !existingRate.isPresent();
-    }   
+        RateId rateId = new RateId(buyer.getId(), owner.getId());
+        Optional<Rate> existingRate = rateRepository.findById(rateId);
+        return !existingRate.isPresent();
+    }
 
     @Transactional
-    public void rateUser(User buyer, User owner, int rating) {
-        Rate rate = new Rate(buyer, owner, rating);
-        rateRepository.save(rate);
+    public boolean rateUser(User buyer, User owner, int rating) {
+        if (canRateUser(buyer, owner)) {
+            Rate rate = new Rate(buyer, owner, rating);
+            rateRepository.save(rate);
+            return true;
+        }
+        return false;
     }
 
     public User registerUser(User user) {

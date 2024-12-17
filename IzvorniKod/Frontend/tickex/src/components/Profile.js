@@ -157,10 +157,9 @@ function Profile({profile, setProfile}) {
     }, [userID, access_token, backendUrl]);
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
-    const { data: sales} = useFetch(`${backendUrl}/api/sales`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
-    const purchasedTickets = Array.isArray(sales) ? sales.filter(sale => sale.buyer?.id === parseInt(userID)) : [];
+    const purchasedTickets = tickets ? tickets.filter(ticket => ticket.buyer?.id === parseInt(userID)) : [];
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
                                     && ticket.isExchangeAvailable === "obrisano") : [];
     const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
@@ -183,7 +182,7 @@ function Profile({profile, setProfile}) {
                         {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
                     </div>
                     <div className="my_offers">
-                        {sales && <SaleList sales={purchasedTickets} title="Kupljeno:" />}
+                        {tickets && <SaleList tickets={purchasedTickets} title="Kupljeno:" />}
                     </div>
                     <div className="my_offers">
                         {tickets && <TicketList tickets={deletedTickets} title="Obrisano:" />}

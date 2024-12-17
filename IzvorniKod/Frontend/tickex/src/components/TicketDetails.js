@@ -13,6 +13,7 @@ const TicketDetails = ({ url }) => {
     const navigate = useNavigate();
     const [canDelete, setCanDelete] = useState(false);
     const [canBringBack, setBringBack] = useState(false);
+    console.log(ticket)
 
     // State for like button image
     const [likeImage, setLikeImage] = useState("../images/unlike.png");

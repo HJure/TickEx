@@ -3,11 +3,15 @@ package progi_project.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class RateId implements Serializable {
+    @Column(name = "ocjenjujeidkor")
     private int ocjenjujeidkor;
+
+    @Column(name = "ocijenjenidkor")
     private int ocijenjenidkor;
 
     public RateId() {}
