@@ -4,9 +4,30 @@
 .App {
   font-family: 'Kanit';
   width: 100%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(230, 206, 255, 0.8), rgba(200, 150, 255, 0.6));
-  background-blend-mode: multiply;
-  /*box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15); */
-  /*border-radius: 12px;*/
+  padding-top: 70px;
+  background-color: #4158d0;
+    background-image: linear-gradient(
+      43deg,
+      #4545ec 0%,
+      #d1a4dc 46%,
+      #c109ef 100%
+    );
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+      rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+      rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+      rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+      rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   overflow-y: auto;
+  background-size: 200% 200%;
+    animation: falling-gradient 3s linear infinite alternate;
 }
+
+@keyframes falling-gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+

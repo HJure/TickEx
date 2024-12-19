@@ -41,16 +41,64 @@
 }
 
 .aboutBtn {
-    width: 15%;
-    margin: 10px 0px;
-    border-radius: 5px;
-    font-size: 1rem;
-    border: none;
-    background-color: rgba(154, 67, 221, 0.36);
-    color: #000000;
-    padding: 10px;
-}
-
-.aboutBtn:hover {
-    background-color: rgba(154, 67, 221, 0.5);
-}
+    display: inline-block;
+    margin-left: 20px;
+    background: rgb(179, 94, 236);
+    padding: 12px 24px;
+    border: 1px solid #4f4f4f;
+    border-radius: 4px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    font-size: 19px;
+    cursor: pointer;
+    color: black;
+    z-index: 1;
+  }
+  
+  .aboutBtn:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  .aboutBtn:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #a128cd;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  .aboutBtn:hover {
+    color: #ffffff;
+    border: 1px solid #a128cd;
+  }
+  
+  .aboutBtn:hover:before {
+    top: -35%;
+    background-color: #a128cd;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+  
+  .aboutBtn:hover:after {
+    top: -45%;
+    background-color: #a128cd;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }

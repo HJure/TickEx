@@ -6,13 +6,16 @@
 }
 
 .navigation {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 70px;
   width: 100%;
   display: flex;
   align-items: center;
   z-index: 100000005;
   border-bottom: 2px solid #000000;
-  background-color: rgba(154, 67, 221, 0.36);
+  background-color: rgba(211, 0, 244, 0.36);
 }
 
 .navigation-menu {
