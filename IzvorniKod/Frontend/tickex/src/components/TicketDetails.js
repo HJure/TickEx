@@ -15,6 +15,10 @@ const TicketDetails = ({ url }) => {
     const [canBringBack, setBringBack] = useState(false);
     const [weatherData, setWeatherData] = useState({})
     const [weatherLocation, setWeatherLocation] = useState('')
+    /*const [eventType, setEventType] = useState('')
+    const [artistSearch, setArtistSearch] = useState('')
+    const [artistData, setArtistData] = useState({})*/
+    //OVDJE
 
     // State for like button image
     const [likeImage, setLikeImage] = useState("../images/unlike.png");
@@ -28,6 +32,8 @@ const TicketDetails = ({ url }) => {
 
         if(ticket){
             setWeatherLocation(ticket.location);
+            //setEventType(ticket.eventTypeId.nazVrDog);
+            //OVDJE
         }
     }, [ticket]);
 
@@ -44,6 +50,19 @@ const TicketDetails = ({ url }) => {
             searchWeather()
         }
     }, [weatherLocation]);
+
+    /*useEffect(() => {
+        if (eventType === 'Glazba') {
+            setArtistSearch(ticket.eventName)
+        }
+    }, [eventType]);
+
+    useEffect(() => {
+        if (artistSearch) {
+            //nešto
+        }
+    }, [artistSearch]);*/
+    //OVDJE
 
     const getDaysDifference = (ticketDate) => {
         const today = new Date();
@@ -138,14 +157,14 @@ const TicketDetails = ({ url }) => {
                     <div className="ticket-info">
                         <br/>
                         <p>
-                            <span>Mjesto:</span> <span className="answer">{ticket.location}</span> |
-                            <span> Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span> |
-                            <span> Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType !== null ? ticket.ticketType : "-"}</span> |
-                            <span> Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span> |
-                            <span> Cijena:</span> <span className="answer">{ticket.price} €</span> |
-                            <span> Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span> |
-                            <span> Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span> |
-                            <span> Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span> |
+                            <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
+                            <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
+                            <span>Vrsta ulaznice:</span> <span className="answer"> {ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
+                            <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
+                            <span>Cijena:</span> <span className="answer">{ticket.price} €</span>
+                            <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
+                            <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
+                            <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
                             <span>
                                 Vrijeme: 
                             </span>
@@ -155,6 +174,14 @@ const TicketDetails = ({ url }) => {
                                         (getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15 ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.conditions || "-" : "-") : "-"
                                 }
                             </span>
+
+                            {ticket.eventTypeId.nazVrDog === 'Glazba' && (
+                            <span>
+                                Artits: Zasada ignoriraj ovo, ovo je priprema 
+                                <img src="path/to/your/image.jpg" alt="Artist" />
+                            </span>
+                            )}
+
                         </p>
                         <br/>
                         <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>

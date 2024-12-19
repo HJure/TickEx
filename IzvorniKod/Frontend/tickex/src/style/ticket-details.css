@@ -10,7 +10,7 @@
 }
 
 .ticket-details h2 {
-    font-size: 24px;
+    font-size: 36px;
     color: #b535f1;
     margin-bottom: 15px;
     text-align: center;
@@ -26,21 +26,24 @@
     color: #333;
     line-height: 1.6;
     margin-top: 15px;
-    text-align: center;
+    text-align: left;
 }
 
 .ticket-info span {
+  font-size: 22px;
     font-weight: bold;
     color: #444; 
 }
 
 .ticket-info p {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     font-weight: 400;
     color: #7e0d88; 
 }
 
 .ticket-info p .answer {
+  font-size: 18px;
     color: #d14a73; 
 }
 
@@ -53,21 +56,67 @@
 }
 
 .ticket-details button {
-    display: block;
-    margin: 20px auto;
-    background: #b535f1;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
+    display: inline-block;
+    margin-left: 20px;
+    background: rgb(179, 94, 236);
+    padding: 12px 24px;
+    border: 1px solid #4f4f4f;
+    border-radius: 4px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    font-size: 19px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
-
-.ticket-details button:hover {
-    background: #9a2ce1;
-}
+    color: black;
+    z-index: 1;
+  }
+  
+  .ticket-details button:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  .ticket-details button:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #a128cd;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  .ticket-details button:hover {
+    color: #ffffff;
+    border: 1px solid #a128cd;
+  }
+  
+  .ticket-details button:hover:before {
+    top: -35%;
+    background-color: #a128cd;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+  
+  .ticket-details button:hover:after {
+    top: -45%;
+    background-color: #a128cd;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
 
 .like {
     height: 25px;
