@@ -7,12 +7,14 @@ import SaleList from './SaleList';
 import '../style/profile.css';
 import { Link } from "react-router-dom";
 import StarRate from './StarRate';
+import Sidebar from './Sidebar';
 
-function Profile({profile, setProfile}) {
+function Profile({ profile, setProfile }) {
     const [email, setEmail] = useState(null);
     const [userID, setUserID] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [isProfileReady, setIsProfileReady] = useState(false); 
+    const [isProfileReady, setIsProfileReady] = useState(false);
+    const [activeTab, setActiveTab] = useState('profile'); // Set default tab to 'profile'
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -34,8 +36,8 @@ function Profile({profile, setProfile}) {
         localStorage.removeItem("user_last_name");
         localStorage.removeItem("user_registration_date");
 
-        setProfile(null);  
-        navigate('/'); 
+        setProfile(null);
+        navigate('/');
     }, [navigate]);
 
     useEffect(() => {
@@ -78,7 +80,7 @@ function Profile({profile, setProfile}) {
 
                     const data = await response.json();
                     setUserID(data);
-                    localStorage.setItem("userID", data); 
+                    localStorage.setItem("userID", data);
                 } catch (error) {
                     console.error('Error:', error);
                 }
@@ -130,70 +132,51 @@ function Profile({profile, setProfile}) {
         return () => clearTimeout(timer);
     }, [profile]);
 
-    useEffect(() => {
-        const fetchUserTickets = async () => {
-            if (userID) {
-                try {
-                    const response = await fetch(`${backendUrl}/api/users/${userID}/tickets`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${access_token}`,
-                        },
-                        credentials: 'include',
-                    });
-    
-                    if (!response.ok) {
-                        throw new Error('Error while fetching user tickets');
-                    }
-    
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            }
-        };
-    
-        fetchUserTickets();
-    }, [userID, access_token, backendUrl]);
-
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
-    const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
+    const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
     const purchasedTickets = tickets ? tickets.filter(ticket => ticket.buyer?.id === parseInt(userID)) : [];
-    const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
+    const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
-    const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID) 
+    const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "isteklo") : [];
+    const likedTickets = tickets
+
+    const renderTicketList = () => {
+        switch (activeTab) {
+            case 'myOffers':
+                return <div className="my_offers" ><TicketList tickets={filteredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'purchased':
+                return <div className="my_offers" ><TicketList tickets={purchasedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'deleted':
+                return <div className="my_offers" ><TicketList tickets={deletedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'expired':
+                return <div className="my_offers" ><TicketList tickets={expiredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'liked':
+                return <div className="my_offers" ><TicketList tickets={likedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'profile':
+                return (
+                    <div className="profile-container">
+                        <img src={profile.picture} alt="user" className="profile-image" />
+                        <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
+                        <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
+                        <p className="profile-info">Ocjena: {localStorage.getItem("user_rating")}</p>
+                        <StarRate ocjena={localStorage.getItem("user_rating")} />
+                    </div>
+                );
+            default:
+                return null;
+        }
+    };
 
     return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
-            <div className="profile-container">
-                <img src={profile.picture} alt="user" className="profile-image" />
-                <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
-                <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
-                <p className="profile-info">Ocjena: {localStorage.getItem("user_rating")}</p>
-                <StarRate ocjena={localStorage.getItem("user_rating")}/>
-            </div>
-            <div>
+            <Sidebar className="bar" setActiveTab={setActiveTab} />
+            <div className="profile-content">
                 {ticketsError && <div className='error'>{ticketsError}</div>}
                 {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
-                <div className="my_offers_trash_container">
-                    <div className="my_offers">
-                        {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
-                    </div>
-                    <div className="my_offers">
-                        {tickets && <SaleList tickets={purchasedTickets} title="Kupljeno:" />}
-                    </div>
-                    <div className="my_offers">
-                        {tickets && <TicketList tickets={deletedTickets} title="Obrisano:" />}
-                    </div>
-                    <div className="my_offers">
-                        {tickets && <TicketList tickets={expiredTickets} title="Isteklo:" />}
-                    </div>
-                </div>
+                {renderTicketList()}
             </div>
-            <br />
-            <br />
             <Link to="/create" className="newBlog">Dodaj novu ulaznicu</Link>
         </div>
     ) : (

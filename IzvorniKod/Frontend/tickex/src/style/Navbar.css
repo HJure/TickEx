@@ -1,12 +1,17 @@
-
 .logo img {
   width: 198px;
   height: 50px;
   margin-left: 5%;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
 }
 
 .navigation {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 70px;
@@ -15,123 +20,131 @@
   align-items: center;
   z-index: 100000005;
   border-bottom: 2px solid #000000;
-  background-color: rgba(211, 0, 244, 0.36);
+  background: linear-gradient(90deg, rgba(211, 0, 244, 0.36), rgba(0, 195, 255, 0.36));
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navigation:hover {
+  background: linear-gradient(90deg, rgba(255, 0, 150, 0.5), rgba(0, 255, 200, 0.5));
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .navigation-menu {
   margin-left: auto;
+  margin-right: 2rem;
 }
 
 .navigation-menu ul {
   display: flex;
   padding: 0.5rem;
+  margin: 0;
 }
 
-.navigation-menu li { 
+.navigation-menu li {
   list-style-type: none;
   margin: 0 1rem;
-  transition: all 1s;
-}
-
-.navigation-menu li,
-.navigation-menu li button {
-  text-decoration: none;
-  font-size: 1.5rem;
-  color: #000000;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 20px 0;
-  margin: 0 10px;
-  display: inline-block;
   position: relative;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: Kanit;
+  text-align: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-/* From Uiverse.io by mrhyddenn */ 
+.navigation-menu li:hover {
+  transform: translateY(-3px) rotate(-5deg);
+  animation: swing 0.5s ease-in-out forwards;
+}
+
 .nav-link-line {
   position: relative;
-  margin: 0;
-  padding: 0.8em 1em;
-  outline: none;
+  padding: 0.5em 1em;
   text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
   border: none;
   text-transform: uppercase;
-  background-color: #333;
-  border-radius: 10px;
-  color: #fff;
-  font-weight: 300;
-  font-size: 18px;
-  font-family: inherit;
-  z-index: 0;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+  background: none;
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-.nav-link-line:hover {
-  animation: sh0 0.5s ease-in-out both;
-}
-
-@keyframes sh0 {
-  0% {
-    transform: rotate(0deg) translate3d(0, 0, 0);
-  }
-
-  25% {
-    transform: rotate(7deg) translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: rotate(-7deg) translate3d(0, 0, 0);
-  }
-
-  75% {
-    transform: rotate(1deg) translate3d(0, 0, 0);
-  }
-
-  100% {
-    transform: rotate(0deg) translate3d(0, 0, 0);
-  }
-}
-
-.nav-link-line::before,
 .nav-link-line::after {
   content: '';
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #fff;
+  bottom: -5px;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background-color: #fff;
   opacity: 0;
-  transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
-  z-index: -1;
-  transform: translate(100%, -25%) translate3d(0, 0, 0);
+  transition: all 0.3s ease-in-out;
 }
 
-.nav-link-line:hover::before,
-.nav-link-line:hover::after {
-  opacity: 0.15;
-  transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
-}
-
-.nav-link-line:hover::before {
-  transform: translate3d(50%, 0, 0) scale(0.9);
+.nav-link-line:hover {
+  color: #ff79c6;
 }
 
 .nav-link-line:hover::after {
-  transform: translate(50%, 0) scale(1.1);
+  opacity: 1;
+  bottom: 0;
+  animation: swing 0.5s ease-in-out forwards;
 }
 
-.link{
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(7deg);
+  }
+  50% {
+    transform: rotate(-7deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.navigation-menu li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 3px;
+  background-color: #ffffff; 
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.navigation-menu li:hover::after {
+  width: 80%;
+  left: 10%;
+}
+
+.navigation-menu li:hover {
+  transform: translateY(-3px);
+  animation: swing 0.5s ease-in-out forwards;
+}
+
+.link {
   text-decoration: none;
-  color: #000000;
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
+.link:hover {
+  color: #ff79c6;
+  text-decoration: underline;
+}
+
+.link.active {
+  color: #ff79c6;
+  font-weight: bold;
+}

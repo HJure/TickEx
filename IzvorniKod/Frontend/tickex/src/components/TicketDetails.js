@@ -132,7 +132,6 @@ const TicketDetails = ({ url }) => {
         });
     };
 
-    // Handle like button click
     const handleLikeClick = () => {
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
     };
@@ -144,16 +143,17 @@ const TicketDetails = ({ url }) => {
             {error && <div>Greška: {error}</div>}
             {ticket && (
                 <div className="ticket-content">
-                    <h2>
-                        {ticket.eventName} 
+                    <div className="title">
+                        <h2>
+                            {ticket.eventName} 
+                        </h2>
                         <img 
-                            className="like" 
-                            src={likeImage} 
-                            alt="like" 
-                            onClick={handleLikeClick}
-                        />
-                    </h2>
-
+                                className="like" 
+                                src={likeImage} 
+                                alt="like" 
+                                onClick={handleLikeClick}
+                            />
+                    </div>
                     <div className="ticket-info">
                         <br/>
                         <p>
@@ -186,9 +186,9 @@ const TicketDetails = ({ url }) => {
                         <br/>
                         <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
                         <StarRate ocjena={ticket.owner.ocjena} />
+                        {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
+                        {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
                     </div>
-                    {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
-                    {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
                 </div>
             )}
         </div>

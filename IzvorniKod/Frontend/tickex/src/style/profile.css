@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Oxanium:wght@200..800&display=swap');
 
-.profilediv{
-    justify-self: center;
-    margin-top: 35px;
+.profilediv {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'bar cont cont cont cont cont cont cont cont cont cont cont cont cont cont';
+ 
 }
 
 .profile-container {
@@ -12,148 +18,127 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    justify-self: center;
     height: fit-content;
     width: fit-content;
     padding: 40px 30px;
     margin: auto;
     margin-bottom: 25px;
     background-color: #4158d0;
-    background-image: linear-gradient(
-      43deg,
-      #f3de7d 0%,
-      #f48beb 46%,
-      #9016ae 100%
-    );
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
-      rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
-      rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
-      rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
-      rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    background-image: linear-gradient(43deg, #f3de7d 0%, #f48beb 46%, #9016ae 100%);
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
     transition: 0.3s ease;
     border-radius: 30px;
 }
-  
-  .profile-container:hover {
+
+.profile-container:hover {
     filter: drop-shadow(0px 0px 30px rgba(209, 38, 197, 1));
-  }
+}
 
 .profile-image {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.profile-heading {
-    font-size: 28px;
-    font-weight: 700;
-    color: #4A148C;
-    margin-bottom: 10px;
-    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
 }
 
 .profile-info {
     font-family: 'Oxanium', sans-serif;
     font-size: 18px;
-    color: #4A148C;
-    margin-bottom: 8px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
 }
-
-
 
 .loading-text {
-    font-size: 18px;
-    color: #4A148C;
-    margin-top: 20px;
     text-align: center;
-    font-style: italic;
+    font-size: 24px;
+    color: #4158d0;
 }
 
-.ticket-preview, .trash-preview {
-    width: auto;
-    height: auto;
-    padding: 10px;
-    font-size: 1.1em;
-    cursor: pointer;
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #7887d5 0%, #C850C0 46%);
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(110, 101, 101, 0.15) 0px -36px 30px 0px inset, rgba(138, 130, 130, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(113, 112, 112, 0.09) 0px 8px 4px, rgba(108, 107, 107, 0.09) 0px 16px 8px, rgba(88, 87, 87, 0.09) 0px 32px 16px;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    transition: all .4s;
+.profile-content {
+    grid-area: cont;
 }
-   
+
+.sidebar {
+    padding: 30px;
+    grid-area: bar;
+}
+
 .ticket-preview:hover, .trash-preview:hover {
-    border-radius: 5px;
+  border-radius: 5px;
     transform: translateY(-10px);
-    box-shadow: 0 7px 0 -2px #2e00e3,
-     0 15px 0 -4px #39a2db,
-     0 16px 10px -3px #39a2db;
+    box-shadow: 0 7px 0 -2px #7d0669,
+     0 10px 0 -4px #cd1fca,
+     0 16px 10px -3px #e55ebf;
 }
    
 .ticket-preview:active, .trash-preview:active {
     transition: all 0.2s;
     transform: translateY(-5px);
-    box-shadow: 0 2px 0 -2px #2e00e3,
-     0 8px 0 -4px #39a2db,
-     0 12px 10px -3px #39a2db;
+    box-shadow: 0 2px 0 -2px #7d0669,
+     0 5px 0 -4px #cd1fca,
+     0 12px 10px -3px #e55ebf;
+}
+
+a{
+  text-decoration: none;
 }
 
 .ticket-preview h2, .trash-preview h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
-    word-wrap: break-word;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  word-wrap: break-word;
 }
 
 .tickets, .trashes{
-    display: flex;
-    
+  display: flex;
+  
 }
 
 .my_offers_trash_container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 80px auto 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: fit-content;
+  margin: 80px auto 20px;
 }
 
 
 .tickets, .trashes {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-  
+
 .my_offers, .trash {
-    min-width: 200px;
-    min-height: 250px;
-    margin-left: 20px;
-    border: 1px solid #710290;
-    width: auto;
-    height: auto;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: radial-gradient(ellipse farthest-side at 76% 77%, rgba(245, 228, 212, 0.25) 4%, rgba(255, 255, 255, 0) calc(4% + 1px)), radial-gradient(circle at 76% 40%, #fef6ec 4%, rgba(255, 255, 255, 0) 4.18%), linear-gradient(135deg, #ff0000 0%, #000036 100%), radial-gradient(ellipse at 28% 0%, #f7acff 0%, rgba(98, 149, 144, 0.5) 100%), linear-gradient(180deg, #cd6e8a 0%, #f5eab0 69%, #d6c8a2 70%, #a2758d 100%);
-    background-blend-mode: normal, normal, screen, overlay, normal;
+  min-width: 200px;
+  min-height: 230px;
+  margin-left: 20px;
+  border: 1px solid #710290;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #cd6e8a 0%, #f5eab0 70%, #a2758d 100%);
+
     box-shadow: 0px 0px 10px 1px #000000;
     transition: 0.3s ease;
     border-radius: 30px;
+  width: fit-content;
   }
 
   .my_offers:hover, .trash:hover {
     filter: drop-shadow(0px 0px 30px rgba(209, 38, 197, 1));
   }
-  
-   
 
-  
+  .my_offers h2 {
+    margin: 10px;
+  }
+
   .error, .loading {
     padding: 10px;
     border-radius: 5px;
@@ -174,14 +159,10 @@
     border: 1px solid rgb(153, 0, 255);
     font-style: italic;
   }
-  
-  .profilediv{
-    width: 900px;
-  }
 
   .newBlog {
+    margin-top: 50px;
     display: inline-block;
-    margin-left: 20px;
     background: rgb(179, 94, 236);
     padding: 12px 24px;
     border: 1px solid #4f4f4f;

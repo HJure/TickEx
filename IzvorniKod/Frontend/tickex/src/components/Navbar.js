@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 
-function Navbar({profile, setProfile}) {
+function Navbar({ profile, setProfile }) {
     const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token")); 
     const navigate = useNavigate();
     const location = useLocation();
@@ -28,7 +28,8 @@ function Navbar({profile, setProfile}) {
 
         setProfile(null);
         setAccessToken(null);
-        navigate("/");
+
+        window.location.reload();
     }, [navigate]);
 
     useEffect(() => {
@@ -46,8 +47,8 @@ function Navbar({profile, setProfile}) {
                     {accessToken && <li className="nav-link nav-link-line"><Link className="link" to="/profile">Profil</Link></li>}
                     {!accessToken && <li className="nav-link nav-link-line"><Link className="link" to="/signup">Prijavi se</Link></li>}
                     {accessToken && <li className="nav-link nav-link-line"><Link className="link" to="/shop">Kupnja</Link></li>}
-                    {accessToken && <li className="nav-link nav-link-line"><button className="abtbutton" onClick={logOut} style={{background: "none", border: "none", cursor: "pointer", padding: 0}}>Odjavi se</button></li>}
-                    <li className="nav-link nav-link-line"><button className="abtbutton" onClick={handleAboutClick} style={{background: "none", border: "none", cursor: "pointer", padding: 0}}>O nama</button></li>
+                    {accessToken && <li className="nav-link nav-link-line"><button className="link" onClick={logOut} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>ODJAVI SE</button></li>}
+                    <li className="nav-link nav-link-line"><button className="link" onClick={handleAboutClick} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>O NAMA</button></li>
                 </ul>
             </nav>
         </div>

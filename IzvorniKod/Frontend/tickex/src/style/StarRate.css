@@ -1,6 +1,9 @@
 .rate {
+    display: flex;
     align-items: center;
+    justify-self: center;
     padding: 0;
+    margin: 0;
 }
 
 .starrate{
@@ -8,4 +11,5 @@
     width: 25px;
     margin: 5px !important;
     box-shadow: none !important;
+    align-content: center;
   }

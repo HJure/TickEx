@@ -1,3 +1,4 @@
+import '../style/profile.css';
 import { Link } from "react-router-dom";
 
 

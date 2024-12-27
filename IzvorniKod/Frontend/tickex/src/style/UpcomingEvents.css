@@ -5,53 +5,117 @@
     align-items: center;
     color: #fff;
     position: relative;
+    padding: 20px;
+    background: linear-gradient(135deg, #6a11cb, #cd25fc);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: gradientAnimation 6s infinite alternate;
 }
-.events-container > h1{
-    color: #000;
+
+@keyframes gradientAnimation {
+    0% {
+        background: linear-gradient(135deg, #6a11cb, #cd25fc);
+    }
+    50% {
+        background: linear-gradient(135deg, #2575fc, #8a0da0);
+    }
+    100% {
+        background: linear-gradient(135deg, #cd25fc, #6a11cb);
+    }
+}
+
+.events-container > h1 {
+    color: #fff;
     padding-bottom: 2%;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    animation: textGlow 3s ease-in-out infinite alternate;
 }
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+        text-shadow: 4px 4px 15px rgba(255, 255, 255, 0.8);
+    }
+    100% {
+        text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+    }
+}
+
 .cards-container-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     position: relative;
-    text-align: center;
+    width: 100%;
+    padding: 20px;
 }
 
 .card {
     margin: 30px;
+    min-height: 260px;
+    min-width: 200px;
     color: #000;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #df85ef;
     overflow: hidden;
     text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
 
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    background-color: #f7c1ff;
 }
 
 .card h1 {
     margin: 20px;
     font-size: 2rem;
+    color: #333;
+    font-weight: bold;
 }
 
 .card h4 {
     font-size: 1rem;
+    color: #666;
+    margin: 10px;
 }
 
 .card h2 {
     font-size: 1.5rem;
     margin: 10px;
+    color: #444;
 }
-.moreInfo{
-    background-color: #fff;
+
+.moreInfo {
+    display: inline-block;
+    background-color: #8a0da0;
+    color: #fff;
     text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: all 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
-.moreInfo:hover{
-    background: transparent;
-    transform: scaleY(1.02);
-    transform-origin: center;
 
+.moreInfo:hover {
+    background: linear-gradient(135deg, #6a11cb, #cd25fc);
+    transform: scale(1.05);
+    filter: drop-shadow(0px 0px 20px rgba(209, 38, 197, 0.8));
+    color: #fff;
+    font-weight: bold;
 }
-.moreInfo:hover h1{
-    transform: scaleY(0.98);
 
+.card:hover h1,
+.card:hover h4,
+.card:hover h2 {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-in-out, color 0.3s ease-in-out;
 }
