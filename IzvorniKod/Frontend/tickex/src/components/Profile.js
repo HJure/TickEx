@@ -14,7 +14,11 @@ function Profile({ profile, setProfile }) {
     const [userID, setUserID] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isProfileReady, setIsProfileReady] = useState(false);
-    const [activeTab, setActiveTab] = useState('profile'); // Set default tab to 'profile'
+    const [activeTab, setActiveTab] = useState('profile'); 
+    const [isEditing, setIsEditing] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [rating, setRating] = useState('');
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -108,12 +112,13 @@ function Profile({ profile, setProfile }) {
                     }
 
                     const data = await response.json();
+                    setFirstName(data.imeKor);
+                    setLastName(data.prezimeKor);
+                    setRating(data.ocjena !== 0.0 ? data.ocjena : "nema ocjenu");
                     localStorage.setItem("user_email", data.email);
                     localStorage.setItem("user_first_name", data.imeKor);
                     localStorage.setItem("user_last_name", data.prezimeKor);
                     localStorage.setItem("user_registration_date", data.datumUla);
-                    data.ocjena !== 0.0 ? localStorage.setItem("user_rating", data.ocjena) : localStorage.setItem("user_rating", "nema ocjenu");
-
                     setIsProfileReady(true);
                 } catch (error) {
                     console.error('Error:', error);
@@ -140,7 +145,54 @@ function Profile({ profile, setProfile }) {
                                     && ticket.isExchangeAvailable === "obrisano") : [];
     const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "isteklo") : [];
-    const likedTickets = tickets
+    const likedTickets = tickets;
+
+    const handleEditProfile = () => {
+        setIsEditing(true);
+    };
+
+    const handleSaveChanges = async () => {
+        try {
+            const numericRating = rating === "nema ocjenu" ? 0.0 : rating;
+    
+            const updatedUserData = {
+                email: localStorage.getItem("user_email"),  
+                imeKor: firstName,                         
+                prezimeKor: lastName,                      
+                datumUla: localStorage.getItem("user_registration_date"), 
+                statusKor: true,                            
+                ocjena: numericRating
+            };
+    
+            const response = await fetch(`${backendUrl}/api/users/${userID}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${access_token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedUserData),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error response:', errorData);  
+                throw new Error('Failed to update profile');
+            }
+    
+            const data = await response.json();
+            setFirstName(data.imeKor);
+            setLastName(data.prezimeKor);
+    
+            localStorage.setItem("user_first_name", data.imeKor);
+            localStorage.setItem("user_last_name", data.prezimeKor);
+    
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    };
+    
+    
 
     const renderTicketList = () => {
         switch (activeTab) {
@@ -162,6 +214,16 @@ function Profile({ profile, setProfile }) {
                         <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
                         <p className="profile-info">Ocjena: {localStorage.getItem("user_rating")}</p>
                         <StarRate ocjena={localStorage.getItem("user_rating")} />
+                        {isEditing ? (
+                            <div>
+                                <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                                <button onClick={handleSaveChanges}>Spremi promjene</button>
+                                <button onClick={() => setIsEditing(false)}>Otkaži</button>
+                            </div>
+                        ) : (
+                            <button onClick={handleEditProfile}>Uredi podatke!</button>
+                        )}
                     </div>
                 );
             default:

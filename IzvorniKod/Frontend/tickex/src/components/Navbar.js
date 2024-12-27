@@ -29,8 +29,12 @@ function Navbar({ profile, setProfile }) {
         setProfile(null);
         setAccessToken(null);
 
-        window.location.reload();
-    }, [navigate]);
+        if (location.pathname === "/") {
+            window.location.reload(); // Osvježi stranicu ako si već na početnoj
+        } else {
+            navigate("/"); // Preusmjeri na početnu stranicu
+        }
+    }, [location, navigate]);
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
