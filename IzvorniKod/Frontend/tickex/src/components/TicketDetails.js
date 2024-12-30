@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import '../style/ticket-details.css';
 import StarRate from "./StarRate";
 
-
 const TicketDetails = ({ url }) => {
     const { id } = useParams();
     const { data: ticket, error, isPending } = useFetch(`${url}/${id}`);
@@ -136,62 +135,69 @@ const TicketDetails = ({ url }) => {
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
     };
 
+    const goBack = () => {
+        navigate("/profile"); 
+    };
+
     return (
-        <div className="ticket-details">
-            {isPending && <div>Učitavam...</div>}
-            {isDeleting && <div>Brišem kartu...</div>}
-            {error && <div>Greška: {error}</div>}
-            {ticket && (
-                <div className="ticket-content">
-                    <div className="title">
-                        <h2>
-                            {ticket.eventName} 
-                        </h2>
-                        <img 
-                                className="like" 
-                                src={likeImage} 
-                                alt="like" 
-                                onClick={handleLikeClick}
-                            />
-                    </div>
-                    <div className="ticket-info">
-                        <br/>
-                        <p>
-                            <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
-                            <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
-                            <span>Vrsta ulaznice:</span> <span className="answer"> {ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
-                            <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
-                            <span>Cijena:</span> <span className="answer">{ticket.price} €</span>
-                            <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
-                            <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
-                            <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
-                            <span>
-                                Vrijeme: 
-                            </span>
-                            <span className="answer">
-                                {
-                                    weatherData?.days?
-                                        (getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15 ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.conditions || "-" : "-") : "-"
-                                }
-                            </span>
+        <>
+            <img className="backward" src="../images/left-chevron.png" alt="arrow" onClick={goBack}/>
+            <div className="ticket-details">
+                {isPending && <div>Učitavam...</div>}
+                {isDeleting && <div>Brišem kartu...</div>}
+                {error && <div>Greška: {error}</div>}
+                {ticket && (
+                    <div className="ticket-content">
+                        <div className="title">
+                            <h2>
+                                {ticket.eventName} 
+                            </h2>
+                            <img 
+                                    className="like" 
+                                    src={likeImage} 
+                                    alt="like" 
+                                    onClick={handleLikeClick}
+                                />
+                        </div>
+                        <div className="ticket-info">
+                            <br/>
+                            <p>
+                                <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
+                                <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
+                                <span>Vrsta ulaznice:</span> <span className="answer"> {ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
+                                <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
+                                <span>Cijena:</span> <span className="answer">{ticket.price} €</span>
+                                <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
+                                <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
+                                <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
+                                <span>
+                                    Vrijeme: 
+                                </span>
+                                <span className="answer">
+                                    {
+                                        weatherData?.days?
+                                            (getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15 ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.conditions || "-" : "-") : "-"
+                                    }
+                                </span>
 
-                            {ticket.eventTypeId.nazVrDog === 'Glazba' && (
-                            <span>
-                                Artits: Zasada ignoriraj ovo, ovo je priprema 
-                                <img src="path/to/your/image.jpg" alt="Artist" />
-                            </span>
-                            )}
+                                {ticket.eventTypeId.nazVrDog === 'Glazba' && (
+                                <span>
+                                    Artits: Zasada ignoriraj ovo, ovo je priprema 
+                                    <img src="path/to/your/image.jpg" alt="Artist" />
+                                </span>
+                                )}
 
-                        </p>
-                        <br/>
-                        <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
-                        <StarRate ocjena={ticket.owner.ocjena} />
-                        {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
-                        {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
+                            </p>
+                            <br/>
+                            <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
+                            <StarRate ocjena={ticket.owner.ocjena} />
+                            {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
+                            {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </>
     );
 }
 

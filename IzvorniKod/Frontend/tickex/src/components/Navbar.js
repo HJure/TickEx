@@ -30,9 +30,9 @@ function Navbar({ profile, setProfile }) {
         setAccessToken(null);
 
         if (location.pathname === "/") {
-            window.location.reload(); // Osvježi stranicu ako si već na početnoj
+            window.location.reload();
         } else {
-            navigate("/"); // Preusmjeri na početnu stranicu
+            navigate("/");
         }
     }, [location, navigate]);
 

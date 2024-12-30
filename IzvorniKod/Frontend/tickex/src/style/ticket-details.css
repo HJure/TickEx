@@ -1,6 +1,7 @@
 .ticket-details {
   max-width: 600px;
-  margin: 35px auto;
+  margin: 0 auto;
+  margin-bottom: 50px;
   padding: 20px;
   background: linear-gradient(135deg, rgba(211, 211, 211, 0.8), rgba(205, 173, 240, 0.8), rgba(124, 41, 233, 0.9));
   background-blend-mode: multiply;
@@ -110,4 +111,37 @@
 }
 .ticket-posted-by{
   text-align: center;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.backward {
+  margin-top: 15px;
+  margin-left: 10px;
+  height: 40px;
+  width: 50px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efekt kada korisnik pređe mišem */
+.backward:hover {
+  transform: scale(1.1); /* Povećava ikonu */
+  animation: bounce 0.6s ease-in-out; /* Dodaje "bounce" efekt */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Dodaje sjenu */
+}
+
+/* Efekt klikom */
+.backward:active {
+  transform: scale(0.9); /* Lagano smanjuje ikonu na klik */
 }

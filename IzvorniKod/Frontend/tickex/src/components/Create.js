@@ -14,6 +14,16 @@ const Create = () => {
     const [price, setPrice] = useState('');
     const [warnings, setWarnings] = useState({});
     const [isPending, setIsPending] = useState(false);
+    const [namjena, setNamjena] = useState('');
+    const [pocCijena, setPocCijena] = useState('');
+    const [trajanje, setTrajanje] = useState('');
+    const [zeljeniNazOgl, setZeljeniNazOgl] = useState('');
+    const [zeljenoMjesto, setZeljenoMjesto] = useState('');
+    const [zeljeniDatum, setZeljeniDatum] = useState('');
+    const [zeljeniBrSje, setZeljeniBrSje] = useState('');
+    const [zeljenaVrsUla, setZeljenaVrsUla] = useState(null);
+    const [imeIzvodaca, setImeIzvodaca] = useState('');
+
     const navigate = useNavigate();
 
     const email = localStorage.getItem("user_email");
@@ -42,28 +52,6 @@ const Create = () => {
         fetchVrDog();
     }, [backendUrl]);
 
-    const validatePrice = (value) => {
-        const intPrice = parseInt(value, 10);
-        if (isNaN(intPrice) || intPrice < 0 || intPrice > Number.MAX_SAFE_INTEGER) {
-            return 'Cijena mora biti broj između 0 i najvećeg cijelog broja.';
-        }
-        return '';
-    };
-
-    const validateSeatNumber = (value) => {
-        if (value && isNaN(parseInt(value, 10))) {
-            return 'Broj sjedala mora biti cijeli broj ili ostavite prazno.';
-        }
-        return '';
-    };
-
-    const validateTicketType = (value) => {
-        if (value && !isNaN(value)) {
-            return 'Vrsta ulaznice ne može biti samo broj.';
-        }
-        return '';
-    };
-
     const handleEventTypeChange = (e) => {
         const selectedNazVrDog = e.target.value;
         setnazVrDog(selectedNazVrDog);
@@ -74,15 +62,6 @@ const Create = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const priceWarning = validatePrice(price);
-        const seatNumberWarning = validateSeatNumber(seatNumber);
-        const ticketTypeWarning = validateTicketType(ticketType);
-
-        if (priceWarning || seatNumberWarning || ticketTypeWarning) {
-            setWarnings({ price: priceWarning, seatNumber: seatNumberWarning, ticketType: ticketTypeWarning });
-            return;
-        }
-
         const ticket = {
             eventTypeId: { id: eventTypeId },
             eventName,
@@ -90,9 +69,17 @@ const Create = () => {
             eventDate: new Date(eventDate).toISOString(),
             seatNumber: seatNumber ? parseInt(seatNumber) : null,
             ticketType: ticketType || null,
-            price: parseInt(price),
             owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla },
-            isExchangeAvailable: "u prodaji"
+            isExchangeAvailable: namjena === "prodaja" ? "u prodaji" : namjena,
+            price: namjena === "prodaja" ? parseInt(price) : null,
+            /*pocCijena: namjena === "aukcija" ? parseInt(pocCijena) : null,
+            trajanje: namjena === "aukcija" ? new Date(trajanje).toISOString() : null,
+            zeljeniNazOgl: namjena === "razmjena" ? zeljeniNazOgl : null,
+            zeljenoMjesto: namjena === "razmjena" ? zeljenoMjesto : null,
+            zeljeniDatum: namjena === "razmjena" ? new Date(zeljeniDatum).toISOString() : null,
+            zeljeniBrSje: namjena === "razmjena" ? zeljeniBrSje : null,
+            zeljenaVrsUla: namjena === "razmjena" ? zeljenaVrsUla : null,
+            imeIzvodaca*/
         };
 
         setIsPending(true);
@@ -130,8 +117,16 @@ const Create = () => {
                     onChange={(e) => setEventName(e.target.value)}
                 />
 
+                <label>Namjena:</label>
+                <select value={namjena} onChange={(e) => {setNamjena(e.target.value);}} required>
+                    <option value="">Odaberite namjenu karte</option>
+                    <option value="prodaja">Prodaja</option>
+                    <option value="razmjena">Razmjena</option>
+                    <option value="aukcija">Aukcija</option>
+                </select>
+
                 <label>Vrsta događaja:</label>
-                <select value={nazVrDog} onChange={handleEventTypeChange}>
+                <select value={nazVrDog} onChange={handleEventTypeChange} required>
                     <option value="">Odaberite vrstu događaja</option>
                     {dogadaji.map(dogadaj => (
                         <option key={dogadaj.id} value={dogadaj.nazVrDog}>
@@ -139,6 +134,92 @@ const Create = () => {
                         </option>
                     ))}
                 </select>
+  
+                {nazVrDog === "Glazba" && (
+                    <>
+                        <label>Ime izvođača:</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={imeIzvodaca}
+                            onChange={(e) => setImeIzvodaca(e.target.value)}
+                        />
+                    </>
+                )}
+
+                {namjena === "prodaja" && (
+                    <>
+                        <label>Cijena (EUR):</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={price} 
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                    </>
+                )}
+
+                {namjena === "aukcija" && (
+                    <>
+                        <label>Početna cijena (EUR):</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={pocCijena} 
+                            onChange={(e) => setPocCijena(e.target.value)}
+                        />
+
+                        <label>Trajanje aukcije (krajnji datum):</label>
+                        <input 
+                            type="date" 
+                            required 
+                            value={trajanje} 
+                            onChange={(e) => setTrajanje(e.target.value)}
+                        />
+                    </>
+                )}
+
+                {namjena === "razmjena" && (
+                    <>
+                        <label>Željeni naziv oglasa:</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={zeljeniNazOgl} 
+                            onChange={(e) => setZeljeniNazOgl(e.target.value)}
+                        />
+
+                        <label>Željeno mjesto:</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={zeljenoMjesto} 
+                            onChange={(e) => setZeljenoMjesto(e.target.value)}
+                        />
+
+                        <label>Željeni datum:</label>
+                        <input 
+                            type="date" 
+                            required 
+                            value={zeljeniDatum} 
+                            onChange={(e) => setZeljeniDatum(e.target.value)}
+                        />
+
+                        <label>Željeni broj sjedala:</label>
+                        <input 
+                            type="text" 
+                            value={zeljeniBrSje} 
+                            onChange={(e) => setZeljeniBrSje(e.target.value)}
+                        />
+
+                        <label>Željena vrsta ulaznice:</label>
+                        <input 
+                            type="text" 
+                            value={zeljenaVrsUla} 
+                            onChange={(e) => setZeljenaVrsUla(e.target.value)}
+                        />
+                    </>
+                )}
 
                 <label>Mjesto:</label>
                 <input 
@@ -160,35 +241,15 @@ const Create = () => {
                 <input 
                     type="text"  
                     value={ticketType} 
-                    onChange={(e) => {
-                        setTicketType(e.target.value);
-                        setWarnings(prev => ({ ...prev, ticketType: validateTicketType(e.target.value) }));
-                    }}
+                    onChange={(e) => setTicketType(e.target.value)}
                 />
-                {warnings.ticketType && <p className="warning">{warnings.ticketType}</p>}
 
                 <label>Broj sjedala:</label>
                 <input 
                     type="text"  
                     value={seatNumber} 
-                    onChange={(e) => {
-                        setSeatNumber(e.target.value);
-                        setWarnings(prev => ({ ...prev, seatNumber: validateSeatNumber(e.target.value) }));
-                    }}
+                    onChange={(e) => setSeatNumber(e.target.value)}
                 />
-                {warnings.seatNumber && <p className="warning">{warnings.seatNumber}</p>}
-
-                <label>Cijena (EUR):</label>
-                <input 
-                    type="text"  
-                    required 
-                    value={price} 
-                    onChange={(e) => {
-                        setPrice(e.target.value);
-                        setWarnings(prev => ({ ...prev, price: validatePrice(e.target.value) }));
-                    }}
-                />
-                {warnings.price && <p className="warning">{warnings.price}</p>}
 
                 {!isPending && <button>Dodaj ulaznicu</button>}
                 {isPending && <button disabled>Dodavanje ulaznice...</button>}

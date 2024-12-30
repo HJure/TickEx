@@ -132,8 +132,8 @@
 
 .link {
   text-decoration: none;
-  color: #fff;
-  font-weight: 500;
+  color: #c51366;
+  font-weight: 1000;
   font-size: 18px;
   font-family: 'Arial', sans-serif;
   transition: color 0.3s ease, text-decoration 0.3s ease;
