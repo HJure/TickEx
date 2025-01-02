@@ -8,6 +8,7 @@ import SaleDetails from './components/SaleDetails';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Footer from './pages/Footer';
+import Exchange from './components/Exchange';
 import Create from './components/Create';
 import Shop from './components/Shop'
 import UserForm from './components/UserForm';
@@ -27,6 +28,7 @@ function App() {
                     <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
                     <Route path="/sales/:id" element={<SaleDetails url={`${backendUrl}/api/tickets/`} />} />
                     {/* <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} /> */}
+                    <Route path="/exchange" element={<Exchange />} />
                     <Route path="/create" element={<Create />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/register" element={<UserForm />} />

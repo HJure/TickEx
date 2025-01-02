@@ -51,6 +51,7 @@ const SearchBar = ({ setResult }) => {
       </div>
     </div>
   );
+  
 };
 
 export default SearchBar;

@@ -2,6 +2,7 @@ package progi_project.config;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(withDefaults()).csrf().disable()
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/shop/**","/", "/error", "/users/register", "/tickets/**", "/users/**", "/vrsta-dogadaja").permitAll()
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/shop/**","/", "/error", "/users/register", "/tickets/**", "/users/**", "/vrsta-dogadaja", "/exchanges/**").permitAll()
                                     .anyRequest().authenticated()
                                     ).oauth2Login()
                                     .successHandler(customOAuth2SuccessHandler)

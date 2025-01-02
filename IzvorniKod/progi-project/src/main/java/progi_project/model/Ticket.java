@@ -1,5 +1,6 @@
 package progi_project.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -32,7 +33,7 @@ public class Ticket{
     private String eventName;
 
     @Column(name="datum", nullable = false)
-    private LocalDateTime eventDate;
+    private LocalDate eventDate;
 
     @Column(name="mjesto", nullable = false)
     private String location;
@@ -42,6 +43,9 @@ public class Ticket{
 
     @Column(name="vrsula", nullable = true)
     private String ticketType;
+    
+    @Column(name="nazizv", nullable = true)
+    private String artistName;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idkor", nullable = false)
@@ -85,11 +89,11 @@ public class Ticket{
         this.eventName = eventName;
     }
 
-    public LocalDateTime getEventDate() {
+    public LocalDate getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(LocalDateTime eventDate) {
+    public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
     }
 
@@ -132,6 +136,16 @@ public class Ticket{
     public void setExchangeAvailable(String exchangeAvailable) {
         isExchangeAvailable = exchangeAvailable;
     }
+
+	public String getArtistName() {
+		return artistName;
+	}
+
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
+	}
+    
+    
 }
 
 

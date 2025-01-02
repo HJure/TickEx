@@ -118,9 +118,10 @@ CREATE TABLE svida
 
 CREATE TABLE sudjeluje
 (
+  idSudj SERIAL NOT NULL,
   idKor INT NOT NULL,
   idOgl INT NOT NULL,
-  PRIMARY KEY (idKor, idOgl),
+  PRIMARY KEY (idSudj, idKor, idOgl),
   FOREIGN KEY (idKor) REFERENCES KORISNIK(idKor),
   FOREIGN KEY (idOgl) REFERENCES RAZMJENA(idOgl)
 );
@@ -357,7 +358,15 @@ EXECUTE FUNCTION remove_invalid_svida_entries();
 
 INSERT INTO svida(idKor,idOgl) VALUES (1,4);
 
+INSERT INTO OGLAS (nazDog, mjesto, datum, idKor, idDog) VALUES ('Arsenal', 'London', '2025-01-05', 1, 2);
+INSERT INTO OGLAS (nazDog, mjesto, datum, idKor, idDog) VALUES ('Barcelona', 'Barcelona', '2025-01-05', 2, 2);
+INSERT INTO OGLAS (nazDog, mjesto, datum, idKor, idDog) VALUES ('Real', 'Madrid', '2025-01-05', 3, 1);
+INSERT INTO OGLAS (nazDog, mjesto, datum, idKor, idDog) VALUES ('Man Utd', 'Manchester', '2025-01-05', 4, 2);
 
+INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Barcelona', 'Barcelona', '2025-01-05', 6);
+INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Real', 'Madrid', '2025-01-05', 7);
+INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Man Utd', 'Manchester', '2025-01-05', 8);
+INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Arsenal', 'London', '2025-01-05', 9);
 
 
 
