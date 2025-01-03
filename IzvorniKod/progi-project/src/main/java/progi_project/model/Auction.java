@@ -1,6 +1,6 @@
 package progi_project.model;
 
-import java.time.Duration;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +15,7 @@ public class Auction extends Ticket{
     private int startPrice;
 
     @Column(name = "trajanje", nullable = false)
-    private Duration duration;
+    private LocalDate duration;
 
     public int getStartPrice() {
         return startPrice;
@@ -25,11 +25,11 @@ public class Auction extends Ticket{
         this.startPrice = startPrice;
     }
 
-    public Duration getDuration() {
+    public LocalDate getTrajanje() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setTrajanje(LocalDate duration) {
         this.duration = duration;
     }
 }

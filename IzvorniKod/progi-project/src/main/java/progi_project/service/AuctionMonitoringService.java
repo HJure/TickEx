@@ -1,6 +1,6 @@
 package progi_project.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AuctionMonitoringService {
 
     @Scheduled(fixedRate = 60000) // Provjeravaj svaku minutu
     public void monitorAuctions() {
-        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDate currentTime = LocalDate.now();
 
         List<Auction> expiredAuctions = auctionRepository.findExpiredAuctions(currentTime);
 
