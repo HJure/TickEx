@@ -4,18 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import progi_project.model.Sale;
 import progi_project.service.SaleService;
 
 @RestController
+@RequestMapping("/sales")
 public class SaleController {
 
     @Autowired
     private SaleService saleService;
 
-    @GetMapping("/sales")
+    @GetMapping
     public List<Sale> getPurchasedTickets() {
         return saleService.getAllSales();
     }
