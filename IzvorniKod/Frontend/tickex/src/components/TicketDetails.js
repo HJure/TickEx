@@ -136,7 +136,7 @@ const TicketDetails = ({ url }) => {
     };
 
     const goBack = () => {
-        navigate("/profile"); 
+        navigate(-1); 
     };
 
     return (

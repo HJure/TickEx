@@ -1,99 +1,93 @@
-.results-list {
-    width: 100%;
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .result-item {
-    max-width: 600px;
-    margin: 35px auto;
-    padding: 20px;
-    background: linear-gradient(135deg, rgba(211, 211, 211, 0.8), rgba(205, 173, 240, 0.8), rgba(124, 41, 233, 0.9));
-    background-blend-mode: multiply;
-    border: 1px solid #e017d6;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    font-size: 16px;
-    color: #333;
-    line-height: 1.6;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .result-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .result-item > h4 {
-    font-size: 24px;
-    color: #b535f1;
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: bold;
-  }
-  
-  .result-item span {
-    font-size: 16px;
-    color: #4a148c;
-    margin-right: 5px;
-  }
-  
+.result-item {
+  max-width: 600px;
+  margin: 35px auto;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(211, 211, 211, 0.8), rgba(205, 173, 240, 0.8), rgba(124, 41, 233, 0.9));
+  background-blend-mode: multiply;
+  border: 1px solid #e017d6;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  position: relative;
+}
 
-  
-  .result-item button {
-    background: linear-gradient(135deg, #b35eea, #9b4cd9);
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-    overflow: hidden;
-    font-size: 18px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    margin-top: 15px;
-    z-index: 1;
-  }
-  
-  .result-item button:hover {
-    background: linear-gradient(135deg, #a128cd, #8f21b6);
-    color: #fff;
-    transform: translateY(-3px);
-  }
-  
-  .result-item button:focus {
-    outline: none;
-  }
-  
-  .result-item button:disabled {
-    background: #b39ddb;
-    cursor: not-allowed;
-  }
-  
-  .result-item .ticket-info {
-    font-size: 16px;
-    color: #333;
-    line-height: 1.6;
-    margin-top: 0;
-    display: flow-root;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .result-item .ticket-info span {
-    font-size: 18px;
-    font-weight: bold;
-    color: #444;
-    text-transform: uppercase;
-    padding: 5px;
-  }
-  
-  .result-item .ticket-info p {
-    font-weight: 400;
-    color: #7e0d88;
-  }
-  
- 
+.result-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, rgba(205, 173, 240, 0.9), rgba(124, 41, 233, 0.8), rgba(211, 211, 211, 0.8));
+}
+
+.result-item > h4 {
+  font-size: 24px;
+  color: #b535f1;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.result-item:hover > h4 {
+  color: #fff;
+}
+
+.result-item span {
+  font-size: 16px;
+  color: #4a148c;
+  margin-right: 5px;
+}
+
+.result-item .status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 8px 16px;
+  background-color: #da54df;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 14px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.result-item .status:hover {
+  background-color: #a635aa; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+}
+
+.result-item button {
+  background: linear-gradient(135deg, #b35eea, #9b4cd9);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  font-size: 18px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  margin-top: 15px;
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.result-item button:hover {
+  background: linear-gradient(135deg, #a128cd, #8f21b6);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.result-item button:focus {
+  outline: none;
+}
+
+.result-item button:disabled {
+  background: #b39ddb;
+  cursor: not-allowed;
+}

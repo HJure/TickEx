@@ -27,7 +27,6 @@ function App() {
                     <Route path="/profile" element={<Profile profile={profile} setProfile={setProfile}/>} />
                     <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
                     <Route path="/sales/:id" element={<SaleDetails url={`${backendUrl}/api/tickets/`} />} />
-                    {/* <Route path="/trashes/:id" element={<TicketDetails url="http://localhost:5000/trash/" />} /> */}
                     <Route path="/exchange" element={<Exchange />} />
                     <Route path="/create" element={<Create />} />
                     <Route path="/shop" element={<Shop />} />

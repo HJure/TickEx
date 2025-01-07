@@ -25,6 +25,8 @@ function Navbar({ profile, setProfile }) {
         localStorage.removeItem("user_first_name");
         localStorage.removeItem("user_last_name");
         localStorage.removeItem("user_registration_date");
+        localStorage.removeItem("user_status");
+        localStorage.removeItem("user_rating");
 
         setProfile(null);
         setAccessToken(null);

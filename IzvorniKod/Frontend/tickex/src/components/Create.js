@@ -17,12 +17,12 @@ const Create = () => {
     const [namjena, setNamjena] = useState('');
     const [pocCijena, setPocCijena] = useState('');
     const [trajanje, setTrajanje] = useState('');
-    const [zeljeniNazOgl, setZeljeniNazOgl] = useState('');
-    const [zeljenoMjesto, setZeljenoMjesto] = useState('');
-    const [zeljeniDatum, setZeljeniDatum] = useState('');
-    const [zeljeniBrSje, setZeljeniBrSje] = useState('');
-    const [zeljenaVrsUla, setZeljenaVrsUla] = useState(null);
-    const [imeIzvodaca, setImeIzvodaca] = useState('');
+    const [wantedEventName, setwantedEventName] = useState('');
+    const [wantedLocation, setwantedLocation] = useState('');
+    const [wantedDate, setwantedDate] = useState('');
+    const [wantedSeatNumber, setwantedSeatNumber] = useState('');
+    const [wantedTicketType, setwantedTicketType] = useState(null);
+    const [artistName, setartistName] = useState('');
 
     const navigate = useNavigate();
 
@@ -31,6 +31,8 @@ const Create = () => {
     const imeKor = localStorage.getItem("user_first_name");
     const prezimeKor = localStorage.getItem("user_last_name");
     const datumUla = localStorage.getItem("user_registration_date");
+    const statusKor = localStorage.getItem("user_status");
+    const ocjena =  localStorage.getItem("user_rating");
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
@@ -61,61 +63,91 @@ const Create = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+    
         const ticket = {
-            eventTypeId: { id: eventTypeId },
+            eventTypeId: { id: eventTypeId, nazVrDog: nazVrDog },
             eventName,
-            location,
             eventDate: new Date(eventDate).toISOString(),
+            location,
             seatNumber: seatNumber ? parseInt(seatNumber) : null,
             ticketType: ticketType || null,
-            owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla },
+            artistName: nazVrDog === "Glazba" ? artistName : null,
+            owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla, statusKor, ocjena },
             isExchangeAvailable: namjena === "prodaja" ? "u prodaji" : namjena,
-            price: namjena === "prodaja" ? parseInt(price) : null,
-            /*pocCijena: namjena === "aukcija" ? parseInt(pocCijena) : null,
-            trajanje: namjena === "aukcija" ? new Date(trajanje).toISOString() : null,
-            zeljeniNazOgl: namjena === "razmjena" ? zeljeniNazOgl : null,
-            zeljenoMjesto: namjena === "razmjena" ? zeljenoMjesto : null,
-            zeljeniDatum: namjena === "razmjena" ? new Date(zeljeniDatum).toISOString() : null,
-            zeljeniBrSje: namjena === "razmjena" ? zeljeniBrSje : null,
-            zeljenaVrsUla: namjena === "razmjena" ? zeljenaVrsUla : null,
-            imeIzvodaca*/
+            obrisanoTime: null
         };
-
+    
+        const sale = {
+            price: parseInt(price),
+            buyer: null, 
+        };
+    
         setIsPending(true);
-
-        fetch(`${backendUrl}/api/tickets`, {
-            method: 'POST',
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${access_token}`
-            },
-            body: JSON.stringify(ticket)
-        })
-        .then(() => {
-            setTimeout(() => { 
-                console.log('New ticket added');
+    
+        if (namjena === "prodaja") {
+           
+            fetch(`${backendUrl}/api/tickets`, {
+                method: 'POST',
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${access_token}`
+                },
+                body: JSON.stringify(ticket)
+            })
+            .then((response) => response.json())
+            .then((createdTicket) => {
+                console.log("jej");
+              
+                sale.id = createdTicket.id; 
+                return fetch(`${backendUrl}/api/sales`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${access_token}`
+                    },
+                    body: JSON.stringify(sale)
+                });
+            })
+            .then(() => {
+                setTimeout(() => { 
+                    console.log('New sale and ticket added');
+                    setIsPending(false);
+                    navigate('/profile'); 
+                }, 1500);
+            })
+            .catch(error => {
+                console.error("Greška prilikom dodavanja karte ili prodaje:", error);
                 setIsPending(false);
-                navigate('/profile'); 
-            }, 1500);
-        })
-        .catch(error => {
-            console.error("Greška prilikom dodavanja karte:", error);
-            setIsPending(false);
-        });
+            });
+        } /*else {
+            // For other purposes, just create the ticket
+            fetch(`${backendUrl}/api/tickets`, {
+                method: 'POST',
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${access_token}`
+                },
+                body: JSON.stringify(ticket)
+            })
+            .then(() => {
+                setTimeout(() => { 
+                    console.log('New ticket added');
+                    setIsPending(false);
+                    navigate('/profile'); 
+                }, 1500);
+            })
+            .catch(error => {
+                console.error("Greška prilikom dodavanja karte:", error);
+                setIsPending(false);
+            });
+        }*/
     };
+    
 
     return (
         <div className="create">
             <h2>Dodaj novu ulaznicu</h2>
             <form onSubmit={handleSubmit}>
-                <label>Naziv događaja:</label>
-                <input 
-                    type="text" 
-                    required 
-                    value={eventName} 
-                    onChange={(e) => setEventName(e.target.value)}
-                />
 
                 <label>Namjena:</label>
                 <select value={namjena} onChange={(e) => {setNamjena(e.target.value);}} required>
@@ -134,6 +166,14 @@ const Create = () => {
                         </option>
                     ))}
                 </select>
+
+                <label>Naziv događaja:</label>
+                <input 
+                    type="text" 
+                    required 
+                    value={eventName} 
+                    onChange={(e) => setEventName(e.target.value)}
+                />
   
                 {nazVrDog === "Glazba" && (
                     <>
@@ -141,8 +181,8 @@ const Create = () => {
                         <input 
                             type="text" 
                             required 
-                            value={imeIzvodaca}
-                            onChange={(e) => setImeIzvodaca(e.target.value)}
+                            value={artistName}
+                            onChange={(e) => setartistName(e.target.value)}
                         />
                     </>
                 )}
@@ -179,48 +219,6 @@ const Create = () => {
                     </>
                 )}
 
-                {namjena === "razmjena" && (
-                    <>
-                        <label>Željeni naziv oglasa:</label>
-                        <input 
-                            type="text" 
-                            required 
-                            value={zeljeniNazOgl} 
-                            onChange={(e) => setZeljeniNazOgl(e.target.value)}
-                        />
-
-                        <label>Željeno mjesto:</label>
-                        <input 
-                            type="text" 
-                            required 
-                            value={zeljenoMjesto} 
-                            onChange={(e) => setZeljenoMjesto(e.target.value)}
-                        />
-
-                        <label>Željeni datum:</label>
-                        <input 
-                            type="date" 
-                            required 
-                            value={zeljeniDatum} 
-                            onChange={(e) => setZeljeniDatum(e.target.value)}
-                        />
-
-                        <label>Željeni broj sjedala:</label>
-                        <input 
-                            type="text" 
-                            value={zeljeniBrSje} 
-                            onChange={(e) => setZeljeniBrSje(e.target.value)}
-                        />
-
-                        <label>Željena vrsta ulaznice:</label>
-                        <input 
-                            type="text" 
-                            value={zeljenaVrsUla} 
-                            onChange={(e) => setZeljenaVrsUla(e.target.value)}
-                        />
-                    </>
-                )}
-
                 <label>Mjesto:</label>
                 <input 
                     type="text" 
@@ -250,6 +248,48 @@ const Create = () => {
                     value={seatNumber} 
                     onChange={(e) => setSeatNumber(e.target.value)}
                 />
+
+                {namjena === "razmjena" && (
+                    <>
+                        <label>Željeni naziv oglasa:</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={wantedEventName} 
+                            onChange={(e) => setwantedEventName(e.target.value)}
+                        />
+
+                        <label>Željeno mjesto:</label>
+                        <input 
+                            type="text" 
+                            required 
+                            value={wantedLocation} 
+                            onChange={(e) => setwantedLocation(e.target.value)}
+                        />
+
+                        <label>Željeni datum:</label>
+                        <input 
+                            type="date" 
+                            required 
+                            value={wantedDate} 
+                            onChange={(e) => setwantedDate(e.target.value)}
+                        />
+
+                        <label>Željeni broj sjedala:</label>
+                        <input 
+                            type="text" 
+                            value={wantedSeatNumber} 
+                            onChange={(e) => setwantedSeatNumber(e.target.value)}
+                        />
+
+                        <label>Željena vrsta ulaznice:</label>
+                        <input 
+                            type="text" 
+                            value={wantedTicketType} 
+                            onChange={(e) => setwantedTicketType(e.target.value)}
+                        />
+                    </>
+                )}
 
                 {!isPending && <button>Dodaj ulaznicu</button>}
                 {isPending && <button disabled>Dodavanje ulaznice...</button>}

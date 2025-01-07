@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 import axios from 'axios';
 import TicketList from './TicketList';
-import SaleList from './SaleList';
+//import SaleList from './SaleList';
 import '../style/profile.css';
-import { Link } from "react-router-dom";
-import StarRate from './StarRate';
+import StarRate from './StarRate'
 import Sidebar from './Sidebar';
+import Chains from './Chains';
 
 function Profile({ profile, setProfile }) {
     const [email, setEmail] = useState(null);
@@ -39,10 +39,13 @@ function Profile({ profile, setProfile }) {
         localStorage.removeItem("user_first_name");
         localStorage.removeItem("user_last_name");
         localStorage.removeItem("user_registration_date");
-
+        localStorage.removeItem("user_rating");
+        localStorage.removeItem("user_status");
+    
         setProfile(null);
         navigate('/');
-    }, [navigate]);
+    }, [navigate, setProfile]);
+    
 
     useEffect(() => {
         if (access_token) {
@@ -63,7 +66,8 @@ function Profile({ profile, setProfile }) {
                 }
             });
         }
-    }, [access_token, logOut]);
+    }, [access_token, logOut, setProfile]);
+    
 
     useEffect(() => {
         const fetchUserID = async () => {
@@ -119,6 +123,8 @@ function Profile({ profile, setProfile }) {
                     localStorage.setItem("user_first_name", data.imeKor);
                     localStorage.setItem("user_last_name", data.prezimeKor);
                     localStorage.setItem("user_registration_date", data.datumUla);
+                    localStorage.setItem("user_rating", data.ocjena);
+                    localStorage.setItem("user_status", data.statusKor);
                     setIsProfileReady(true);
                 } catch (error) {
                     console.error('Error:', error);
@@ -146,6 +152,7 @@ function Profile({ profile, setProfile }) {
     const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "isteklo") : [];
     const likedTickets = tickets;
+    const { data: chains } = useFetch(`${backendUrl}/api/exchanges/chains`);
 
     const handleEditProfile = () => {
         setIsEditing(true);
@@ -191,8 +198,6 @@ function Profile({ profile, setProfile }) {
             console.error('Error updating profile:', error);
         }
     };
-    
-    
 
     const renderTicketList = () => {
         switch (activeTab) {
@@ -206,6 +211,12 @@ function Profile({ profile, setProfile }) {
                 return <div className="my_offers" ><TicketList tickets={expiredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'liked':
                 return <div className="my_offers" ><TicketList tickets={likedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'exchangeChains':
+                return (
+                    <div className="exchange-chains">
+                        <Chains chains={chains}/>
+                    </div>
+                );
             case 'profile':
                 return (
                     <div className="profile-container">
@@ -239,7 +250,6 @@ function Profile({ profile, setProfile }) {
                 {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
                 {renderTicketList()}
             </div>
-            <Link to="/create" className="newBlog">Dodaj novu ulaznicu</Link>
         </div>
     ) : (
         <p className="loading-text">Učitavam profil...</p>

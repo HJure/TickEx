@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../style/SearchBar.css'
 
-
 const SearchBar = ({ setResult }) => {
   const [data, setData] = useState(null);
   const ID = localStorage.getItem("userID");
@@ -18,6 +17,11 @@ const SearchBar = ({ setResult }) => {
   const [input, setInput] = useState("");
 
   const fetchData = (value) => {
+    if (value === "") {
+      setResult([]);
+      return;
+    }
+
     if (data) {
       const results = data.filter((item) =>
         item.owner.id !== parseInt(ID) && 
@@ -51,7 +55,6 @@ const SearchBar = ({ setResult }) => {
       </div>
     </div>
   );
-  
 };
 
 export default SearchBar;
