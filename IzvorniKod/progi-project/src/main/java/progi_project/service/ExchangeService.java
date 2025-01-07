@@ -84,4 +84,9 @@ public class ExchangeService {
     public List<Exchange> findAll(){
     	return exchangeRepository.findAll();
     }
+
+
+	public void save(Exchange exchange) {
+		exchangeRepository.save(exchange);
+	}
 }

@@ -44,4 +44,8 @@ public class SaleService {
     public void deleteSale(Long id) {
         saleRepository.deleteById(id);
     }
+
+	public void save(Sale sale) {
+		saleRepository.save(sale);	
+	}
 }

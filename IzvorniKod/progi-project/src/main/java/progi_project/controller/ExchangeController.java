@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import progi_project.model.Exchange;
+import progi_project.model.Auction;
 import progi_project.model.Chain;
 import progi_project.service.ExchangeService;
 import progi_project.repository.ChainRepository;
@@ -43,10 +45,15 @@ public class ExchangeController {
     }
 	
 	
-	 @GetMapping("/chains")
-	 public List<Chain> getAllChains() {
-	    return chainRepository.findAll();
-	 }
+	@GetMapping("/chains")
+	public List<Chain> getAllChains() {
+	   return chainRepository.findAll();
+	}
+	 
+	@PostMapping
+	public void createExchange(@RequestBody Exchange exchange) {
+	   exchangeService.save(exchange);
+	} 
 	 
 	 
 }

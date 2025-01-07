@@ -33,6 +33,7 @@ CREATE TABLE prijavljuje
 (
   prijavljujeIdKor INT NOT NULL,
   prijavljenIdKor INT NOT NULL,
+  razlog VARCHAR(250) NOT NULL,
   PRIMARY KEY (prijavljujeIdKor, prijavljenIdKor),
   FOREIGN KEY (prijavljujeIdKor) REFERENCES KORISNIK(idKor),
   FOREIGN KEY (prijavljenIdKor) REFERENCES KORISNIK(idKor)
