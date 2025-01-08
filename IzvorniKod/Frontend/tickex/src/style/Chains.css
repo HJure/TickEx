@@ -21,7 +21,7 @@
     flex: 1 1 48%;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, rgba(249, 134, 252, 0.8), rgba(135, 206, 250, 0.8), rgba(255, 105, 180, 0.6)); 
+    background: linear-gradient(180deg, rgba(249, 134, 252, 0.8), rgba(255, 182, 193, 0.8), rgba(220, 20, 60, 0.6)); 
     background-size: 200% 200%;
     animation: falling-gradient 3s linear infinite alternate;
     color: white;
@@ -63,11 +63,11 @@
     align-items: center;
     width: 100%;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    background: linear-gradient(135deg, rgba(255, 182, 193, 0.8), rgba(135, 206, 250, 0.8), rgba(255, 105, 180, 0.9)); 
+    background: linear-gradient(135deg, rgba(249, 134, 252, 0.8), rgba(255, 182, 193, 0.8), rgba(220, 20, 60, 0.8)); 
 }
 
 .chain-item:hover {
-    background: linear-gradient(135deg, rgba(135, 206, 250, 0.9), rgba(255, 182, 193, 0.8), rgba(255, 105, 180, 0.8));
+    background: linear-gradient(135deg, rgba(249, 134, 252, 0.8), rgba(220, 20, 60, 0.8), rgba(255, 182, 193, 0.8));
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     transform: scale(1.02);
 }
@@ -108,7 +108,7 @@
     display: inline-block;
     margin-left: 10px;
     font-size: 24px;
-    color: #ff3385; 
+    color: #9b4dca; 
     opacity: 0.7;
     pointer-events: none;
     transition: transform 0.3s ease;
@@ -133,5 +133,30 @@
 
     .chain-item {
         padding: 15px;
+    }
+}
+
+.no-chains-message {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    color: #9b4dca;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.7), 0 0 20px rgba(135, 206, 250, 0.7);
+    animation: glowAnimation 1.5s ease-in-out infinite alternate;
+    margin-top: 20px;
+}
+
+@keyframes glowAnimation {
+    0% {
+        color: #9b4dca;
+        text-shadow: 0 0 10px rgba(255, 105, 180, 0.7), 0 0 20px rgba(135, 206, 250, 0.7);
+    }
+    50% {
+        color: #ff3385;
+        text-shadow: 0 0 15px rgba(255, 105, 180, 1), 0 0 25px rgba(135, 206, 250, 1);
+    }
+    100% {
+        color: #ff3385;
+        text-shadow: 0 0 10px rgba(255, 105, 180, 0.7), 0 0 20px rgba(135, 206, 250, 0.7);
     }
 }

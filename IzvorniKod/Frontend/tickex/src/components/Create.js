@@ -10,18 +10,25 @@ const Create = () => {
     const [seatNumber, setSeatNumber] = useState('');
     const [ticketType, setTicketType] = useState('');
     const [nazVrDog, setnazVrDog] = useState('');
-    const [eventTypeId, setEventTypeId] = useState(null);
-    const [price, setPrice] = useState('');
-    const [warnings, setWarnings] = useState({});
+    const [eventTypeId, setEventTypeId] = useState('');
+    const [price, setPrice] = useState(0);
+    const [warnings, setWarnings] = useState({
+        price: '',
+        seatNumber: '',
+        ticketType: '',
+        wantedSeatNumber: '',
+        wantedTicketType: '',
+        startPrice: ''
+    });
     const [isPending, setIsPending] = useState(false);
     const [namjena, setNamjena] = useState('');
-    const [pocCijena, setPocCijena] = useState('');
-    const [trajanje, setTrajanje] = useState('');
+    const [startPrice, setStartPrice] = useState(0);
+    const [duration, setDuration] = useState('');
     const [wantedEventName, setwantedEventName] = useState('');
     const [wantedLocation, setwantedLocation] = useState('');
     const [wantedDate, setwantedDate] = useState('');
     const [wantedSeatNumber, setwantedSeatNumber] = useState('');
-    const [wantedTicketType, setwantedTicketType] = useState(null);
+    const [wantedTicketType, setwantedTicketType] = useState('');
     const [artistName, setartistName] = useState('');
 
     const navigate = useNavigate();
@@ -35,6 +42,50 @@ const Create = () => {
     const ocjena =  localStorage.getItem("user_rating");
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
+    const validatePrice = (value) => {
+        const intPrice = parseInt(value, 10);
+        if (isNaN(intPrice) || intPrice < 0 || intPrice > Number.MAX_SAFE_INTEGER) {
+            return 'Cijena mora biti broj između 0 i najvećeg cijelog broja.';
+        }
+        return '';
+    };
+
+    const validateSeatNumber = (value) => {
+        if (value && isNaN(parseInt(value, 10))) {
+            return 'Broj sjedala mora biti cijeli broj ili ostavite prazno.';
+        }
+        return '';
+    };
+
+    const validateTicketType = (value) => {
+        if (value && !isNaN(value)) {
+            return 'Vrsta ulaznice ne može biti samo broj.';
+        }
+        return '';
+    };
+
+    const validateWantedSeatNumber = (value) => {
+        if (value && isNaN(parseInt(value, 10))) {
+            return 'Željeni broj sjedala mora biti cijeli broj ili ostavite prazno.';
+        }
+        return '';
+    };
+
+    const validateWantedTicketType = (value) => {
+        if (value && !isNaN(value)) {
+            return 'Željena vrsta ulaznice ne može biti samo broj.';
+        }
+        return '';
+    };
+
+    const validateStartPrice = (value) => {
+        const intPrice = parseInt(value, 10);
+        if (isNaN(intPrice) || intPrice < 0 || intPrice > Number.MAX_SAFE_INTEGER) {
+            return 'Početna cijena mora biti broj između 0 i najvećeg cijelog broja.';
+        }
+        return '';
+    };
 
     useEffect(() => {
         const fetchVrDog = async () => {
@@ -59,12 +110,35 @@ const Create = () => {
         setnazVrDog(selectedNazVrDog);
         const selectedDogadaj = dogadaji.find(dogadaj => dogadaj.nazVrDog === selectedNazVrDog);
         setEventTypeId(selectedDogadaj ? selectedDogadaj.id : null);
-    };
+    };       
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
     
-        const ticket = {
+        const priceWarning = validatePrice(price); 
+        const seatNumberWarning = validateSeatNumber(seatNumber);
+        const ticketTypeWarning = validateTicketType(ticketType);
+        const startPriceWarning = validateStartPrice(startPrice);
+        const wantedSeatNumberWarning = validateWantedSeatNumber(wantedSeatNumber);
+        const wantedTicketTypeWarning = validateWantedTicketType(wantedTicketType);
+
+        
+        if (priceWarning || seatNumberWarning || ticketTypeWarning || startPriceWarning || wantedSeatNumberWarning || wantedTicketTypeWarning) {
+            setWarnings({
+                price: priceWarning,
+                seatNumber: seatNumberWarning,
+                ticketType: ticketTypeWarning,
+                startPrice: startPriceWarning,
+                wantedSeatNumber: wantedSeatNumberWarning,
+                wantedTicketType: wantedTicketTypeWarning
+            });
+            console.log("price:",price)
+            console.log(warnings)
+            return;
+        }
+    
+        let ticket = {
             eventTypeId: { id: eventTypeId, nazVrDog: nazVrDog },
             eventName,
             eventDate: new Date(eventDate).toISOString(),
@@ -77,72 +151,50 @@ const Create = () => {
             obrisanoTime: null
         };
     
-        const sale = {
-            price: parseInt(price),
-            buyer: null, 
-        };
+        if (namjena === "prodaja") {
+            ticket.price = parseInt(price);
+            ticket.buyer = null;
+        } else if (namjena === "razmjena") {
+            ticket.wantedEventName = wantedEventName;
+            ticket.wantedLocation = wantedLocation;
+            ticket.wantedDate = wantedDate;
+            ticket.wantedSeatNumber = wantedSeatNumber ? parseInt(wantedSeatNumber) : null;
+            ticket.wantedTicketType = wantedTicketType || null;
+        } else if (namjena === "aukcija") {
+            ticket.startPrice = parseInt(startPrice);
+            ticket.duration = new Date(duration).toISOString();
+        }
     
+        console.log(ticket);
         setIsPending(true);
     
-        if (namjena === "prodaja") {
-           
-            fetch(`${backendUrl}/api/tickets`, {
-                method: 'POST',
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${access_token}`
-                },
-                body: JSON.stringify(ticket)
-            })
-            .then((response) => response.json())
-            .then((createdTicket) => {
-                console.log("jej");
-              
-                sale.id = createdTicket.id; 
-                return fetch(`${backendUrl}/api/sales`, {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${access_token}`
-                    },
-                    body: JSON.stringify(sale)
-                });
-            })
-            .then(() => {
-                setTimeout(() => { 
-                    console.log('New sale and ticket added');
-                    setIsPending(false);
-                    navigate('/profile'); 
-                }, 1500);
-            })
-            .catch(error => {
-                console.error("Greška prilikom dodavanja karte ili prodaje:", error);
-                setIsPending(false);
-            });
-        } /*else {
-            // For other purposes, just create the ticket
-            fetch(`${backendUrl}/api/tickets`, {
-                method: 'POST',
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${access_token}`
-                },
-                body: JSON.stringify(ticket)
-            })
-            .then(() => {
-                setTimeout(() => { 
-                    console.log('New ticket added');
-                    setIsPending(false);
-                    navigate('/profile'); 
-                }, 1500);
-            })
-            .catch(error => {
-                console.error("Greška prilikom dodavanja karte:", error);
-                setIsPending(false);
-            });
-        }*/
+        const endpoint = {
+            "prodaja": `${backendUrl}/api/sales`,
+            "razmjena": `${backendUrl}/api/exchanges`,
+            "aukcija": `${backendUrl}/api/auctions`
+        }[namjena];
+    
+        fetch(endpoint, {
+            method: 'POST',
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${access_token}`
+            },
+            body: JSON.stringify(ticket)
+        })
+        .then(() => {
+            setTimeout(() => { 
+                console.log('New ticket added');
+                navigate('/profile'); 
+            }, 1500);
+        })
+        .catch(error => {
+            console.error("Error while adding the ticket:", error);
+            setIsPending(false);
+        });
     };
     
+
 
     return (
         <div className="create">
@@ -192,10 +244,15 @@ const Create = () => {
                         <label>Cijena (EUR):</label>
                         <input 
                             type="text" 
-                            required 
+                            required
                             value={price} 
-                            onChange={(e) => setPrice(e.target.value)}
+                            onChange={(e) => {
+                                setPrice(e.target.value);
+                                setWarnings(prev => ({ ...prev, price: validatePrice(e.target.value) }));
+                                console.log(warnings);
+                            }}     
                         />
+                        {warnings.price && <p className="warning">{warnings.price}</p>}
                     </>
                 )}
 
@@ -205,16 +262,20 @@ const Create = () => {
                         <input 
                             type="text" 
                             required 
-                            value={pocCijena} 
-                            onChange={(e) => setPocCijena(e.target.value)}
+                            value={startPrice} 
+                            onChange={(e) => {
+                                setStartPrice(e.target.value);
+                                setWarnings(prev => ({ ...prev, startPrice: validateStartPrice(e.target.value) }));
+                            }} 
                         />
+                        {warnings.startPrice && <p className="warning">{warnings.startPrice}</p>}
 
                         <label>Trajanje aukcije (krajnji datum):</label>
                         <input 
                             type="date" 
                             required 
-                            value={trajanje} 
-                            onChange={(e) => setTrajanje(e.target.value)}
+                            value={duration} 
+                            onChange={(e) => setDuration(e.target.value)}
                         />
                     </>
                 )}
@@ -239,15 +300,24 @@ const Create = () => {
                 <input 
                     type="text"  
                     value={ticketType} 
-                    onChange={(e) => setTicketType(e.target.value)}
+                    onChange={(e) => {
+                        setTicketType(e.target.value);
+                        setWarnings(prev => ({ ...prev, ticketType: validateTicketType(e.target.value) }));
+                    }}
                 />
+                {warnings.ticketType && <p className="warning">{warnings.ticketType}</p>}
 
                 <label>Broj sjedala:</label>
                 <input 
                     type="text"  
                     value={seatNumber} 
-                    onChange={(e) => setSeatNumber(e.target.value)}
+                    onChange={(e) => {
+                        setSeatNumber(e.target.value);
+                        setWarnings(prev => ({ ...prev, seatNumber: validateSeatNumber(e.target.value) }));
+                    }}
                 />
+                {warnings.seatNumber && <p className="warning">{warnings.seatNumber}</p>}
+
 
                 {namjena === "razmjena" && (
                     <>
@@ -279,15 +349,23 @@ const Create = () => {
                         <input 
                             type="text" 
                             value={wantedSeatNumber} 
-                            onChange={(e) => setwantedSeatNumber(e.target.value)}
+                            onChange={(e) => {
+                                setwantedSeatNumber(e.target.value);
+                                setWarnings(prev => ({ ...prev, wantedSeatNumber: validateWantedSeatNumber(e.target.value) }));
+                            }}
                         />
+                        {warnings.wantedSeatNumber && <p className="warning">{warnings.wantedSeatNumber}</p>}
 
                         <label>Željena vrsta ulaznice:</label>
                         <input 
                             type="text" 
                             value={wantedTicketType} 
-                            onChange={(e) => setwantedTicketType(e.target.value)}
+                            onChange={(e) => {
+                                setwantedTicketType(e.target.value);
+                                setWarnings(prev => ({ ...prev, wantedTicketType: validateWantedTicketType(e.target.value) }));
+                            }}
                         />
+                        {warnings.wantedTicketType && <p className="warning">{warnings.wantedTicketType}</p>}
                     </>
                 )}
 
@@ -296,6 +374,7 @@ const Create = () => {
             </form>
         </div>
     );
+    
 }
 
 export default Create;

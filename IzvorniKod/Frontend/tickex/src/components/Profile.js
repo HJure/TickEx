@@ -223,7 +223,11 @@ function Profile({ profile, setProfile }) {
                         <img src={profile.picture} alt="user" className="profile-image" />
                         <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
                         <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
-                        <p className="profile-info">Ocjena: {localStorage.getItem("user_rating")}</p>
+                        <p className="profile-info">
+                            Ocjena: {localStorage.getItem("user_rating") === "0" ? (
+                                <img src="/images/forbidden.png" alt="forbidden" className="rating-image" />
+                            ) : localStorage.getItem("user_rating")}
+                        </p>
                         <StarRate ocjena={localStorage.getItem("user_rating")} />
                         {isEditing ? (
                             <div>

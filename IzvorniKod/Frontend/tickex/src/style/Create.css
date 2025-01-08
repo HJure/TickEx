@@ -109,11 +109,48 @@
 }
 
 .warning {
-    color: #f44336; 
-    font-size: 0.9em;
-    margin-top: 5px;
-    animation: shake 0.5s ease; 
+    color: #ce128f !important;
+    font-size: 1em;
+    margin-top: 10px;
+    text-shadow: 
+        0 0 15px #ff99cc, 
+        0 0 30px #ff80ab, 
+        0 0 45px rgba(255, 128, 171, 1), 
+        0 0 60px #ffbcd9, 
+        0 0 75px #ff7b9e; 
+    animation: shake 0.5s ease, glow 2s infinite alternate ease-in-out;
+    font-weight: bold;
+    text-transform: uppercase;
 }
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 
+            0 0 15px #ff99cc, 
+            0 0 30px #ff80ab, 
+            0 0 45px rgba(255, 128, 171, 1), 
+            0 0 60px #ffbcd9, 
+            0 0 75px #ff7b9e;
+    }
+    100% {
+        text-shadow: 
+            0 0 30px #ffe6f2, 
+            0 0 45px #ffc1e3, 
+            0 0 60px rgba(255, 193, 227, 1), 
+            0 0 75px #ffb7d9, 
+            0 0 90px #ff5e8d;
+    }
+}
+
+
 
 @keyframes shake {
     0% {

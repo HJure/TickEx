@@ -50,6 +50,8 @@
     font-weight: bold;
     text-align: center;
     color: white;
+    display: inline-flex;
+    align-items: center;
 }
 
 .loading-text {
@@ -278,4 +280,11 @@ a{
 .profile-container input, .profile-container button {
   width: 100%;
   max-width: 300px;
+}
+
+.rating-image {
+  width: 25px; 
+  height: 25px; 
+  margin-left: 10px;
+  vertical-align: middle; 
 }

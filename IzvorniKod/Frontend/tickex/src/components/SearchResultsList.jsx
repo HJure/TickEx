@@ -27,8 +27,8 @@ const SearchResultsList = ({ results }) => {
           <h4>{result.eventName}</h4>
           <span>Mjesto: {result.location}</span> |
           <span> Datum: {result.eventDate.split('T')[0]}</span> |
-          <span> Vrsta ulaznice: {result.ticketType}</span> |
-          <span> Cijena: {result.price} EUR</span> |
+          <span> Vrsta ulaznice: {result.ticketType !== null ? result.ticketType : "-"}</span> |
+          {result.isExchangeAvailable !== "razmjena" && <><span> Cijena: {result.price} EUR</span> |</>} 
           <span> Vrsta događaja:</span>{' '}
           <span className="answer">{result.eventTypeId.nazVrDog}</span> |
           <span> Broj sjedala:</span>{' '}
