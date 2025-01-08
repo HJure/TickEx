@@ -3,7 +3,6 @@
     border-width: 4px;
     border-color: #4c2050;
     color: #000000;
-    margin-top: 35px;
     background: linear-gradient(180deg, rgba(249, 134, 252, 0.8), rgba(235, 213, 103, 0.8), rgba(162, 0, 255, 0.6));
     background-size: 200% 200%;
     animation: falling-gradient 3s linear infinite alternate;

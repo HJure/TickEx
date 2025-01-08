@@ -1,0 +1,158 @@
+/* Global styles */
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Shop container */
+.shop-container {
+    background: linear-gradient(135deg, #6a5acd, #ff1493); 
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 300px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.shop-container h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+/* Description */
+.shop-description {
+    font-size: 1.4rem;
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+/* Menu */
+.shop-menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+/* Link styles */
+.shop-link {
+    display: inline-block;
+    padding: 18px 35px;
+    background-color: #9b4dca;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: linkFade 2s infinite alternate;
+}
+
+/* Hover effect */
+.shop-link:hover {
+    background-color: #8e44ad;
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    color: #ff1493;
+}
+
+/* Focus effect */
+.shop-link:focus {
+    outline: none;
+}
+
+/* Active effect */
+.shop-link:active {
+    background-color: #732d91;
+    transform: translateY(0);
+}
+
+/* Animations */
+
+/* Link fade animation */
+@keyframes linkFade {
+    0% {
+        opacity: 0.7;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Pulse animation (glowing effect) */
+.shop-link:hover {
+    animation: pulseGlow 1.5s infinite;
+}
+
+/* Glowing effect */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 20, 147, 0.8), 0 0 30px rgba(255, 20, 147, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 20, 147, 1), 0 0 50px rgba(255, 20, 147, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(255, 20, 147, 0.8), 0 0 30px rgba(255, 20, 147, 0.6);
+    }
+}
+
+/* Shake animation */
+@keyframes shake {
+    0% {
+        transform: translateX(-5px);
+    }
+    25% {
+        transform: translateX(5px);
+    }
+    50% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .shop-container h1 {
+        font-size: 2.8rem;
+    }
+
+    .shop-description {
+        font-size: 1.2rem;
+    }
+
+    .shop-menu {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .shop-link {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+    }
+}

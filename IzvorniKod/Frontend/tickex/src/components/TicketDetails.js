@@ -166,7 +166,8 @@ const TicketDetails = ({ url }) => {
                                 <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
                                 <span>Vrsta ulaznice:</span> <span className="answer"> {ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
                                 <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
-                                {ticket.isExchangeAvailable !== "razmjena" && <><span>Cijena:</span> <span className="answer">{ticket.price} €</span></>}
+                                {ticket.isExchangeAvailable === "prodaja" && <><span>Cijena:</span> <span className="answer">{ticket.price} €</span></>}
+                                {ticket.isExchangeAvailable === "aukcija" && <><span>Početna cijena:</span> <span className="answer">{ticket.startPrice} €</span></>}
                                 <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
                                 <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
                                 <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>

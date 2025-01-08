@@ -52,7 +52,7 @@ function Navbar({ profile, setProfile }) {
                 <ul>
                     {accessToken && <li className="nav-link nav-link-line"><Link className="link" to="/profile">Profil</Link></li>}
                     {!accessToken && <li className="nav-link nav-link-line"><Link className="link" to="/signup">Prijavi se</Link></li>}
-                    {accessToken && <li className="nav-link nav-link-line"><Link className="link" to="/shop">Kupnja</Link></li>}
+                    {accessToken && <li className="nav-link nav-link-line"><Link className="link" to="/shop">Započni</Link></li>}
                     {accessToken && <li className="nav-link nav-link-line"><button className="link" onClick={logOut} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>ODJAVI SE</button></li>}
                     <li className="nav-link nav-link-line"><button className="link" onClick={handleAboutClick} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>O NAMA</button></li>
                 </ul>
