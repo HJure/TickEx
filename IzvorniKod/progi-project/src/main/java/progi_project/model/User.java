@@ -44,8 +44,8 @@ public class User {
     @Column(name ="ocjena",nullable = false)
     private float ocjena;
 
-    //Spajanje sa svida tablicom u bazi
-    @ManyToMany(cascade = CascadeType.PERSIST)
+  /*   //Spajanje sa svida tablicom u bazi
+    @ManyToMany
     @JoinTable(
         name = "svida",
         joinColumns = @JoinColumn(name = "idkor"),
@@ -59,7 +59,7 @@ public class User {
     public void setFavoriteTickets(Ticket t){
         favoriteTickets.add(t);
         
-    }
+    } */
 
     //Temporary default constructor
     public User() { 

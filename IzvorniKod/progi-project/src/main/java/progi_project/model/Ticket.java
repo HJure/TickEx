@@ -61,7 +61,7 @@ public class Ticket{
     private LocalDateTime ObrisanoTime;
     
     //spajanje sa svida tablicom u bazi
-    @ManyToMany(mappedBy = "favoriteTickets", cascade = CascadeType.PERSIST)
+   /*  @ManyToMany(mappedBy = "favoriteTickets")
     private Set<User> users;
 
     public Set<User> getUsers(){
@@ -70,7 +70,7 @@ public class Ticket{
     public void setUsers(User u){
         users.add(u);
         //System.out.println("\n users in ticket's set " + users.toString() +"\n");
-    }
+    } */
     public int getId() {
         return id;
     }

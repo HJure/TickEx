@@ -50,7 +50,7 @@ public class TicketService {
         return ticketRepository.findAllByOwnerId(userId);
     }
     
-    @Transactional
+   /*  @Transactional
     public Ticket favoriteTicket(int ticketId, int userId){
         Ticket ticket = ticketRepository.findById(ticketId);
         User user = userRepository.findById(userId);
@@ -67,5 +67,5 @@ public class TicketService {
            
         }
         
-    }
+    } */
 }
