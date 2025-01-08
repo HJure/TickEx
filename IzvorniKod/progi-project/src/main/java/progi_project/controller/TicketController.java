@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import progi_project.model.Ticket;
+import progi_project.repository.UserRepository;
 import progi_project.service.TicketService;
 
 @RestController
@@ -24,6 +25,9 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping
     public Ticket createTicket(@RequestBody Ticket ticket) {
@@ -61,6 +65,14 @@ public class TicketController {
     		ticket.setObrisanoTime(LocalDateTime.now());
     	}
     	ticketService.updateTicketStatus(id, status);
+        return ResponseEntity.noContent().build();
+    }
+    // Lajkanje karte
+    @PostMapping("/{id}/favorite")
+    public ResponseEntity<Ticket> favoriteTicket(@PathVariable int id, @RequestBody int userId) {
+       
+        ticketService.favoriteTicket(id, userId);
+        //System.out.println("User["+ userId +"] favorite tickets are" + userRepository.getById(userId).getFavoriteTickets() + "\n");
         return ResponseEntity.noContent().build();
     }
 }

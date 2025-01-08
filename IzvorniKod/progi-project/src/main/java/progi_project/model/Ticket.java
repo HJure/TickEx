@@ -2,7 +2,9 @@ package progi_project.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -56,7 +59,18 @@ public class Ticket{
     
     @Column(name = "vrijemeobrisano", nullable = true)
     private LocalDateTime ObrisanoTime;
+    
+    //spajanje sa svida tablicom u bazi
+    @ManyToMany(mappedBy = "favoriteTickets", cascade = CascadeType.PERSIST)
+    private Set<User> users;
 
+    public Set<User> getUsers(){
+        return users;
+    }
+    public void setUsers(User u){
+        users.add(u);
+        //System.out.println("\n users in ticket's set " + users.toString() +"\n");
+    }
     public int getId() {
         return id;
     }

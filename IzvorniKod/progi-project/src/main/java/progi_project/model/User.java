@@ -1,7 +1,9 @@
 package progi_project.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,6 +43,23 @@ public class User {
 
     @Column(name ="ocjena",nullable = false)
     private float ocjena;
+
+    //Spajanje sa svida tablicom u bazi
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+        name = "svida",
+        joinColumns = @JoinColumn(name = "idkor"),
+        inverseJoinColumns = @JoinColumn(name = "idogl")
+    )
+    private Set<Ticket> favoriteTickets;
+
+    public Set<Ticket> getFavoriteTickets(){
+        return favoriteTickets;
+    }
+    public void setFavoriteTickets(Ticket t){
+        favoriteTickets.add(t);
+        
+    }
 
     //Temporary default constructor
     public User() { 
