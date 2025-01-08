@@ -132,8 +132,13 @@ const TicketDetails = ({ url }) => {
     };
 
     const handleLikeClick = () => {
+        //if like image === like.png DELETE tickets/{ticket_id}/favorite i setLikeImage unlike.png
+        //inace POST tickets/{ticket_id}/favorite i setLikeImage like.png
+        // treba u body poslati userID
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
+       
     };
+    
 
     const goBack = () => {
         navigate(-1); 

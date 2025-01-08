@@ -68,11 +68,11 @@ public class TicketController {
         return ResponseEntity.noContent().build();
     }
     // Lajkanje karte
-   /*  @PostMapping("/{id}/favorite")
+    @PostMapping("/{id}/favorite")
     public ResponseEntity<Ticket> favoriteTicket(@PathVariable int id, @RequestBody int userId) {
        
         ticketService.favoriteTicket(id, userId);
         //System.out.println("User["+ userId +"] favorite tickets are" + userRepository.getById(userId).getFavoriteTickets() + "\n");
         return ResponseEntity.noContent().build();
-    }  */
+    }  
 }

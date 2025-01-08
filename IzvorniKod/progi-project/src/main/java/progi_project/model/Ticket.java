@@ -61,16 +61,16 @@ public class Ticket{
     private LocalDateTime ObrisanoTime;
     
     //spajanje sa svida tablicom u bazi
-   /*  @ManyToMany(mappedBy = "favoriteTickets")
-    private Set<User> users;
+  /*   @ManyToMany(mappedBy = "favoriteTickets")
+    private Set<Integer> userIds;
 
-    public Set<User> getUsers(){
-        return users;
+    public Set<Integer> getUsers(){
+        return userIds;
     }
     public void setUsers(User u){
-        users.add(u);
+        userIds.add(u.getId());
         //System.out.println("\n users in ticket's set " + users.toString() +"\n");
-    } */
+    }  */
     public int getId() {
         return id;
     }

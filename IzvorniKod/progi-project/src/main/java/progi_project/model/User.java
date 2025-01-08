@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,22 +46,23 @@ public class User {
     @Column(name ="ocjena",nullable = false)
     private float ocjena;
 
-  /*   //Spajanje sa svida tablicom u bazi
-    @ManyToMany
-    @JoinTable(
+   //Spajanje sa svida tablicom u bazi
+    @ElementCollection
+    @CollectionTable(
         name = "svida",
-        joinColumns = @JoinColumn(name = "idkor"),
-        inverseJoinColumns = @JoinColumn(name = "idogl")
+        joinColumns = @JoinColumn(name = "idkor")
+       
     )
-    private Set<Ticket> favoriteTickets;
+    @Column(name = "idogl")
+    private Set<Integer> favoriteTicketId;
 
-    public Set<Ticket> getFavoriteTickets(){
-        return favoriteTickets;
+    public Set<Integer> getFavoriteTickets(){
+        return favoriteTicketId;
     }
     public void setFavoriteTickets(Ticket t){
-        favoriteTickets.add(t);
+        this.favoriteTicketId.add(t.getId());
         
-    } */
+    } 
 
     //Temporary default constructor
     public User() { 
@@ -73,6 +76,7 @@ public class User {
         this.datumUla = datumUla;
         this.statusKor = true;
         this.ocjena = 0.0f;
+        
     }
 
     public User(String email, String imeKor, String prezimeKor, LocalDate datumUla, boolean statusKor, float ocjena) {
