@@ -25,12 +25,13 @@ public class Auction extends Ticket{
         this.startPrice = startPrice;
     }
 
-    public LocalDate getTrajanje() {
-        return duration;
-    }
+	public LocalDate getDuration() {
+		return duration;
+	}
 
-    public void setTrajanje(LocalDate duration) {
-        this.duration = duration;
-    }
+	public void setDuration(LocalDate duration) {
+		this.duration = duration;
+	}
+
 }
 

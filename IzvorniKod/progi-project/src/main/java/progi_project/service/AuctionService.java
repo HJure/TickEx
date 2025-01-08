@@ -25,8 +25,8 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 
-    public Auction createAuction(Auction auction) {
-        return auctionRepository.save(auction);
+    public void createAuction(Auction auction) {
+        auctionRepository.save(auction);
     }
 
     public void resolveAuction(Auction auction) {
