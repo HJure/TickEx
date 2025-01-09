@@ -137,7 +137,7 @@ const TicketDetails = ({ url }) => {
         // treba u body poslati userID kojeg backend uzima kao Integer
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
         console.log(likeImage === "../images.like.png");
-        if (likeImage === "../images/like.png"){
+        if (likeImage === "../images/unlike.png"){
             const userID = localStorage.getItem("userID");
             const access_token = localStorage.getItem("access_token"); 
             fetch ('http://localhost:8080/api/favorites',{
@@ -163,7 +163,40 @@ const TicketDetails = ({ url }) => {
             })
             .catch(error => {
                 console.error('Error:', error.message);  
-                //alert(error.message);  
+                
+                if(error.message === "Error: Oglas vise nije aktivan"){
+                    
+                    alert(error.message);  
+                    setLikeImage("../images/unlike.png");
+                }
+            });
+        }else if(likeImage === "../images/like.png"){
+            const userID = localStorage.getItem("userID");
+            const access_token = localStorage.getItem("access_token"); 
+            fetch ('http://localhost:8080/api/favorites',{
+                method: 'DELETE',
+                headers:{
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ticketId: id,
+                    userId: userID
+                })
+            })  .then(response => {
+                if (!response.ok) {
+                    return response.text().then(errorMessage => {
+                        throw new Error(errorMessage); // Use the message from the backend
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Ticket removed from favorites');
+            })
+            .catch(error => {
+                console.error('Error:', error.message);  
+                
             });
         }
     };

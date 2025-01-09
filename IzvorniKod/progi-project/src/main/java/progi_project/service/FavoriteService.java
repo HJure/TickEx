@@ -26,7 +26,7 @@ public class FavoriteService {
     private UserRepository userRepository;
 
     private String nonActiveTicketError(String errorMessage) {
-        // Find where the actual error message starts (after "ERROR: ")
+        
         String prefix = "ERROR: Oglas vise nije aktivan";
         if (errorMessage.contains(prefix)) {
             return "Oglas vise nije aktivan";
@@ -40,31 +40,31 @@ public class FavoriteService {
         
         Favorite favorite = new Favorite(user, ticket);
         try{
-            System.out.println(favorite.toString());
+            //System.out.println(favorite.toString());
             return favoriteRepository.save(favorite);
         }catch(Exception  e){
             String msg = nonActiveTicketError(e.getMessage());
             
-            System.out.println("\n ERROR IS " + msg + "\n");
+            //System.out.println("\n ERROR IS " + msg + "\n");
             throw new RuntimeException(msg);
         }
         
     }
 
-    public void removeFavorite(int userId, int ticketId) {
+    public void removeFavorite(int idkor, int idogl) {
         
-        favoriteRepository.deleteByUserIdAndTicketId(userId, ticketId);
+        favoriteRepository.deleteByIdkorAndIdogl(idkor, idogl);
     }
 
     public List<Favorite> getAllFavorites() {
         return favoriteRepository.findAll();
     }
     public List<Favorite> getAllUserFavorites(int userId){
-        return favoriteRepository.findByUserId(userId);
+        return favoriteRepository.findByidkor(userId);
     }
     public List<Favorite> getAllTicketFavorites(int ticketId){
         //finds every user who favorited a ticket
-        return favoriteRepository.findByTicketId(ticketId);
+        return favoriteRepository.findByidogl(ticketId);
     }
     
 }
