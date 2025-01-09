@@ -46,23 +46,6 @@ public class User {
     @Column(name ="ocjena",nullable = false)
     private float ocjena;
 
-   //Spajanje sa svida tablicom u bazi
-    @ElementCollection
-    @CollectionTable(
-        name = "svida",
-        joinColumns = @JoinColumn(name = "idkor")
-       
-    )
-    @Column(name = "idogl")
-    private Set<Integer> favoriteTicketId;
-
-    public Set<Integer> getFavoriteTickets(){
-        return favoriteTicketId;
-    }
-    public void setFavoriteTickets(Ticket t){
-        this.favoriteTicketId.add(t.getId());
-        
-    } 
 
     //Temporary default constructor
     public User() { 
@@ -144,5 +127,18 @@ public class User {
     public void setOcjena(float ocjena) {
         this.ocjena = ocjena;
     }
+    @Override
+    public String toString() {
+        return "User{" +
+            "id=" + id +
+            ", email='" + email + '\'' +
+            ", imeKor='" + imeKor + '\'' +
+            ", prezimeKor='" + prezimeKor + '\'' +
+            ", datumUla=" + datumUla +
+            ", statusKor=" + statusKor +
+            ", ocjena=" + ocjena +
+            '}';
+}
+
 }
 

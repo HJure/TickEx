@@ -132,11 +132,40 @@ const TicketDetails = ({ url }) => {
     };
 
     const handleLikeClick = () => {
-        //if like image === like.png DELETE tickets/{ticket_id}/favorite i setLikeImage unlike.png
-        //inace POST tickets/{ticket_id}/favorite i setLikeImage like.png
-        // treba u body poslati userID
+        //if like image === like.png DELETE ../tickets/{ticket_id}/favorite i setLikeImage unlike.png
+        //inace POST na ../tickets/{ticket_id}/favorite i setLikeImage like.png
+        // treba u body poslati userID kojeg backend uzima kao Integer
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
-       
+        console.log(likeImage === "../images.like.png");
+        if (likeImage === "../images/like.png"){
+            const userID = localStorage.getItem("userID");
+            const access_token = localStorage.getItem("access_token"); 
+            fetch ('http://localhost:8080/api/favorites',{
+                method: 'POST',
+                headers:{
+                    "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ticketId: id,
+                    userId: userID
+                })
+            })  .then(response => {
+                if (!response.ok) {
+                    return response.text().then(errorMessage => {
+                        throw new Error(errorMessage); // Use the message from the backend
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Ticket favorited');
+            })
+            .catch(error => {
+                console.error('Error:', error.message);  
+                //alert(error.message);  
+            });
+        }
     };
     
 

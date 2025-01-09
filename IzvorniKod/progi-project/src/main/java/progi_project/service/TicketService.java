@@ -50,22 +50,6 @@ public class TicketService {
         return ticketRepository.findAllByOwnerId(userId);
     }
     
-    //@Transactional
-    public Ticket favoriteTicket(int ticketId, int userId){
-        Ticket ticket = ticketRepository.findById(ticketId);
-        User user = userRepository.findById(userId);
-
-        if (user == null || ticket == null) {
-            throw new RuntimeException("User or Ticket not found");
-           
-        } else {
-             
-            
-            user.setFavoriteTickets(ticket);
-            // Save the updated ticket, which updates the svida join table
-            return ticketRepository.save(ticket);
-           
-        }
-        
-    } 
+   
+   
 }

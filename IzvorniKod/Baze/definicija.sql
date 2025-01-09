@@ -258,7 +258,7 @@ CREATE FUNCTION check_buyer_seller_different()
 RETURNS TRIGGER AS $$
 BEGIN
   IF (SELECT idKor FROM OGLAS WHERE idOgl = NEW.idOgl) = NEW.idKupac THEN
-    RAISE EXCEPTION 'Kupac ne smije biti prodavač';
+    RAISE EXCEPTION 'Kupac ne smije biti prodavac';
   END IF;
 
   RETURN NEW;
@@ -304,7 +304,7 @@ CREATE FUNCTION prevent_self_like()
 RETURNS TRIGGER AS $$
 BEGIN
   IF NEW.idKor = (SELECT idKor FROM OGLAS WHERE idOgl = NEW.idOgl) THEN
-    RAISE EXCEPTION 'Nemoguće lajkati svoj oglas';
+    RAISE EXCEPTION 'Nemoguce lajkati svoj oglas';
   END IF;
   RETURN NEW;
 END;
@@ -324,7 +324,7 @@ BEGIN
     WHERE idOgl = NEW.idOgl
       AND status IN ('u prodaji', 'razmjena', 'aukcija')
   ) THEN
-    RAISE EXCEPTION 'Oglas više nije aktivan';
+    RAISE EXCEPTION 'Oglas vise nije aktivan';
   END IF;
 
   RETURN NEW;

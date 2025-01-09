@@ -60,17 +60,7 @@ public class Ticket{
     @Column(name = "vrijemeobrisano", nullable = true)
     private LocalDateTime ObrisanoTime;
     
-    //spajanje sa svida tablicom u bazi
-  /*   @ManyToMany(mappedBy = "favoriteTickets")
-    private Set<Integer> userIds;
-
-    public Set<Integer> getUsers(){
-        return userIds;
-    }
-    public void setUsers(User u){
-        userIds.add(u.getId());
-        //System.out.println("\n users in ticket's set " + users.toString() +"\n");
-    }  */
+   
     public int getId() {
         return id;
     }
@@ -158,7 +148,22 @@ public class Ticket{
 	public void setArtistName(String artistName) {
 		this.artistName = artistName;
 	}
-    
+    @Override
+public String toString() {
+    return "Ticket{" +
+            "id=" + id +
+            ", eventTypeId=" + eventTypeId +
+            ", eventName='" + eventName + '\'' +
+            ", eventDate=" + eventDate +
+            ", location='" + location + '\'' +
+            ", seatNumber=" + seatNumber +
+            ", ticketType='" + ticketType + '\'' +
+            ", artistName='" + artistName + '\'' +
+            ", owner=" + (owner != null ? owner.getEmail() : "null") + // Or any other identifying field of User
+            ", isExchangeAvailable='" + isExchangeAvailable + '\'' +
+            ", ObrisanoTime=" + ObrisanoTime +
+            '}';
+}
     
 }
 
