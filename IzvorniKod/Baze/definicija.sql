@@ -120,11 +120,9 @@ CREATE TABLE svida
 CREATE TABLE sudjeluje
 (
   idSudj SERIAL NOT NULL,
-  idKor INT NOT NULL,
-  idOgl INT NOT NULL,
-  PRIMARY KEY (idSudj, idKor, idOgl),
-  FOREIGN KEY (idKor) REFERENCES KORISNIK(idKor),
-  FOREIGN KEY (idOgl) REFERENCES RAZMJENA(idOgl)
+  idKor INT[] NOT NULL,
+  idOgl INT[] NOT NULL,
+  PRIMARY KEY (idSudj)
 );
 
 CREATE TABLE nudi

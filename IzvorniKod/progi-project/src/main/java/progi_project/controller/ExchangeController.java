@@ -3,6 +3,7 @@ package progi_project.controller;
 import java.util.List;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import progi_project.model.Exchange;
-import progi_project.model.Auction;
-import progi_project.model.Chain;
 import progi_project.service.ExchangeService;
-import progi_project.repository.ChainRepository;
 
 @RestController
 @RequestMapping("/exchanges")
@@ -26,8 +24,10 @@ public class ExchangeController {
 	@Autowired
     private ExchangeService exchangeService;
 	
-	@Autowired
-    private ChainRepository chainRepository;
+	@GetMapping
+    public List<Exchange> getAllExchanges() {
+        return exchangeService.findAll();
+    }
 	
 	@PostMapping("/{id}/process")
     public ResponseEntity<String> processExchange(@PathVariable Integer id) {
@@ -38,17 +38,6 @@ public class ExchangeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No valid exchange chain found.");
         }
     }
-	
-	@GetMapping("/")
-    public List<Exchange> getAllExchanges() {
-        return exchangeService.findAll();
-    }
-	
-	
-	@GetMapping("/chains")
-	public List<Chain> getAllChains() {
-	   return chainRepository.findAll();
-	}
 	 
 	@PostMapping
 	public void createExchange(@RequestBody Exchange exchange) {

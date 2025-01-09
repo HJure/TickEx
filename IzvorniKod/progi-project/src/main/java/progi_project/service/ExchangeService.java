@@ -33,17 +33,15 @@ public class ExchangeService {
 
         if (isValid) {
             
-            Chain firstChain = new Chain(chain.get(0).getOwner(), chain.get(0));
-            chainRepository.save(firstChain);
-
-            //da su svi pod istim id-em
-            int sharedIdSudj = firstChain.getId();
-           
-            for (int i = 1; i < chain.size() - 1; i++) {
-                Chain newChain = new Chain(chain.get(i).getOwner(), chain.get(i));
-                newChain.setId(sharedIdSudj);  
-                chainRepository.save(newChain);
-            }
+        	Integer[] idOgl = new Integer[chain.size() - 1];
+        	Integer[] idKor = new Integer[chain.size() - 1];
+        	for(int i = 0; i < chain.size() - 1;i++) {
+        		idOgl[i] = chain.get(i).getId();
+        		idKor[i] = chain.get(i).getOwner().getId();
+        	}
+        	
+        	Chain lanac = new Chain(idOgl,idKor);
+        	chainRepository.save(lanac);
         }
 
         return isValid;
