@@ -23,13 +23,17 @@ public class Chain {
     @Column(name = "idkor", nullable = false)
     private Integer[] idkor;
     
+    @Column(name = "odgovor", nullable = true)
+    private Boolean[] response;
+    
     public Chain() {
     }
 
     
-	public Chain(Integer[] idogl, Integer[] idkor) {
+	public Chain(Integer[] idogl, Integer[] idkor, int broj) {
 		this.idogl = idogl;
 		this.idkor = idkor;
+		this.response = new Boolean[broj];
 	}
 	
 	public int getIdsudj() {
@@ -60,4 +64,13 @@ public class Chain {
 		this.idkor = idkor;
 	}
 
+	public Boolean[] getResponse() {
+		return response;
+	}
+
+
+	public void setResponse(Boolean[] response) {
+		this.response = response;
+	}
+	
 }

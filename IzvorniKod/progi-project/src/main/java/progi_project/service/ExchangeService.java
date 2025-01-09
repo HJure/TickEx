@@ -40,7 +40,7 @@ public class ExchangeService {
         		idKor[i] = chain.get(i).getOwner().getId();
         	}
         	
-        	Chain lanac = new Chain(idOgl,idKor);
+        	Chain lanac = new Chain(idOgl,idKor, chain.size() - 1);
         	chainRepository.save(lanac);
         }
 

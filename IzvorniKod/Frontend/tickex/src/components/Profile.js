@@ -147,6 +147,8 @@ function Profile({ profile, setProfile }) {
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
     const purchasedTickets = tickets ? tickets.filter(ticket => ticket.buyer?.id === parseInt(userID)) : [];
+    const soldTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)  
+                                    && ticket.isExchangeAvailable === "prodano") : [];
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
     const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
@@ -205,6 +207,8 @@ function Profile({ profile, setProfile }) {
                 return <div className="my_offers" ><TicketList tickets={filteredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'purchased':
                 return <div className="my_offers" ><TicketList tickets={purchasedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'sold':
+                return <div className="my_offers" ><TicketList tickets={soldTickets} isPending={isTicketsPending} error={ticketsError} /></div>;    
             case 'deleted':
                 return <div className="my_offers" ><TicketList tickets={deletedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'expired':

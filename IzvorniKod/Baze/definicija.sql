@@ -122,6 +122,7 @@ CREATE TABLE sudjeluje
   idSudj SERIAL NOT NULL,
   idKor INT[] NOT NULL,
   idOgl INT[] NOT NULL,
+  odgovor BOOLEAN[],
   PRIMARY KEY (idSudj)
 );
 

@@ -36,7 +36,7 @@ function Navbar({ profile, setProfile }) {
         } else {
             navigate("/");
         }
-    }, [location, navigate]);
+    }, [location, navigate, setProfile]);
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 const Exchange = () => {
   const [exchanges, setExchanges] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [setLoading] = useState(true);
+  const [setError] = useState(null);
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
@@ -18,7 +18,7 @@ const Exchange = () => {
         setError('Error fetching exchanges.');
         setLoading(false);
       });
-  }, [backendUrl]);
+  }, [backendUrl, setLoading]);
 
   const handleProcessExchange = (id) => {
     fetch(`${backendUrl}/api/exchanges/${id}/process`, {
