@@ -128,3 +128,19 @@
         transform: translateX(0);
     }
 }
+
+input.checkbox  { 
+    margin: 0; 
+    padding: 0; 
+    margin-left: 20px; 
+    list-style: none; 
+  }
+input.checkbox li { 
+    border: 1px transparent solid; 
+    display:inline-block;
+    width:12em;
+  }
+ input.checkbox li { 
+    color: white;
+  }
+

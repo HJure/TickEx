@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SavePreferences from "./SavePreferences";
 import { parseUrlParams } from '../utils/parseUrlParams';
 import '../style/UserForm.css';
 
@@ -9,6 +10,7 @@ const UserForm = () => {
     const [prezimeKor, setPrezimeKor] = useState('');
     const [email, setEmail] = useState('');
     const [isPending, setIsPending] = useState(false);
+    const [preferences, setPreferences] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -24,7 +26,7 @@ const UserForm = () => {
     const submitFunction = (e) => {
         e.preventDefault();
         const datumUla = new Date().toISOString().split('T')[0];
-        const user = { email, imeKor, prezimeKor, datumUla };
+        const user = { email, imeKor, prezimeKor, datumUla, preferences };
         setIsPending(true);
 
         fetch(`${backendUrl}/api/users/register`, {
@@ -78,6 +80,10 @@ const UserForm = () => {
                     value={prezimeKor} 
                     onChange={(e) => setPrezimeKor(e.target.value)}
                 />
+                <label>Označite kategorije koje vas zanimaju.</label>
+                <div className ="likedCategories">
+                    <SavePreferences setPreferences={setPreferences} />
+                </div>
                 {!isPending && <button>Submit</button>}
                 {isPending && <button disabled>Dodavanje korisnika...</button>}
             </form>
