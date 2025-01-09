@@ -152,7 +152,7 @@ function Profile({ profile, setProfile }) {
     const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "isteklo") : [];
     const likedTickets = tickets;
-    const { data: chains } = useFetch(`${backendUrl}/api/exchanges/chains`);
+    const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
 
     const handleEditProfile = () => {
         setIsEditing(true);

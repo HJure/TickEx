@@ -8,7 +8,7 @@ const Exchange = () => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
   useEffect(() => {
-    fetch(`${backendUrl}/api/exchanges/`)
+    fetch(`${backendUrl}/api/exchanges`)
       .then(response => response.json())
       .then(data => {
         setExchanges(data);

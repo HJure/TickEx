@@ -7,7 +7,6 @@
     position: relative;
     padding: 20px;
     background: linear-gradient(135deg, #6a11cb, #cd25fc);
-    border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     text-align: center;
     animation: gradientAnimation 6s infinite alternate;

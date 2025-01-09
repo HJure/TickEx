@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../style/Shop.css'; // Učitajte stilove
+import '../style/Shop.css';
 
 const Shop = () => {
     return (

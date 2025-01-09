@@ -26,7 +26,7 @@ public class ChainController {
 	   return chainRepository.findAll();
 	}
 	
-	@PostMapping("/{id}")
+	@GetMapping("/{id}")
     public ResponseEntity<?> findChainsUser(@PathVariable Integer id) {
         List<Chain> chains = chainRepository.findChainsByUserId(id);
 

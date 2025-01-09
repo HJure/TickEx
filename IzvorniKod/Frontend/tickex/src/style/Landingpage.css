@@ -9,8 +9,8 @@
 .landingpage-content  {
     position: absolute;
     color: #fff;  
-    text-align: center;            /* Makes the original text invisible */
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Blurs text with shadow */
+    text-align: center;            
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); 
     font-size: 36px;
     font-weight: bold;
 }
