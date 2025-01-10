@@ -123,6 +123,7 @@ CREATE TABLE sudjeluje
   idKor INT[] NOT NULL,
   idOgl INT[] NOT NULL,
   odgovor BOOLEAN[],
+  vrijemeNastanka TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (idSudj)
 );
 
@@ -369,6 +370,11 @@ INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES 
 INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Arsenal', 'London', '2025-01-05', 9);
 
 
-
+/*
+UPDATE sudjeluje
+SET odgovor = ARRAY[FALSE, NULL, FALSE, FALSE]::BOOLEAN[]
+WHERE idsudj = 1;
+na svoj id staviti NULL pa kada se klikne da se vidi razlika
+/*
 
 

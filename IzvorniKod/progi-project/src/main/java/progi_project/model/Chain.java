@@ -1,5 +1,7 @@
 package progi_project.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ public class Chain {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="idsudj",nullable = false, unique = true)
-    private int idsudj;
+    private int id;
 
     @Column(name = "idogl", nullable = false)
     private Integer[] idogl;
@@ -26,24 +28,17 @@ public class Chain {
     @Column(name = "odgovor", nullable = true)
     private Boolean[] response;
     
+    @Column(name = "vrijemenastanka", updatable = false, insertable = false)
+    private LocalDateTime timeOfMaking;
+    
     public Chain() {
     }
 
-    
 	public Chain(Integer[] idogl, Integer[] idkor, int broj) {
 		this.idogl = idogl;
 		this.idkor = idkor;
 		this.response = new Boolean[broj];
 	}
-	
-	public int getIdsudj() {
-		return idsudj;
-	}
-
-	public void setIdsudj(int idsudj) {
-		this.idsudj = idsudj;
-	}
-
 
 	public Integer[] getIdogl() {
 		return idogl;
@@ -72,5 +67,23 @@ public class Chain {
 	public void setResponse(Boolean[] response) {
 		this.response = response;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getTimeOfMaking() {
+		return timeOfMaking;
+	}
+
+	public void setTimeOfMaking(LocalDateTime timeOfMaking) {
+		this.timeOfMaking = timeOfMaking;
+	}
+	
+	
 	
 }
