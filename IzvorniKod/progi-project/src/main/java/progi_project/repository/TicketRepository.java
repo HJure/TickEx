@@ -54,6 +54,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	List<Ticket> findAllByOwnerId(int userId);
     
     @Modifying
-    @Query("UPDATE oglas t SET t.status = 'istekao' WHERE t.datum < CURRENT_DATE")
+    @Query(value = "UPDATE oglas SET status = 'istekao' WHERE datum <= CURRENT_DATE AND status <> 'istekao'", 
+    nativeQuery = true)
     int markExpiredTickets();
 }
