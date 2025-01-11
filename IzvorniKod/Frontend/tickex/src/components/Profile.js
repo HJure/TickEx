@@ -20,6 +20,7 @@ function Profile({ profile, setProfile }) {
     const [lastName, setLastName] = useState('');
     const [rating, setRating] = useState('');
     const [expiredTickets, setExpiredTickets] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -133,7 +134,25 @@ function Profile({ profile, setProfile }) {
             }
         };
 
+        const isAdmin = async () => {
+            try {
+                const response = await fetch(`${backendUrl}/api/users/isAdmin`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${access_token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                setIsAdmin(data);
+            } catch (error) {
+                console.error('Error fetching expired tickets:', error);
+            }
+        };
+
         fetchUserData();
+        isAdmin();
     }, [userID, access_token, backendUrl]);
 
     useEffect(() => {
@@ -191,6 +210,7 @@ function Profile({ profile, setProfile }) {
     const handleEditProfile = () => {
         setIsEditing(true);
     };
+
 
     const handleSaveChanges = async () => {
         try {
@@ -275,6 +295,9 @@ function Profile({ profile, setProfile }) {
                         ) : (
                             <button onClick={handleEditProfile}>Uredi podatke!</button>
                         )}
+                        {isAdmin ? (
+                           <button onClick={() => navigate("/reports")}>Pregled prijava</button>
+                        ) : null }
                     </div>
                 );
             default:

@@ -24,20 +24,20 @@ function App() {
         <Router>
             <div className="App">
             <Navbar profile={profile} setProfile={setProfile}/>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/signup" element={<Login />} />
-                    <Route path="/profile" element={<Profile profile={profile} setProfile={setProfile}/>} />
-                    <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
-                    <Route path="/sales/:id" element={<SaleDetails url={`${backendUrl}/api/tickets/`} />} />
-                    <Route path="/exchange" element={<Exchange />} />
-                    <Route path="/create" element={<Create />} />
-                    <Route path="/shop" element={<Shop />} />
-                    <Route path="/register" element={<UserForm />} />
-                    <Route path="/buy" element={<Buy />} />
-                    <Route path="/auction" element={<Auction />} />
-                    <Route path="/reports" element={<Reports />} />
-                </Routes>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/signup" element={<Login />} />
+                <Route path="/profile" element={<Profile profile={profile} setProfile={setProfile}/>} />
+                <Route path="/tickets/:id" element={<TicketDetails url={`${backendUrl}/api/tickets/`} />} />
+                <Route path="/sales/:id" element={<SaleDetails url={`${backendUrl}/api/tickets/`} />} />
+                <Route path="/exchange" element={<Exchange />} />
+                <Route path="/create" element={<Create />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/register" element={<UserForm />} />
+                <Route path="/buy" element={<Buy />} />
+                <Route path="/auction" element={<Auction />} />
+                <Route path="/reports" element={<Reports />} />
+            </Routes>
             <Footer />
             </div>
         </Router>
