@@ -42,7 +42,7 @@ function Profile({ profile, setProfile }) {
         localStorage.removeItem("user_registration_date");
         localStorage.removeItem("user_rating");
         localStorage.removeItem("user_status");
-    
+       
         setProfile(null);
         navigate('/');
     }, [navigate, setProfile]);
@@ -162,7 +162,7 @@ function Profile({ profile, setProfile }) {
                     }
     
                     const data = await response.json();
-                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "isteklo"));
+                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "istekao"));
                 } catch (error) {
                     console.error('Error fetching expired tickets:', error);
                 }
@@ -180,15 +180,12 @@ function Profile({ profile, setProfile }) {
                                     && ticket.isExchangeAvailable === "prodano") : [];
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
-    const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
-                                    && ticket.isExchangeAvailable === "istekao") : [];
-
-
+    
+    
     const { data: likedTickets, isPending: isFavoritesPending, error: favoritesError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`);                                
     console.log(JSON.stringify(likedTickets)); 
 
-    //const likedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
-    //&& ticket.isExchangeAvailable === "istekao") : [];;
+   
     const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
 
     const handleEditProfile = () => {

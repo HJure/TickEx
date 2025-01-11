@@ -17,22 +17,26 @@ const TicketDetails = ({ url }) => {
     const [weatherData, setWeatherData] = useState({})
     const [weatherLocation, setWeatherLocation] = useState('')
     const [likeImage, setLikeImage] = useState("../images/unlike.png");  // Initial image is 'unlike'
-
+    
     /*const [eventType, setEventType] = useState('')
     const [artistSearch, setArtistSearch] = useState('')
     const [artistData, setArtistData] = useState({})*/
     //OVDJE
 
     // State for like button image
-    console.log(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
-    const { data: favorites, isFavsPending, favsError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}&`);
     
+    const { data: favorites, isFavsPending, favsError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
+    
+   
     useEffect(() => {
         if (favorites && favorites.length > 0) {
-            // Check if the ticketId is in the list of favorites
-            const isLiked = favorites.some(favorite => favorite.ticketId === id);
+            // Check if the ticketId is in the list of favorites 
+            const isLiked = favorites.some(fav => fav.ticketId === parseInt(id));
             // If liked, change the image to 'like.png', otherwise 'unlike.png'
-            setLikeImage(likeImage ? "../images/like.png" : "../images/unlike.png");
+            setLikeImage(isLiked ? "../images/like.png" : "../images/unlike.png");
+        } else {
+            // If no favorites, set to the default 'unlike' image
+            setLikeImage("../images/unlike.png");
         }
     }, [favorites, id]); // Only rerun when 'favorites' or 'ticketId' changes
 

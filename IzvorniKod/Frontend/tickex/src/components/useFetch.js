@@ -8,7 +8,10 @@ const useFetch = (url) => {
 
     useEffect(() => {
         
-        const formattedUrl = `${url}?timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1");
+        const formattedUrl = url.includes('?')
+        ? `${url}&timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1")
+        : `${url}?timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1"); 
+        //`${url}?timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1");
 
         const abortCont = new AbortController();
 

@@ -38,6 +38,9 @@ public class TicketService {
         return ticketRepository.getTicketsNotExpired();
     }
 
+    public List<Ticket> getTicketsExpired() {
+        return ticketRepository.getTicketsExpired();
+    }
     public Ticket updateTicket(Ticket ticket) {
         return ticketRepository.save(ticket);
     }

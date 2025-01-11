@@ -61,5 +61,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     @Query("SELECT t FROM Ticket t WHERE t.isExchangeAvailable <> 'istekao' AND t.isExchangeAvailable <> 'nepoznato'")
     List<Ticket> getTicketsNotExpired();
 	
+    @Query("SELECT t FROM Ticket t WHERE t.isExchangeAvailable = 'istekao' ")
+    List<Ticket> getTicketsExpired();
 	
 }

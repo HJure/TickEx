@@ -58,6 +58,7 @@ public class FavoriteService {
         List<Favorite> favorites = favoriteRepository.findByidkor(userId);
         List<Ticket> tickets = new ArrayList<Ticket>();
         for(Favorite f : favorites){
+            
             if (ticketRepository.findById(f.getTicket().getId()).getisExchangeAvailable() != "istekao"){
                 //dodaje oglase koje nisu istekli
                 tickets.add(f.getTicket());
