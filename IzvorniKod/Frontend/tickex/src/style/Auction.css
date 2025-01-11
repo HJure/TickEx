@@ -1,0 +1,86 @@
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.relink{
+    display: flex;
+    justify-content: space-evenly;
+}
+.relink h3{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+
+}
+
+.button{
+    padding: 5px 5px;
+    height: 50%;
+    align-self: center;
+    background-color: #9b4dca;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: linkFade 2s infinite alternate;
+}
+.button:hover{
+    background-color: #8e44ad;
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    color: #f4f4f4;
+}
+@keyframes linkFade {
+    0% {
+        opacity: 0.7;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.auctionContainer{
+    background: linear-gradient(135deg, #6a5acd, #ff1493); 
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 0 300px rgba(0, 0, 0, 0.1);
+}
+.searchArea{
+    background: linear-gradient(135deg, #8e7ef4, #f79ecd); 
+}
+.searchBar{
+    padding: 1%;
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 30%;
+    height: 1rem;
+    display: flex;
+    justify-content:center;
+    gap: 0.5em;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+input{
+    font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-self: center;
+    height: 100%;
+    width: 100%;
+    font-size: 1.25rem;
+}
+
