@@ -61,21 +61,23 @@ const SavePreferences = ({setPreferences}) => {
     };
 
     return (
-        <div className="savePreferences">
-            <form onSubmit={handleSubmit}>
-                {categories.map((category, index) => (
-                    <><div key={index} className="checkbox-wrapper">
-                        <input
-                            type="checkbox"
-                            id={index}
-                            value={category}
-                            onChange={() => handleCategoryChange(category)} />
-                    </div><div htmlFor={index} className="categoryName">
-                            {category}
-                        </div></>
-                ))}
-            </form>
-        </div>
+    <div className="savePreferences">
+        <form onSubmit={handleSubmit}>
+            {categories.map((category, index) => (
+                <div key={index} className="checkbox-wrapper">
+                    <input
+                        type="checkbox"
+                        id={`checkbox-${index}`}
+                        value={category}
+                        onChange={() => handleCategoryChange(category)}
+                    />
+                    <div className="categoryName">
+                        {category}
+                    </div>
+                </div>
+            ))}
+        </form>
+    </div>
     );
 
 }

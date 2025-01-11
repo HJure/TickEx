@@ -1,14 +1,16 @@
-.savePreferences{
+.savePreferences {
+    max-width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.checkbox-wrapper{
     display: flex;
-    justify-content: space-evenly;
+    gap: 10px;
+    padding: 5px;
+    width: 20%; 
 }
-.checkbox-wrapper { 
-    gap: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
 input[type="checkbox"] {
+    flex-shrink: 0;
     width: 20px;
     height: 20px;
     accent-color: #e00cb2;
@@ -18,8 +20,11 @@ input[type="checkbox"] {
     transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .categoryName {
+    padding-top: 11%;
     font-size: 18px;
     color: #f5f5f5;
+    text-align: left;
+    text-wrap: none;
     font-weight: bold;
 }
 
