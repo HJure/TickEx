@@ -152,8 +152,14 @@ function Profile({ profile, setProfile }) {
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
     const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
-                                    && ticket.isExchangeAvailable === "isteklo") : [];
-    const likedTickets = tickets;
+                                    && ticket.isExchangeAvailable === "istekao") : [];
+
+
+    const { data: likedTickets, isPending: isFavoritesPending, error: favoritesError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`);                                
+    console.log(JSON.stringify(likedTickets)); 
+
+    //const likedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
+    //&& ticket.isExchangeAvailable === "istekao") : [];;
     const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
 
     const handleEditProfile = () => {
@@ -214,7 +220,7 @@ function Profile({ profile, setProfile }) {
             case 'expired':
                 return <div className="my_offers" ><TicketList tickets={expiredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'liked':
-                return <div className="my_offers" ><TicketList tickets={likedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+                return <div className="my_offers" ><TicketList tickets={likedTickets} isPending={isFavoritesPending} error={favoritesError} /></div>;
             case 'exchangeChains':
                 return (
                     <div className="exchange-chains">

@@ -57,4 +57,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     @Query(value = "UPDATE oglas SET status = 'istekao' WHERE datum <= CURRENT_DATE AND status <> 'istekao'", 
     nativeQuery = true)
     int markExpiredTickets();
+
+    @Query("SELECT t FROM Ticket t WHERE t.isExchangeAvailable <> 'istekao' AND t.isExchangeAvailable <> 'nepoznato'")
+    List<Ticket> getTicketsNotExpired();
 }
