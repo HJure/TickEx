@@ -43,6 +43,21 @@ const Create = () => {
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
+    const [minDate, setMinDate] = useState('');
+
+    useEffect(() => {
+        // Get the current date
+        const currentDate = new Date();
+
+        // Subtract one day from the current date
+        currentDate.setDate(currentDate.getDate() + 1);
+
+        // Format the date to yyyy-mm-dd
+        const formattedDate = currentDate.toISOString().split('T')[0];
+
+        // Set the minDate to one day before the current date
+        setMinDate(formattedDate);
+    }, []);
     const validatePrice = (value) => {
         const intPrice = parseInt(value, 10);
         if (isNaN(intPrice) || intPrice < 0 || intPrice > Number.MAX_SAFE_INTEGER) {
@@ -302,6 +317,7 @@ const Create = () => {
                     required 
                     value={eventDate} 
                     onChange={(e) => setEventDate(e.target.value)}
+                    min= {minDate}
                 />
 
                 <label>Vrsta ulaznice:</label>
@@ -351,6 +367,7 @@ const Create = () => {
                             required 
                             value={wantedDate} 
                             onChange={(e) => setwantedDate(e.target.value)}
+                            
                         />
 
                         <label>Željeni broj sjedala:</label>
