@@ -18,7 +18,8 @@ public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
           "e.location = :wantedLocation AND " +
           "e.eventDate = :wantedDate AND " +
           "(:wantedSeatNumber IS NULL OR e.seatNumber = :wantedSeatNumber) AND " +
-          "(:wantedTicketType IS NULL OR e.ticketType = :wantedTicketType)")
+          "(:wantedTicketType IS NULL OR e.ticketType = :wantedTicketType) AND " +
+          "e.isExchangeAvailable = 'razmjena' ")
   List<Exchange> findMatches(
           @Param("wantedEventName") String wantedEventName,
           @Param("wantedLocation") String wantedLocation,

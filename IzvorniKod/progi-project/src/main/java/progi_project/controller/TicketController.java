@@ -63,6 +63,9 @@ public class TicketController {
     	if(status.equals("obrisano")) {
     		Ticket ticket = getTicketById(id);
     		ticket.setObrisanoTime(LocalDateTime.now());
+    	}else {
+    		Ticket ticket = getTicketById(id);
+    		ticket.setObrisanoTime(null);
     	}
     	ticketService.updateTicketStatus(id, status);
         return ResponseEntity.noContent().build();
