@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import progi_project.model.Sale;
 import progi_project.model.Ticket;
 import progi_project.model.User;
+import progi_project.service.ReportService;
 import progi_project.service.TicketService;
 import progi_project.service.UserService;
 
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ReportService reportService;
     
     @Autowired
     private TicketService ticketService;
@@ -38,6 +42,12 @@ public class UserController {
     @PostMapping("/register")
     public User registerUser(@RequestBody User user) {
         return userService.registerUser(user);
+    }
+
+    @PostMapping("/report")
+    public ResponseEntity<String> reportUser(@RequestParam int reporterId, @RequestParam int reportedId, @RequestParam String reason) {
+        reportService.createReport(reporterId, reportedId, reason);
+        return ResponseEntity.ok("Report submitted successfully");
     }
 
     @GetMapping("/{id}")
