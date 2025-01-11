@@ -173,6 +173,14 @@ const Create = () => {
             "razmjena": `${backendUrl}/api/exchanges`,
             "aukcija": `${backendUrl}/api/auctions`
         }[namjena];
+
+        if (namjena === "aukcija") {
+            const userConfirmed = window.confirm("Upozorenje: aukcija se u budućnosti ne može povući, želite li nastaviti?");
+            if (!userConfirmed) {
+                console.log("Odbijen zahtjev");
+                return;
+            }
+        }
     
         fetch(endpoint, {
             method: 'POST',
@@ -180,7 +188,7 @@ const Create = () => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${access_token}`
             },
-            body: JSON.stringify(ticket)
+            body: JSON.stringify(ticket),
         })
         .then(() => {
             setTimeout(() => { 
