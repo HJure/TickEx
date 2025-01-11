@@ -39,20 +39,30 @@ const Reports = () => {
 
     return (
         <div>
-            <h2>Admin Reports</h2>
+            <h2 style={{textAlign: "center"}}>Reports</h2>
             {reports.length > 0 ? (
-                <ul>
-                    {reports.map((report) => (
-                        <li key={`${report.reporter.id}-${report.reported.id}`}>
-                            <strong>{report.reporter.name}</strong> reported <strong>{report.reported.name}</strong>: {report.reason}
-                        </li>
-                    ))}
-                </ul>
+                <div>
+                {reports.map((report) => (
+                    <div key={`${report.reporter.id}-${report.reported.id}`} style={{width: "50%", margin: "0 auto 16px", backgroundColor: "#9955EB", padding: "16px", borderRadius: "8px", border: "solid black 2px"}}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                            <div>
+                            <strong>Reporter:</strong> {report.reporter.imeKor} {report.reporter.prezimeKor}  ({report.reporter.email})
+                            </div>
+                            <div>
+                            <strong>Reported:</strong> {report.reported.imeKor} {report.reported.prezimeKor}  ({report.reported.email})
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Reason:</strong> {report.reason}
+                        </div>
+                    </div>
+                ))}
+                </div>
             ) : (
-                <p>No reports available.</p>
+                <p style={{ color: "#fff", textAlign: "center" }}>No reports available.</p>
             )}
         </div>
-    );
+      );
 };
 
 export default Reports;

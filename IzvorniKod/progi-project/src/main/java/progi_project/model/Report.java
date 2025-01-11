@@ -20,7 +20,7 @@ public class Report {
     @EmbeddedId
     private ReportId id;
 
-    @Column(nullable = false, length = 250)
+    @Column(name = "razlog", nullable = false, length = 250)
     private String reason;
 
     @ManyToOne
@@ -33,7 +33,7 @@ public class Report {
     @JoinColumn(name = "prijavljenidkor", referencedColumnName = "idkor")
     private User reported;
 
-    @Column(name = "datumPri", nullable = false)
+    @Column(name = "datumpri", nullable = false)
     private LocalDate reportDate = LocalDate.now();
 
     public ReportId getId() {
