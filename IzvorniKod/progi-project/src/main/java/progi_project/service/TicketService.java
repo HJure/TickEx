@@ -50,6 +50,10 @@ public class TicketService {
         return ticketRepository.findAllByOwnerId(userId);
     }
     
+    @Transactional
+    public int markExpiredTickets() {
+        return ticketRepository.markExpiredTickets();
+    }
    
    
 }

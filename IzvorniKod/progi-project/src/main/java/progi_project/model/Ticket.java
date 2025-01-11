@@ -149,8 +149,8 @@ public class Ticket{
 		this.artistName = artistName;
 	}
     @Override
-public String toString() {
-    return "Ticket{" +
+    public String toString() {
+        return "Ticket{" +
             "id=" + id +
             ", eventTypeId=" + eventTypeId +
             ", eventName='" + eventName + '\'' +
@@ -163,7 +163,7 @@ public String toString() {
             ", isExchangeAvailable='" + isExchangeAvailable + '\'' +
             ", ObrisanoTime=" + ObrisanoTime +
             '}';
-}
+    }
     
 }
 
