@@ -157,7 +157,7 @@ CREATE TABLE prihvaca
 );
 
 INSERT INTO KORISNIK(email,imeKor,prezKor) VALUES 
-('anaanic143@gmail.com','Ana','Anic') , ('karlobasic184@gmail.com','Karlo','Basic');
+('anaanic143@gmail.com','Ana','Anic') , ('karlobasic184@gmail.com','Karlo','Basic') , ('ivan.djuric15@gmail.com','Ivan','Đurić') , ('jure.herceg4@gmail.com','Jure','Herceg');
 
 INSERT INTO VRSTA_DOGADAJA (nazVrDog) VALUES ('Glazba'),('Nogomet'),('Kazaliste'),('Kino'),('Tenis'),('Festival'),('Tematski park');
 
@@ -369,6 +369,8 @@ INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES 
 INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Real', 'Madrid', '2025-01-05', 7);
 INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Man Utd', 'Manchester', '2025-01-05', 8);
 INSERT INTO RAZMJENA (zeljeniNazOgl, zeljenoMjesto, zeljeniDatum, idOgl) VALUES ('Arsenal', 'London', '2025-01-05', 9);
+
+INSERT INTO prijavljuje (prijavljujeIdKor, prijavljenIdKor, razlog, datumPri) VALUES (1, 2, 'Spam content', '2025-01-10 15:30:00');
 
 
 /*

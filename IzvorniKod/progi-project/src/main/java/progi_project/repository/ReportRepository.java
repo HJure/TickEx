@@ -9,6 +9,6 @@ import progi_project.model.Report;
 
 public interface  ReportRepository extends JpaRepository<Report, Long>{
 
-    @Query("SELECT r FROM Report r ORDER BY r.reportDate DESC LIMIT 6")
+    @Query("SELECT r FROM Report r ORDER BY r.reportDate DESC LIMIT 50")
     List<Report> findTopSixReports();
 }
