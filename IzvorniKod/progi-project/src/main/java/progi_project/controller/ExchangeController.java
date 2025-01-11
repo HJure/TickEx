@@ -1,8 +1,7 @@
 package progi_project.controller;
 
 import java.util.List;
-
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,11 @@ public class ExchangeController {
 	
 	@GetMapping
     public List<Exchange> getAllExchanges() {
-        return exchangeService.findAll();
+		return exchangeService.findAll()
+                .stream()
+                .filter(exchange -> !"isteklo".equals(exchange.getisExchangeAvailable()))
+                .collect(Collectors.toList());
+		//da se ne vracaju istekle zamjene
     }
 	
 	@PostMapping("/{id}/process")

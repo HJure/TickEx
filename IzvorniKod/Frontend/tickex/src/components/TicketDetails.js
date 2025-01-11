@@ -101,7 +101,7 @@ const TicketDetails = ({ url }) => {
         let newStatus = "u prodaji";
         if (ticket.price > 0) {
             newStatus = "u prodaji";
-        } else if (ticket.wantedNameEvent) {
+        } else if (ticket.wantedEventName) {
             newStatus = "razmjena";
         } else if (ticket.startPrice > 0) {
             newStatus = "aukcija";
@@ -120,14 +120,14 @@ const TicketDetails = ({ url }) => {
         })
         .then(() => {
             console.log('Ticket status updated');
-            setIsDeleting(true); 
+            setBringBack(true); 
             setTimeout(() => {
                 navigate('/profile'); 
             }, 1500);
         })
         .catch(error => {
             console.error("Greška prilikom ažuriranja karte:", error);
-            setIsDeleting(false);
+            setBringBack(false);
         });
     };
 
@@ -212,6 +212,7 @@ const TicketDetails = ({ url }) => {
             <div className="ticket-details">
                 {isPending && <div>Učitavam...</div>}
                 {isDeleting && <div>Brišem kartu...</div>}
+                {canBringBack && <div>Vraćam kartu...</div>} 
                 {error && <div>Greška: {error}</div>}
                 {ticket && (
                     <div className="ticket-content">

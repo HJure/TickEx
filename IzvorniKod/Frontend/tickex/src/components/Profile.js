@@ -19,6 +19,7 @@ function Profile({ profile, setProfile }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [rating, setRating] = useState('');
+    const [expiredTickets, setExpiredTickets] = useState([]);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -143,6 +144,34 @@ function Profile({ profile, setProfile }) {
         return () => clearTimeout(timer);
     }, [profile]);
 
+    useEffect(() => {
+        const fetchExpiredTickets = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/users/${userID}/tickets`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error while fetching expired tickets');
+                    }
+    
+                    const data = await response.json();
+                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "isteklo"));
+                } catch (error) {
+                    console.error('Error fetching expired tickets:', error);
+                }
+            }
+        };
+    
+        fetchExpiredTickets();
+    }, [userID, access_token, backendUrl]);
+
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
@@ -151,8 +180,8 @@ function Profile({ profile, setProfile }) {
                                     && ticket.isExchangeAvailable === "prodano") : [];
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
-    const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
-                                    && ticket.isExchangeAvailable === "isteklo") : [];
+ /*   const expiredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
+                                    && ticket.isExchangeAvailable === "isteklo") : []; */
     const likedTickets = tickets;
     const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
 
