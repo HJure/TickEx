@@ -41,7 +41,8 @@ public class TicketController {
 
     @GetMapping
     public List<Ticket> getAllTickets() {
-        return ticketService.getAllTickets();
+        //vrati neistekle oglase
+        return ticketService.getTicketsNotExpired();
     }
 
     @PutMapping("/{id}")

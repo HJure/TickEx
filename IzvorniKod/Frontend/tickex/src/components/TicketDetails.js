@@ -6,6 +6,8 @@ import '../style/ticket-details.css';
 import StarRate from "./StarRate";
 
 const TicketDetails = ({ url }) => {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
+
     const { id } = useParams();
     const { data: ticket, error, isPending } = useFetch(`${url}/${id}`);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -14,13 +16,25 @@ const TicketDetails = ({ url }) => {
     const [canBringBack, setBringBack] = useState(false);
     const [weatherData, setWeatherData] = useState({})
     const [weatherLocation, setWeatherLocation] = useState('')
+    const [likeImage, setLikeImage] = useState("../images/unlike.png");  // Initial image is 'unlike'
+
     /*const [eventType, setEventType] = useState('')
     const [artistSearch, setArtistSearch] = useState('')
     const [artistData, setArtistData] = useState({})*/
     //OVDJE
 
     // State for like button image
-    const [likeImage, setLikeImage] = useState("../images/unlike.png");
+    console.log(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
+    const { data: favorites, isFavsPending, favsError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}&`);
+    
+    useEffect(() => {
+        if (favorites && favorites.length > 0) {
+            // Check if the ticketId is in the list of favorites
+            const isLiked = favorites.some(favorite => favorite.ticketId === id);
+            // If liked, change the image to 'like.png', otherwise 'unlike.png'
+            setLikeImage(likeImage ? "../images/like.png" : "../images/unlike.png");
+        }
+    }, [favorites, id]); // Only rerun when 'favorites' or 'ticketId' changes
 
     useEffect(() => {
         const userID = localStorage.getItem("userID"); 
@@ -135,12 +149,13 @@ const TicketDetails = ({ url }) => {
         //if like image === like.png DELETE ../tickets/{ticket_id}/favorite i setLikeImage unlike.png
         //inace POST na ../tickets/{ticket_id}/favorite i setLikeImage like.png
         // treba u body poslati userID kojeg backend uzima kao Integer
+        
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
         console.log(likeImage === "../images.like.png");
         if (likeImage === "../images/unlike.png"){
             const userID = localStorage.getItem("userID");
             const access_token = localStorage.getItem("access_token"); 
-            fetch ('http://localhost:8080/api/favorites',{
+            fetch (`${backendUrl}/api/favorites`,{
                 method: 'POST',
                 headers:{
                     "Authorization": `Bearer ${access_token}`,
@@ -169,11 +184,16 @@ const TicketDetails = ({ url }) => {
                     alert(error.message);  
                     setLikeImage("../images/unlike.png");
                 }
+                if(error.message === "Error: Nemoguce lajkati svoj oglas"){
+                    
+                    alert(error.message);  
+                    setLikeImage("../images/unlike.png");
+                }
             });
         }else if(likeImage === "../images/like.png"){
             const userID = localStorage.getItem("userID");
             const access_token = localStorage.getItem("access_token"); 
-            fetch ('http://localhost:8080/api/favorites',{
+            fetch (`${backendUrl}/api/favorites`,{
                 method: 'DELETE',
                 headers:{
                     "Authorization": `Bearer ${access_token}`,

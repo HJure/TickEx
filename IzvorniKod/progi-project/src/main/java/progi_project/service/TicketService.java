@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -32,6 +34,10 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
+    public List<Ticket> getTicketsNotExpired() {
+        return ticketRepository.getTicketsNotExpired();
+    }
+
     public Ticket updateTicket(Ticket ticket) {
         return ticketRepository.save(ticket);
     }
@@ -54,6 +60,9 @@ public class TicketService {
     public int markExpiredTickets() {
         return ticketRepository.markExpiredTickets();
     }
-   
+  
+
+    
+
    
 }

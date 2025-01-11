@@ -1,6 +1,7 @@
 package progi_project.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,11 @@ public class FavoriteService {
     private String nonActiveTicketError(String errorMessage) {
         
         String prefix = "ERROR: Oglas vise nije aktivan";
+        String prefix2 = "ERROR: Nemoguce lajkati svoj oglas";
         if (errorMessage.contains(prefix)) {
             return "Oglas vise nije aktivan";
+        }else if(errorMessage.contains(prefix2)){
+            return "Nemoguce lajkati svoj oglas";
         }
         return errorMessage; // If "ERROR:" is not found, return the full message
     }
@@ -50,7 +54,19 @@ public class FavoriteService {
         }
         
     }
-
+    public List<Ticket> getFavoriteTickets(int userId){
+        List<Favorite> favorites = favoriteRepository.findByidkor(userId);
+        List<Ticket> tickets = new ArrayList<Ticket>();
+        for(Favorite f : favorites){
+            if (ticketRepository.findById(f.getTicket().getId()).getisExchangeAvailable() != "istekao"){
+                //dodaje oglase koje nisu istekli
+                tickets.add(f.getTicket());
+                System.out.println("Tickets via GET /favorites" + tickets.toString());
+            }
+            
+        }
+        return tickets;
+    }
     public void removeFavorite(int idkor, int idogl) {
         
         favoriteRepository.deleteByIdkorAndIdogl(idkor, idogl);
