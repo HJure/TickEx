@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import progi_project.model.Ticket;
@@ -50,4 +52,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     Optional<Ticket> deleteById(long id);
 
 	List<Ticket> findAllByOwnerId(int userId);
+    
+    @Modifying
+    @Query("UPDATE oglas t SET t.status = 'istekao' WHERE t.datum < CURRENT_DATE")
+    int markExpiredTickets();
 }
