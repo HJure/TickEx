@@ -32,20 +32,21 @@ public class ExchangeController {
 		//da se ne vracaju istekle zamjene
     }
 	
-	@PostMapping("/{id}/process")
+    @PostMapping("/{id}/process")
     public ResponseEntity<String> processExchange(@PathVariable Integer id) {
         boolean success = exchangeService.processExchangeChain(id);
         if (success) {
             return ResponseEntity.ok("Exchange chain successfully processed!");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No valid exchange chain found.");
+            // ako lanac nije pronađen, vratiti poruku "Nema lanaca"
+            return ResponseEntity.status(HttpStatus.OK).body("Nema lanaca");
         }
     }
-	 
-	@PostMapping
-	public void createExchange(@RequestBody Exchange exchange) {
-	   exchangeService.save(exchange);
-	} 
-	 
+
+    @PostMapping
+    public ResponseEntity<Integer> createExchange(@RequestBody Exchange exchange) {
+        Exchange savedExchange = exchangeService.save(exchange);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedExchange.getId());
+    }
 	 
 }
