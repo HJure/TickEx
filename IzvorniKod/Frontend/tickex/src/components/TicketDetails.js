@@ -339,7 +339,7 @@ const TicketDetails = ({ url }) => {
                                 {ticket.eventTypeId.nazVrDog === 'Glazba' && (
                                     <>
                                     <div>
-                                        <span>Artits:</span> <span>{ticket.artistName}</span>
+                                        <span>Artist:</span> <span id="artistName">{ticket.artistName}</span>
                                     </div>
                                     <div>
                                         <span>Artist info:</span> <span id="artistProfile">{artistData.profile ? artistData.profile : "-"}</span>
