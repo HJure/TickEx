@@ -35,6 +35,10 @@
   margin-right: 12px;
 }
 
+#artistProfile {
+  font-size: 12px;
+}
+
 .ticket-info {
   font-size: 16px;
   color: #333;

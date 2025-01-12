@@ -14,14 +14,15 @@ const TicketDetails = ({ url }) => {
     const navigate = useNavigate();
     const [canDelete, setCanDelete] = useState(false);
     const [canBringBack, setBringBack] = useState(false);
+    //Za vrijeme
     const [weatherData, setWeatherData] = useState({})
     const [weatherLocation, setWeatherLocation] = useState('')
+    //Like image
     const [likeImage, setLikeImage] = useState("../images/unlike.png");  // Initial image is 'unlike'
-    
-    /*const [eventType, setEventType] = useState('')
+    //Za artista
+    const [eventType, setEventType] = useState('')
     const [artistSearch, setArtistSearch] = useState('')
-    const [artistData, setArtistData] = useState({})*/
-    //OVDJE
+    const [artistData, setArtistData] = useState({})
 
     // State for like button image
     
@@ -49,8 +50,7 @@ const TicketDetails = ({ url }) => {
 
         if(ticket){
             setWeatherLocation(ticket.location);
-            //setEventType(ticket.eventTypeId.nazVrDog);
-            //OVDJE
+            setEventType(ticket.eventTypeId.nazVrDog);
         }
     }, [ticket]);
 
@@ -68,18 +68,31 @@ const TicketDetails = ({ url }) => {
         }
     }, [weatherLocation]);
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (eventType === 'Glazba') {
-            setArtistSearch(ticket.eventName)
+            setArtistSearch(ticket.artistName)
         }
     }, [eventType]);
 
+    const artistSearchToken = "htgBjiTrQMVOEEhWSSiWXEHDxIYVEDNpibEUWEkY"
+    const searchArtistFunc = async () => {
+        const artistAPI_ID = `https://api.discogs.com/database/search?token=${artistSearchToken}&type=artist&q=${artistSearch}`;
+        const resArtist_ID = await fetch(artistAPI_ID)
+        const searchArtistData_ID = await resArtist_ID.json()
+        const artistID = searchArtistData_ID.results[0].id
+        console.log(artistID)
+        
+        const artistAPI = `https://api.discogs.com/artists/${artistID}`
+        const resArtist = await fetch(artistAPI)
+        const searchArtistData = await resArtist.json()
+        setArtistData(searchArtistData)
+    };
+
     useEffect(() => {
         if (artistSearch) {
-            //nešto
+            searchArtistFunc()
         }
-    }, [artistSearch]);*/
-    //OVDJE
+    }, [artistSearch]);
 
     const getDaysDifference = (ticketDate) => {
         const today = new Date();
@@ -254,41 +267,67 @@ const TicketDetails = ({ url }) => {
                         <div className="ticket-info">
                             <br/>
                             <p>
-                                <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
-                                <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
-                                <span>Vrsta ulaznice:</span> <span className="answer"> {ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
-                                <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
-                                {ticket.isExchangeAvailable === "prodaja" && <><span>Cijena:</span> <span className="answer">{ticket.price} €</span></>}
-                                {ticket.isExchangeAvailable === "aukcija" && <><span>Početna cijena:</span> <span className="answer">{ticket.startPrice} €</span></>}
-                                <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
-                                <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
-                                <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
-                                <span>
-                                    Vrijeme: 
-                                </span>
-                                <span className="answer">
-                                    {
-                                        weatherData?.days?
-                                            (getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15 ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.conditions || "-" : "-") : "-"
-                                    }
-                                </span>
-                                <span>
-                                    Prosj. Temperatura: 
-                                </span>
-                                <span className="answer">
-                                    {
-                                        weatherData?.days?
-                                            (getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15 ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.temp + "°C"|| "-" : "-") : "-"
-                                    }
-                                </span>
-
-                                {ticket.eventTypeId.nazVrDog === 'Glazba' && (
-                                <span>
-                                    Artits: Zasada ignoriraj ovo, ovo je priprema 
-                                    <img src="path/to/your/image.jpg" alt="Artist" />
-                                </span>
+                                <div>
+                                    <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
+                                </div>
+                                <div>
+                                    <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
+                                </div>
+                                <div>
+                                    <span>Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
+                                </div>
+                                <div>
+                                    <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
+                                </div>
+                                {ticket.isExchangeAvailable === "prodaja" && (
+                                    <div>
+                                    <span>Cijena:</span> <span className="answer">{ticket.price} €</span>
+                                    </div>
                                 )}
-
+                                {ticket.isExchangeAvailable === "aukcija" && (
+                                    <div>
+                                    <span>Početna cijena:</span> <span className="answer">{ticket.startPrice} €</span>
+                                    </div>
+                                )}
+                                <div>
+                                    <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
+                                </div>
+                                <div>
+                                    <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
+                                </div>
+                                <div>
+                                    <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
+                                </div>
+                                <div>
+                                    <span>Vrijeme:</span>
+                                    <span className="answer">
+                                    {weatherData?.days
+                                        ? getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15
+                                        ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.conditions || "-"
+                                        : "-"
+                                        : "-"}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Prosj. Temperatura:</span>
+                                    <span className="answer">
+                                    {weatherData?.days
+                                        ? getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15
+                                        ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.temp + "°C" || "-"
+                                        : "-"
+                                        : "-"}
+                                    </span>
+                                </div>
+                                {ticket.eventTypeId.nazVrDog === 'Glazba' && (
+                                    <>
+                                    <div>
+                                        <span>Artits:</span> <span>{ticket.artistName}</span>
+                                    </div>
+                                    <div>
+                                        <span>Artist info:</span> <span id="artistProfile">{artistData.profile}</span>
+                                    </div>
+                                    </>
+                                )}
                             </p>
                             <br/>
                             <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
