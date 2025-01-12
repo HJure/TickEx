@@ -46,18 +46,12 @@ const Create = () => {
     const [minDate, setMinDate] = useState('');
 
     useEffect(() => {
-        // Get the current date
         const currentDate = new Date();
-
-        // Subtract one day from the current date
         currentDate.setDate(currentDate.getDate() + 1);
-
-        // Format the date to yyyy-mm-dd
         const formattedDate = currentDate.toISOString().split('T')[0];
-
-        // Set the minDate to one day before the current date
         setMinDate(formattedDate);
     }, []);
+
     const validatePrice = (value) => {
         const intPrice = parseInt(value, 10);
         if (isNaN(intPrice) || intPrice < 0 || intPrice > Number.MAX_SAFE_INTEGER) {
@@ -127,76 +121,102 @@ const Create = () => {
         setEventTypeId(selectedDogadaj ? selectedDogadaj.id : null);
     };       
 
+    const handleProcessExchange = (id) => {
+        console.log("id: ", id);
+        fetch(`${backendUrl}/api/exchanges/${id}/process`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.text(); 
+            } else {
+              throw new Error("Exchange chain processing failed.");
+            }
+          })
+          .then((message) => {
+            if (message === "Nema lanaca") {
+              alert("Trenutno nije dostupan nijedan lanac, no kad bude dostupan bit ćete obaviješteni.");
+            } else {
+              alert(message); 
+            }
+          })
+          .catch((error) => {
+            console.error("Error processing exchange:", error);
+            alert("Došlo je do pogreške prilikom obrade razmjene.");
+          });
+      };
+      
+      
+      
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    
-        const priceWarning = validatePrice(price); 
-        const seatNumberWarning = validateSeatNumber(seatNumber);
-        const ticketTypeWarning = validateTicketType(ticketType);
-        const startPriceWarning = validateStartPrice(startPrice);
-        const wantedSeatNumberWarning = validateWantedSeatNumber(wantedSeatNumber);
-        const wantedTicketTypeWarning = validateWantedTicketType(wantedTicketType);
+    const priceWarning = validatePrice(price); 
+    const seatNumberWarning = validateSeatNumber(seatNumber);
+    const ticketTypeWarning = validateTicketType(ticketType);
+    const startPriceWarning = validateStartPrice(startPrice);
+    const wantedSeatNumberWarning = validateWantedSeatNumber(wantedSeatNumber);
+    const wantedTicketTypeWarning = validateWantedTicketType(wantedTicketType);
 
-        
-        if (priceWarning || seatNumberWarning || ticketTypeWarning || startPriceWarning || wantedSeatNumberWarning || wantedTicketTypeWarning) {
-            setWarnings({
-                price: priceWarning,
-                seatNumber: seatNumberWarning,
-                ticketType: ticketTypeWarning,
-                startPrice: startPriceWarning,
-                wantedSeatNumber: wantedSeatNumberWarning,
-                wantedTicketType: wantedTicketTypeWarning
-            });
-            console.log("price:",price)
-            console.log(warnings)
+    if (priceWarning || seatNumberWarning || ticketTypeWarning || startPriceWarning || wantedSeatNumberWarning || wantedTicketTypeWarning) {
+        setWarnings({
+            price: priceWarning,
+            seatNumber: seatNumberWarning,
+            ticketType: ticketTypeWarning,
+            startPrice: startPriceWarning,
+            wantedSeatNumber: wantedSeatNumberWarning,
+            wantedTicketType: wantedTicketTypeWarning
+        });
+        return;
+    }
+
+    let ticket = {
+        eventTypeId: { id: eventTypeId, nazVrDog: nazVrDog },
+        eventName,
+        eventDate: new Date(eventDate).toISOString(),
+        location,
+        seatNumber: seatNumber ? parseInt(seatNumber) : null,
+        ticketType: ticketType || null,
+        artistName: nazVrDog === "Glazba" ? artistName : null,
+        owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla, statusKor, ocjena },
+        isExchangeAvailable: namjena === "prodaja" ? "u prodaji" : namjena,
+        obrisanoTime: null
+    };
+
+    if (namjena === "prodaja") {
+        ticket.price = parseInt(price);
+        ticket.buyer = null;
+    } else if (namjena === "razmjena") {
+        ticket.wantedEventName = wantedEventName;
+        ticket.wantedLocation = wantedLocation;
+        ticket.wantedDate = wantedDate;
+        ticket.wantedSeatNumber = wantedSeatNumber ? parseInt(wantedSeatNumber) : null;
+        ticket.wantedTicketType = wantedTicketType || null;
+    } else if (namjena === "aukcija") {
+        ticket.startPrice = parseInt(startPrice);
+        ticket.duration = new Date(duration).toISOString();
+    }
+
+    const endpoint = {
+        "prodaja": `${backendUrl}/api/sales`,
+        "razmjena": `${backendUrl}/api/exchanges`,
+        "aukcija": `${backendUrl}/api/auctions`
+    }[namjena];
+
+    if (namjena === "aukcija") {
+        const userConfirmed = window.confirm("Upozorenje: aukcija se u budućnosti ne može povući, želite li nastaviti?");
+        if (!userConfirmed) {
+            console.log("Odbijen zahtjev");
             return;
         }
-    
-        let ticket = {
-            eventTypeId: { id: eventTypeId, nazVrDog: nazVrDog },
-            eventName,
-            eventDate: new Date(eventDate).toISOString(),
-            location,
-            seatNumber: seatNumber ? parseInt(seatNumber) : null,
-            ticketType: ticketType || null,
-            artistName: nazVrDog === "Glazba" ? artistName : null,
-            owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla, statusKor, ocjena },
-            isExchangeAvailable: namjena === "prodaja" ? "u prodaji" : namjena,
-            obrisanoTime: null
-        };
-    
-        if (namjena === "prodaja") {
-            ticket.price = parseInt(price);
-            ticket.buyer = null;
-        } else if (namjena === "razmjena") {
-            ticket.wantedEventName = wantedEventName;
-            ticket.wantedLocation = wantedLocation;
-            ticket.wantedDate = wantedDate;
-            ticket.wantedSeatNumber = wantedSeatNumber ? parseInt(wantedSeatNumber) : null;
-            ticket.wantedTicketType = wantedTicketType || null;
-        } else if (namjena === "aukcija") {
-            ticket.startPrice = parseInt(startPrice);
-            ticket.duration = new Date(duration).toISOString();
-        }
-    
-        console.log(ticket);
-        setIsPending(true);
-    
-        const endpoint = {
-            "prodaja": `${backendUrl}/api/sales`,
-            "razmjena": `${backendUrl}/api/exchanges`,
-            "aukcija": `${backendUrl}/api/auctions`
-        }[namjena];
+    }
 
-        if (namjena === "aukcija") {
-            const userConfirmed = window.confirm("Upozorenje: aukcija se u budućnosti ne može povući, želite li nastaviti?");
-            if (!userConfirmed) {
-                console.log("Odbijen zahtjev");
-                return;
-            }
-        }
-    
+    setIsPending(true);
+
+    if (namjena === "razmjena") {
         fetch(endpoint, {
             method: 'POST',
             headers: { 
@@ -205,20 +225,47 @@ const Create = () => {
             },
             body: JSON.stringify(ticket),
         })
-        .then(() => {
-            setTimeout(() => { 
-                console.log('New ticket added');
-                navigate('/profile'); 
-            }, 1500);
-        })
-        .catch(error => {
-            console.error("Error while adding the ticket:", error);
-            setIsPending(false);
-        });
-    };
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to add ticket");
+                }
+                return response.json(); 
+            })
+            .then(data => {
+                console.log("ID", data); 
+                setTimeout(() => {
+                    navigate(`/profile`);
+                }, 1500);
     
-
-
+                handleProcessExchange(data); 
+                
+            })
+            .catch(error => {
+                console.error("Error while adding the ticket:", error);
+                setIsPending(false);
+            });
+        } else {
+            fetch(endpoint, {
+                method: 'POST',
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${access_token}` 
+                },
+                body: JSON.stringify(ticket),
+            })
+            .then(() => {
+                setTimeout(() => { 
+                    console.log('New ticket added');
+                    navigate('/profile'); 
+                }, 1500);
+            })
+            .catch(error => {
+                console.error("Error while adding the ticket:", error);
+                setIsPending(false);
+            });
+            
+        }
+  }
     return (
         <div className="create">
             <h2>Dodaj novu ulaznicu</h2>

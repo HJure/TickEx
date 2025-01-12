@@ -16,37 +16,38 @@ import progi_project.repository.ExchangeRepository;
 @Service
 public class ExchangeService {
 
-	@Autowired
+    @Autowired
     private ExchangeRepository exchangeRepository;
 
     @Autowired
     private ChainRepository chainRepository;
     
     public boolean processExchangeChain(Integer id) {
-    	
-    	Exchange startExchange = exchangeRepository.findById(id);
-     
+        Exchange startExchange = exchangeRepository.findById(id);
+
+        if (startExchange == null) {
+            return false; // Ne postoji razmjena s tim ID-em
+        }
+
         Set<Integer> visitedExchanges = new HashSet<>();
         List<Exchange> chain = new ArrayList<>();
         
         boolean isValid = findExchangeChain(startExchange, startExchange, visitedExchanges, chain);
 
         if (isValid) {
-            
-        	Integer[] idOgl = new Integer[chain.size() - 1];
-        	Integer[] idKor = new Integer[chain.size() - 1];
-        	for(int i = 0; i < chain.size() - 1;i++) {
-        		idOgl[i] = chain.get(i).getId();
-        		idKor[i] = chain.get(i).getOwner().getId();
-        	}
-        	
-        	Chain lanac = new Chain(idOgl,idKor, chain.size() - 1);
-        	chainRepository.save(lanac);
+            Integer[] idOgl = new Integer[chain.size() - 1];
+            Integer[] idKor = new Integer[chain.size() - 1];
+            for(int i = 0; i < chain.size() - 1; i++) {
+                idOgl[i] = chain.get(i).getId();
+                idKor[i] = chain.get(i).getOwner().getId();
+            }
+
+            Chain lanac = new Chain(idOgl, idKor, chain.size() - 1);
+            chainRepository.save(lanac);
         }
 
         return isValid;
     }
-
     
     private boolean findExchangeChain(Exchange current, Exchange startExchange, Set<Integer> visited, List<Exchange> chain) {
         chain.add(current);
@@ -54,10 +55,10 @@ public class ExchangeService {
         
         List<Exchange> matches = exchangeRepository.findMatches(
                 current.getWantedEventName(),
-                current.getWantedLocation()
-               ,current.getWantedDate()
-               ,current.getWantedSeatNumber()
-               ,current.getWantedTicketType()
+                current.getWantedLocation(),
+                current.getWantedDate(),
+                current.getWantedSeatNumber(),
+                current.getWantedTicketType()
         );
 
         for (Exchange match : matches) {
@@ -73,18 +74,19 @@ public class ExchangeService {
             }
         }
 
-        //backtracking
+        // backtracking
         chain.remove(chain.size() - 1);
         visited.remove(current.getId());
         return false;
     }
+   
     
     public List<Exchange> findAll(){
     	return exchangeRepository.findAll();
     }
 
 
-	public void save(Exchange exchange) {
-		exchangeRepository.save(exchange);
+	public Exchange save(Exchange exchange) {
+		return exchangeRepository.save(exchange);
 	}
 }

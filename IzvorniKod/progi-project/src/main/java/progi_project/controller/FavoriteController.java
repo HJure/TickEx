@@ -28,7 +28,6 @@ public class FavoriteController {
         return favoriteService.getFavoriteTickets(userId);
     }
 
-    // Add a favorite
     @PostMapping
     public ResponseEntity<String> addFavorite(@RequestBody FavoriteRequest favoriteRequest) {
         Integer userId = favoriteRequest.getUserId();
@@ -46,7 +45,6 @@ public class FavoriteController {
         
     }
 
-    // Remove a favorite
     @DeleteMapping
     public ResponseEntity<String> removeFavorite(@RequestBody FavoriteRequest favoriteRequest) {
         favoriteService.removeFavorite(favoriteRequest.getUserId(), favoriteRequest.getTicketId()); 
@@ -56,7 +54,6 @@ public class FavoriteController {
         private Integer userId;
         private Integer ticketId;
 
-        // Getters and setters
         public Integer getUserId() {
             return userId;
         }

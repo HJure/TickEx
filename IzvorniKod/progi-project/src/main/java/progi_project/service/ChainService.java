@@ -6,13 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import progi_project.model.Chain;
+import progi_project.model.Ticket;
 import progi_project.repository.ChainRepository;
+import progi_project.repository.TicketRepository;
 
 @Service
 public class ChainService {
 	
 	@Autowired
     private ChainRepository chainRepository;
+	
+	@Autowired
+    private TicketRepository ticketRepository;
+
 
 	public List<Chain> findAll() {
 		return chainRepository.findAll();
@@ -40,6 +46,12 @@ public class ChainService {
 			if(!responses[i].equals(true)) {
 				return false;
 			}
+		}
+		//svi su prihvatili, promijeni status na prodano
+		for(int i = 0;i < responses.length;i++) {
+			int idOgl = chain.getIdogl()[i];
+			Ticket ulaznica = ticketRepository.findById(idOgl);
+			ulaznica.setExchangeAvailable("prodano");
 		}
 		return true;
     }
