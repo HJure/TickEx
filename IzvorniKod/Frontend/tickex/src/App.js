@@ -15,6 +15,7 @@ import UserForm from './components/UserForm';
 import { useState } from "react";
 import Buy from './components/Buy';
 import Auction from './components/Auction';
+import ReportDetails from './components/ReportDetails';
 import Reports from './components/Reports';
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
                 <Route path="/register" element={<UserForm />} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/auction" element={<Auction />} />
-                <Route path="/reports" element={<Reports />} />
+                <Route path="/reports" element={<ReportDetails />} />
+                <Route path="/reports/dashboard" element={<Reports />} />
             </Routes>
             <Footer />
             </div>
