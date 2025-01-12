@@ -244,12 +244,19 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            <img 
-                                    className="like" 
-                                    src={likeImage} 
-                                    alt="like" 
-                                    onClick={handleLikeClick}
+                            <div className="images">
+                                <img 
+                                        className="like" 
+                                        src={likeImage} 
+                                        alt="like" 
+                                        onClick={handleLikeClick}
+                                    />
+                                <img
+                                    className="edit"
+                                    src="../images/editIcon.png"
+                                    alt="edit"
                                 />
+                            </div>
                         </div>
                         <div className="ticket-info">
                             <br/>
