@@ -79,13 +79,13 @@ const TicketDetails = ({ url }) => {
         const artistAPI_ID = `https://api.discogs.com/database/search?token=${artistSearchToken}&type=artist&q=${artistSearch}`;
         const resArtist_ID = await fetch(artistAPI_ID)
         const searchArtistData_ID = await resArtist_ID.json()
-        const artistID = searchArtistData_ID.results[0].id
-        console.log(artistID)
-        
-        const artistAPI = `https://api.discogs.com/artists/${artistID}`
-        const resArtist = await fetch(artistAPI)
-        const searchArtistData = await resArtist.json()
-        setArtistData(searchArtistData)
+        const artistID = searchArtistData_ID.results[0] ? searchArtistData_ID.results[0].id : null
+        if (artistID != null){
+            const artistAPI = `https://api.discogs.com/artists/${artistID}`
+            const resArtist = await fetch(artistAPI)
+            const searchArtistData = await resArtist.json()
+            setArtistData(searchArtistData)
+        }
     };
 
     useEffect(() => {
@@ -324,7 +324,7 @@ const TicketDetails = ({ url }) => {
                                         <span>Artits:</span> <span>{ticket.artistName}</span>
                                     </div>
                                     <div>
-                                        <span>Artist info:</span> <span id="artistProfile">{artistData.profile}</span>
+                                        <span>Artist info:</span> <span id="artistProfile">{artistData.profile ? artistData.profile : "-"}</span>
                                     </div>
                                     </>
                                 )}
