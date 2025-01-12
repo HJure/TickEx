@@ -18,6 +18,30 @@
 
 .title{
   display: flex;
+  justify-content: space-evenly;
+  width:100%;
+  overflow: hidden;
+}
+
+.titleDiv{
+  text-align: center;
+}
+
+.edit{
+  height: 5%;
+  width: 5%;
+  border-radius: 6px;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.images img{
+  padding: 10px;
+}
+.images{
+  display: flex;
+  justify-content: right;
 }
 
 .ticket-details h2 {

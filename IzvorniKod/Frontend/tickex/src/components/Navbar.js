@@ -46,7 +46,7 @@ function Navbar({ profile, setProfile }) {
     return (
         <div className="navigation">
             <Link to="/" className="logo">
-                <img src="./images/logo.png" alt="logo" />
+                <img src="../images/logo.png" alt="logo" />
             </Link>
             <nav className="navigation-menu">
                 <ul>

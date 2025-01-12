@@ -296,7 +296,7 @@ function Profile({ profile, setProfile }) {
                             <button onClick={handleEditProfile}>Uredi podatke!</button>
                         )}
                         {isAdmin ? (
-                           <button onClick={() => navigate("/reports")}>Pregled prijava</button>
+                           <button onClick={() => navigate("/reports/dashboard")}>Pregled prijava</button>
                         ) : null }
                     </div>
                 );

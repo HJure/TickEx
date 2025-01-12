@@ -1,5 +1,6 @@
 package progi_project.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import progi_project.repository.UserRepository;
 
 @Service
 public class ReportService {
+
     @Autowired
     private ReportRepository reportRepository;
 
@@ -24,9 +26,10 @@ public class ReportService {
         User reported = userRepository.findById(reportedId);
 
         Report report = new Report();
-        report.setId(new ReportId(reporterId, reportedId));
+        report.setId(new ReportId(reportedId, reportedId));
         report.setReporter(reporter);
         report.setReported(reported);
+        report.setReportDate(LocalDate.now());
         report.setReason(reason);
 
         reportRepository.save(report);
