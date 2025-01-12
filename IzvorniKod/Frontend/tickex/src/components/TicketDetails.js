@@ -68,6 +68,14 @@ const TicketDetails = ({ url }) => {
         }
     }, [weatherLocation]);
 
+    const handleReportClick = async (ticket, navigate) => {
+        try {
+            navigate('/reports', { state: { ticket } });
+        } catch (error) {
+            console.error("Error navigating to reports:", error);
+        }
+      };
+
     /*useEffect(() => {
         if (eventType === 'Glazba') {
             setArtistSearch(ticket.eventName)
@@ -286,6 +294,9 @@ const TicketDetails = ({ url }) => {
                             <StarRate ocjena={ticket.owner.ocjena} />
                             {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
                             {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
+                            <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
+                                Prijavi
+                            </button>
                         </div>
                     </div>
                 )}

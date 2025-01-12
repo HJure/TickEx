@@ -9,7 +9,7 @@ const Reports = () => {
     useEffect(() => {
         const fetchReports = async () => {
             try {
-                const response = await fetch(`${backendUrl}/api/reports`, {
+                const response = await fetch(`${backendUrl}/api/reports/dashboard`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ const Reports = () => {
                     credentials: 'include'
                 });
 
-                if (!response.ok) {
+                if (!response.ok) { 
                     throw new Error('Access denied!');
                 }
 

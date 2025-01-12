@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import progi_project.model.Rate;
 import progi_project.model.RateId;
+import progi_project.model.Report;
 import progi_project.model.User;
 import progi_project.repository.RateRepository;
+import progi_project.repository.ReportRepository;
 import progi_project.repository.UserRepository;
 
 @Service
@@ -23,10 +25,19 @@ public class UserService {
     @Autowired
     private RateRepository rateRepository;
 
+    @Autowired
+    private ReportRepository reportRepository;
+
     public boolean canRateUser(User buyer, User owner) {
         RateId rateId = new RateId(buyer.getId(), owner.getId());
         Optional<Rate> existingRate = rateRepository.findById(rateId);
         return !existingRate.isPresent();
+    }
+
+    public boolean canReportUser(int reporterId, int reportedId) {
+        Report.ReportId reportId = new Report.ReportId(reporterId, reportedId);
+        Optional<Report> existingReport = reportRepository.findById(reportId);
+        return !existingReport.isPresent();
     }
 
     @Transactional

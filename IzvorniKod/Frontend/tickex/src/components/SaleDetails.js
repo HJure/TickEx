@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"; 
+import { useParams, useNavigate} from "react-router-dom"; 
 import { useState, useEffect } from "react";
 import '../style/ticket-details.css';
 
@@ -10,6 +10,7 @@ const SaleDetails = ({ url }) => {
     const [rating, setRating] = useState(0);
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
     const access_token = localStorage.getItem("access_token");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTicket = async () => {
@@ -39,6 +40,14 @@ const SaleDetails = ({ url }) => {
 
         fetchTicket();
     }, [url, id, access_token]);
+
+    const handleReportClick = async (ticket, navigate) => {
+        try {
+            navigate('/reports', { state: { ticket } });
+        } catch (error) {
+            console.error("Error navigating to reports:", error);
+        }
+      };
 
     const handleRating = async () => {
         try {
@@ -100,6 +109,9 @@ const SaleDetails = ({ url }) => {
                         ))}
                     </div>
                     <button onClick={handleRating}>Submit Rating</button>
+                    <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
+                        Prijavi
+                    </button>
                 </div>
             </div>
         </div>

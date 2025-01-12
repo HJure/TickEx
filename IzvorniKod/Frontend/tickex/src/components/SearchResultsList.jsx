@@ -1,10 +1,19 @@
 import React from 'react';
 import '../style/SearchResultsList.css';
 import { handleBuyClick } from '../utils/buyButton.js';
+import { useNavigate } from 'react-router-dom';
 
 const handleAcceptExchange = (result) => {
   console.log("Prihvati razmjenu za ulaznicu: ", result);
   // funkcionalnost za prihvat razmjene
+};
+
+const handleReportClick = async (result, navigate) => {
+  try {
+      navigate('/reports', { state: { result } });
+  } catch (error) {
+      console.error("Error navigating to reports:", error);
+  }
 };
 
 const handleGoToAuction = (result) => {
@@ -13,6 +22,8 @@ const handleGoToAuction = (result) => {
 };
 
 const SearchResultsList = ({ results }) => {
+  const navigate = useNavigate();
+
   if (!Array.isArray(results)) {
     console.error("array doesn't exist");
     return null;
@@ -55,6 +66,9 @@ const SearchResultsList = ({ results }) => {
               Idi u aukciju
             </button>
           )}
+          <button className="btn-buy" onClick={() => handleReportClick(result, navigate)}>
+              Prijavi
+          </button>
         </div>
       ))}
     </div>
