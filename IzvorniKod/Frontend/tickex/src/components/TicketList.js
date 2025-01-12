@@ -11,12 +11,12 @@ const TicketList = ({ tickets, title }) => {
                     <div className="ticket-preview" key={ticket.id}>   
                         <Link to={ `/tickets/${ticket.id}` }>
                             <div className='eventType'>
-                            <h1>{ ticket.isExchangeAvailable }</h1>
+                                <h1>{ ticket.isExchangeAvailable }</h1>
                             </div>
                             <div className='eventInfo'>
-                            <h2>{ ticket.eventName }</h2>
-                            <h3>{ticket.eventDate}</h3>
-                            <h3>{ticket.location}</h3>
+                                <h2>{ ticket.eventName }</h2>
+                                <h3>{ticket.eventDate}</h3>
+                                <h3>{ticket.location}</h3>
                             </div>
                         </Link>
                     </div>

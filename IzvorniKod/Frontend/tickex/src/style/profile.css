@@ -70,11 +70,11 @@
 }
 
 .ticket-preview:hover, .trash-preview:hover {
-    border-radius: 5px;
-    transform: translateY(-10px);
-    box-shadow: 0 7px 0 -2px #7d0669,
-     0 10px 0 -4px #cd1fca,
-     0 16px 10px -3px #e55ebf;
+  border-radius: 5px;
+  transform: translateY(-10px);
+  box-shadow: 0 7px 0 -2px #7d0669,
+  0 10px 0 -4px #cd1fca,
+  0 16px 10px -3px #e55ebf;
 }
 
 .ticket-preview {
@@ -83,17 +83,24 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100%;
+  width: 220px;
   overflow: hidden;
   object-fit: contain;
+  box-sizing: border-box;
+  position: relative;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #cd6e8a 0%, #f5eab0 70%, #a2758d 100%);
+  box-shadow: 0px 0px 5px 1px #000000;
+  transition: 0.3s ease;
+  border-radius: 30px;
 }
-   
 .ticket-preview:active, .trash-preview:active {
-    transition: all 0.2s;
-    transform: translateY(-5px);
-    box-shadow: 0 2px 0 -2px #7d0669,
-     0 5px 0 -4px #cd1fca,
-     0 12px 10px -3px #e55ebf;
+  transition: all 0.2s;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 0 -2px #7d0669,
+  0 5px 0 -4px #cd1fca,
+  0 12px 10px -3px #e55ebf;
+     
 }
 
 a{
@@ -158,11 +165,6 @@ a{
   font-size: 25px;
 }
 
-.tickets, .trashes{
-  display: flex;
-  
-}
-
 .my_offers_trash_container {
   display: flex;
   justify-content: space-between;
@@ -172,10 +174,16 @@ a{
   margin: 80px auto 20px;
 }
 
+.my_offers {
+  justify-content: space-between;
+  gap: 10px;
+}
 
 .tickets, .trashes {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
 }
 
 .my_offers, .trash {
@@ -185,12 +193,6 @@ a{
   border: 1px solid #710290;
   padding: 10px;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #cd6e8a 0%, #f5eab0 70%, #a2758d 100%);
-
-    box-shadow: 0px 0px 10px 1px #000000;
-    transition: 0.3s ease;
-    border-radius: 30px;
   width: fit-content;
   }
 

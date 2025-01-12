@@ -169,3 +169,7 @@
 .backward:active {
   transform: scale(0.9); /* Lagano smanjuje ikonu na klik */
 }
+.btn-buy{
+  padding: 10px;
+  margin-left: 55%;
+}
