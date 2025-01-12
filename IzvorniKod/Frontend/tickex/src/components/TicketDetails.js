@@ -272,6 +272,15 @@ const TicketDetails = ({ url }) => {
                                             (getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15 ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.conditions || "-" : "-") : "-"
                                     }
                                 </span>
+                                <span>
+                                    Prosj. Temperatura: 
+                                </span>
+                                <span className="answer">
+                                    {
+                                        weatherData?.days?
+                                            (getDaysDifference(ticket.eventDate) >= 0 && getDaysDifference(ticket.eventDate) < 15 ? weatherData?.days?.[Math.ceil(getDaysDifference(ticket.eventDate))]?.temp + "°C"|| "-" : "-") : "-"
+                                    }
+                                </span>
 
                                 {ticket.eventTypeId.nazVrDog === 'Glazba' && (
                                 <span>
