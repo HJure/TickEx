@@ -70,11 +70,22 @@
 }
 
 .ticket-preview:hover, .trash-preview:hover {
-  border-radius: 5px;
+    border-radius: 5px;
     transform: translateY(-10px);
     box-shadow: 0 7px 0 -2px #7d0669,
      0 10px 0 -4px #cd1fca,
      0 16px 10px -3px #e55ebf;
+}
+
+.ticket-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  object-fit: contain;
 }
    
 .ticket-preview:active, .trash-preview:active {
@@ -90,11 +101,61 @@ a{
 }
 
 .ticket-preview h2, .trash-preview h2 {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 700;
   color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  position: relative;
   margin: 0;
   word-wrap: break-word;
+}
+
+.eventType h1{
+  color: #7d0669;
+  border-radius: 10px;
+  padding: 5px 5px;
+  position: relative;
+  animation: linkFade 2s infinite alternate;
+  text-align: center;
+}
+
+
+@keyframes linkFade {
+  0% {
+      opacity: 1;
+      transform: translateX(-5px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(5px);
+}
+  100% {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+.eventInfo{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 0%;
+}
+.eventInfo h2{
+  margin: 5px;
+  padding: 0;
+  font-weight: 700;
+  font-size: 40px;
+  color: #34034e;
+}
+.eventInfo h3{
+  margin: 0;
+  padding: 0;
+  color: #34034e;
+  font-weight: 700;
+  font-size: 25px;
 }
 
 .tickets, .trashes{
