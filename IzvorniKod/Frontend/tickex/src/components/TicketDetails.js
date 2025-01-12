@@ -54,6 +54,14 @@ const TicketDetails = ({ url }) => {
         }
     }, [ticket]);
 
+    const handleReportClick = async (ticket, navigate) => {
+        try {
+            navigate('/reports', { state: { ticket } });
+        } catch (error) {
+            console.error("Error navigating to reports:", error);
+        }
+      };
+
     const api_key = 'JYLAZZ9VPACY4FFAAYWSEDJDJ'
     const searchWeather = async () => {
         const urlWeather = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}?unitGroup=metric&include=days&key=${api_key}&contentType=json`
@@ -70,13 +78,6 @@ const TicketDetails = ({ url }) => {
         }
     }, [weatherLocation]);
 
-    const handleReportClick = async (ticket, navigate) => {
-        try {
-            navigate('/reports', { state: { ticket } });
-        } catch (error) {
-            console.error("Error navigating to reports:", error);
-        }
-      };
 
     useEffect(() => {
         if (eventType === 'Glazba') {
