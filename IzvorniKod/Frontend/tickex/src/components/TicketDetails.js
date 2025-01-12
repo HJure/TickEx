@@ -58,8 +58,10 @@ const TicketDetails = ({ url }) => {
     const searchWeather = async () => {
         const urlWeather = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}?unitGroup=metric&include=days&key=${api_key}&contentType=json`
         const resWeather = await fetch(urlWeather)
-        const searchWeatherData = await resWeather.json()
-        setWeatherData(searchWeatherData)
+        if(resWeather.status == 200){
+            const searchWeatherData = await resWeather.json()
+            setWeatherData(searchWeatherData)
+        }
     };
 
     useEffect(() => {
