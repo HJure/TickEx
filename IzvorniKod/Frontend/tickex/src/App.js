@@ -17,6 +17,7 @@ import Buy from './components/Buy';
 import Auction from './components/Auction';
 import ReportDetails from './components/ReportDetails';
 import Reports from './components/Reports';
+import UserTicketsPage from './components/UserTicketsPage';
 
 function App() {
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/auction" element={<Auction />} />
                 <Route path="/reports" element={<ReportDetails />} />
                 <Route path="/reports/dashboard" element={<Reports />} />
+                <Route path="/user/:userId/tickets" element={<UserTicketsPage />} />
             </Routes>
             <Footer />
             </div>
