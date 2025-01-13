@@ -5,26 +5,33 @@ import '../style/Auction.css';
 
 const Auction = () => {
     const [data, setData] = useState(null);
+    const [originalData, setOriginalData] = useState(null);
       const ID = localStorage.getItem("userID");
     
       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
       useEffect(() => {
           fetch(`${backendUrl}/api/auctions`)
             .then(response => response.json())
-            .then(data => setData(data))
-            .catch(error => console.error('Error fetching data:', error));
-        }, [backendUrl]);
+            .then(data => {
+                const filteredData = data.filter(item => item.isExchangeAvailable !== "istekao");
+                const filteredData2 = filteredData.filter(item => item.owner.id !== parseInt(ID));
+                setData(filteredData2);
+                setOriginalData(filteredData2);
+            }).catch(error => console.error('Error fetching data:', error));
+        }, [backendUrl, ID]);
       
         const [input, setInput] = useState("");
-      
         const fetchData = (value) => {
           if (value === "") {
-            setData([]);
+            setData(originalData);
             return;
           }
+
+          if (!originalData) return;
       
-          if (data) {
-            const results = data.filter((item) =>
+          if (originalData) {
+            const results = originalData.filter((item) =>
+              item.isExchangeAvailable !== "istekao" &&
               item.owner.id !== parseInt(ID) && 
               (
                 item.eventName?.toLowerCase().includes(value.toLowerCase()) ||
@@ -34,8 +41,9 @@ const Auction = () => {
             );
             setData(results);
             console.log(results);
-          }
         };
+      }
+      
       
         const handleChange = (value) => {
           setInput(value);
