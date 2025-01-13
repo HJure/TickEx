@@ -28,7 +28,8 @@ const UserForm = () => {
         const datumUla = new Date().toISOString().split('T')[0];
         const user = { email, imeKor, prezimeKor, datumUla, preferences };
         setIsPending(true);
-
+       
+       
         fetch(`${backendUrl}/api/users/register`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -53,6 +54,20 @@ const UserForm = () => {
             console.log(err);
             setIsPending(false);
             navigate('/signup');
+        });
+        
+        const url = `${backendUrl}/api/savePreferences?email=${encodeURIComponent(email)}`;
+        const selectedCategories = localStorage.getItem("selectedCategories");
+        console.log("Selected categories before ffetching savepref: ", selectedCategories)
+        fetch(url, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: selectedCategories,
+        })
+       
+        .catch((err) => {
+            console.log(err);
+            console.log('Failed to save preferences');
         });
     };
 

@@ -62,7 +62,7 @@ public class FavoriteService {
             if (ticketRepository.findById(f.getTicket().getId()).getisExchangeAvailable() != "istekao"){
                 //dodaje oglase koje nisu istekli
                 tickets.add(f.getTicket());
-                System.out.println("Tickets via GET /favorites" + tickets.toString());
+                
             }
             
         }
