@@ -60,23 +60,29 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
 }
 
-.result-item button {
+.result-item .buttonsTickets{
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  place-items: center;
+}
+
+.btn-buy {
   background: linear-gradient(135deg, #b35eea, #9b4cd9);
-  padding: 12px 24px;
+  padding: 10px 24px;
   border: none;
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
-  overflow: hidden;
   font-size: 18px;
   cursor: pointer;
   color: white;
   font-weight: bold;
   margin-top: 15px;
+  white-space: nowrap;
   z-index: 1;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.result-item button:hover {
+.buttonsTickets button:hover {
   background: linear-gradient(135deg, #a128cd, #8f21b6);
   color: #fff;
   transform: translateY(-3px);

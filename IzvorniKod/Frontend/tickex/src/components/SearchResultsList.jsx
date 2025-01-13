@@ -48,27 +48,29 @@ const SearchResultsList = ({ results }) => {
           </span>
           <br />
           <br />
-          
-          {result.isExchangeAvailable === "u prodaji" && (
-            <button className="btn-buy" onClick={() => handleBuyClick(result)}>
-              Kupi
-            </button>
-          )}
+          <div className="buttonsTickets">
+            {result.isExchangeAvailable === "u prodaji" && (
+              <button className="btn-buy" onClick={() => handleBuyClick(result)}>
+                Kupi
+              </button>
+            )}
 
-          {result.isExchangeAvailable === "razmjena" && (
-            <button className="btn-buy" onClick={() => handleAcceptExchange(result)}>
-              Prihvati
-            </button>
-          )}
+            {result.isExchangeAvailable === "razmjena" && (
+              <button className="btn-buy" onClick={() => handleAcceptExchange(result)}>
+                Prihvati
+              </button>
+            )}
 
-          {result.isExchangeAvailable === "aukcija" && (
-            <button className="btn-buy" onClick={() => handleGoToAuction(result)}>
-              Idi u aukciju
+            {result.isExchangeAvailable === "aukcija" && (
+              <button className="btn-buy" onClick={() => handleGoToAuction(result)}>
+                Idi u aukciju
+              </button>
+            )}
+            
+            <button className="btn-buy" onClick={() => handleReportClick(result, navigate)}>
+                Prijavi
             </button>
-          )}
-          <button className="btn-buy" onClick={() => handleReportClick(result, navigate)}>
-              Prijavi
-          </button>
+          </div>
         </div>
       ))}
     </div>
