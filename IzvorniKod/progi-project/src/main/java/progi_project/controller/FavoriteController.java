@@ -54,6 +54,13 @@ public class FavoriteController {
         private Integer userId;
         private Integer ticketId;
 
+        public FavoriteRequest() {
+        }  
+        public FavoriteRequest(Integer userId, Integer ticketId) {
+            this.userId = userId;
+            this.ticketId = ticketId;
+        } 
+
         public Integer getUserId() {
             return userId;
         }
