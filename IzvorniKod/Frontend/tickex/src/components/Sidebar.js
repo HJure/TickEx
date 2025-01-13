@@ -9,7 +9,6 @@ function Sidebar({ setActiveTab }) {
             <button onClick={() => setActiveTab('myOffers')}>MOJE PONUDE<img src="../images/sale.png" alt='sale'/></button>
             <button onClick={() => setActiveTab('purchased')}>KUPLJENO<img src="../images/trolley.png" alt='trolley'/></button>
             <button onClick={() => setActiveTab('sold')}>PRODANO<img src="../images/trolley.png" alt='trolley'/></button>
-            <button onClick={() => setActiveTab('rate')}>OCIJENI<img src="../images/trolley.png" alt='trolley'/></button>
             <button onClick={() => setActiveTab('deleted')}>SMEĆE<img src="../images/delete.png" alt='deleted'/></button>
             <button onClick={() => setActiveTab('expired')}>ISTEKLO<img src="../images/expired.png" alt='expired'/></button>
             <button onClick={() => setActiveTab('liked')}>SVIĐA MI SE<img src="../images/like.png" alt='like'/></button>
