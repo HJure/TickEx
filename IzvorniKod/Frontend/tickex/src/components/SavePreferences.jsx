@@ -24,27 +24,34 @@ const SavePreferences = ({setPreferences}) => {
             }
         };
         dohvatiDogadaje();
-    }, [backendUrl, categories]);
-
+    }, [backendUrl]);
+    
     const handleCategoryChange = (category) => {
         setSelectedCategories((prev) => {
+            console.log('Selected categories:', selectedCategories);
             if (prev.includes(category)) {
                 return prev.filter((item) => item !== category);
             }else{
-                return [...prev, category];
+                return [...prev, category];                
             }
         })
     }
-
-    const handleSubmit = async () => {
+    
+    useEffect(() => {
+        console.log('Updated selected categories:', selectedCategories);
+        localStorage.setItem("selectedCategories", JSON.stringify(selectedCategories)); 
+    }, [selectedCategories]);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try{
+        
         const response = await fetch(`${backendUrl}/api/savePreferences`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${access_token}`,
             },
-            body: JSON.stringify({ categories: selectedCategories }),
+            body: JSON.stringify({categories: localStorage.getItem("savedPreferences"), email: localStorage.getItem("user_email")}),
         });
         if (response.ok) {
             const data = await response.json();

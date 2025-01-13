@@ -183,7 +183,7 @@ function Profile({ profile, setProfile }) {
     
     
     const { data: likedTickets, isPending: isFavoritesPending, error: favoritesError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`);                                
-    console.log(JSON.stringify(likedTickets)); 
+    
 
    
     const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
