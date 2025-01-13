@@ -43,6 +43,8 @@ function UpcomingEvents() {
             return "../Images/Festival.png";
         }else if (nazVrgDog === "Tenis"){
             return "../Images/Tenis.png";
+        }else if (nazVrgDog === "Glazba"){
+            return "../Images/Koncert.png"
         }
     };
 
