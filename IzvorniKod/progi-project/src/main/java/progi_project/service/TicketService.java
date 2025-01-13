@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import progi_project.model.User;
 import progi_project.model.Ticket;
@@ -45,8 +46,14 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public void deleteTicket(Long id) {
-        ticketRepository.deleteById(id);
+    // Delete a ticket by ID
+    @Transactional
+    public void deleteTicket(int id) {
+        if (ticketRepository.existsById(id)) {
+            ticketRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Ticket with ID " + id + " does not exist.");
+        }
     }
     
     public void updateTicketStatus(int id, String status) {
