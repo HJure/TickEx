@@ -74,8 +74,15 @@
     background-color: #f7c1ff;
 }
 
+.imageDiv img{
+    justify-content: center;
+    margin-top: 5%;
+    width: 30%;
+    height: 30%;
+}
+
 .card h1 {
-    margin: 20px;
+    margin: 10px;
     font-size: 2rem;
     color: #333;
     font-weight: bold;

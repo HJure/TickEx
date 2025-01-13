@@ -30,6 +30,22 @@ function UpcomingEvents() {
         return date.toLocaleDateString('en-CA');
     };
 
+    const divImage = (nazVrgDog) => {
+        if (nazVrgDog === "Kino"){
+            return "../Images/Kino.png";
+        }else if (nazVrgDog === "Kazaliste"){
+            return "../Images/Kazaliste.png";
+        }else if (nazVrgDog === "Nogomet"){
+            return "../Images/Nogomet.png";
+        }else if (nazVrgDog === "Tematski park"){
+            return "../Images/Tematski park.png";
+        }else if (nazVrgDog === "Festival"){
+            return "../Images/Festival.png";
+        }else if (nazVrgDog === "Tenis"){
+            return "../Images/Tenis.png";
+        }
+    };
+
     return (
         <>
             <div className="events-container">
@@ -39,6 +55,9 @@ function UpcomingEvents() {
                         Tickets.map((ticket) => (
                             <Link to={`/tickets/${ticket.id}`} className='moreInfo' key={ticket.id}>
                                 <div className="card">
+                                    <div className='imageDiv'>
+                                    <img src={divImage(ticket.eventTypeId.nazVrDog)} alt = {ticket.eventTypeId.nazVrDog}/>
+                                    </div>
                                     <h1>{ticket.eventName}</h1>
                                     <h4>{ticket.location}</h4>
                                     <h4>{ticket.eventTypeId.nazVrDog}</h4>
