@@ -112,7 +112,7 @@ body {
   text-transform: uppercase;
   cursor: pointer;  
   transition: background-color 0.3s ease;
-  white-space: nowrap; /* Osigurava da tekst ostane u jednoj liniji */
+  white-space: nowrap; 
 }
 
 
@@ -157,3 +157,44 @@ body {
   }
 }
 
+.dateFilter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; 
+  margin-top: 20px;
+}
+
+.dateFilter label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.dateFilter input[type="date"] {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 2px solid #9b4dca;
+  border-radius: 5px;
+  background: linear-gradient(45deg, rgba(240, 240, 255, 0.9), rgba(255, 255, 255, 0.95));
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.dateFilter input[type="date"]:focus {
+  border-color: #ff66b2;
+  box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+}
+
+.dateFilter img.submitIcon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.dateFilter img.submitIcon:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.8));
+}
