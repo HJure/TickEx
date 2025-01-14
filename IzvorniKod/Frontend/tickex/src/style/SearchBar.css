@@ -1,184 +1,159 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background: none;
 }
 
 .searchArea {
-    padding: 3% 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f7f8fa;
-    transition: all 0.3s ease;
+  padding: 3% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  background: none !important;
 }
 
 .searchBar {
-    display: flex;
-    align-items: center;
-    background:  rgba(217, 150, 248, 0.9) !important;
-    padding: 12px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-    width: 50%;
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: rgba(217, 150, 248, 0.9) !important;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  min-width: 500px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  min-height: 30px;
 }
 
 .searchBar:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-    background: linear-gradient(45deg, rgba(255, 0, 179, 0.6), rgba(102, 0, 255, 0.5)) !important;
-    animation: pulse 1.5s infinite alternate;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  background: linear-gradient(45deg, rgba(255, 0, 179, 0.6), rgba(102, 0, 255, 0.5)) !important;
+  animation: pulse 1.5s infinite alternate;
 }
 
 .searchBar:hover img.searchIcon {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.7));
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.7));
 }
 
 .searchBar img.searchIcon {
-    width: 25px;
-    height: 25px;
-    margin-right: 12px;
-    transition: transform 0.3s ease;
+  width: 25px;
+  height: 25px;
+  margin-right: 12px;
+  transition: transform 0.3s ease;
 }
 
 .searchInput {
-    border: 1px solid #e1e4e8;
-    outline: none;
-    font-size: 1.1rem;
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 5px;
-    background: linear-gradient(45deg, rgba(200, 200, 255, 0.5), rgba(255, 255, 255, 0.9));
-    color: #333;
-    transition: all 0.3s ease;
-    position: relative;
+  border: 1px solid #e1e4e8;
+  outline: none;
+  font-size: 1.1rem;
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background: linear-gradient(45deg, rgba(200, 200, 255, 0.5), rgba(255, 255, 255, 0.9));
+  color: #333;
+  transition: all 0.3s ease;
+  position: relative;
+  height: 50%;
 }
 
 .searchInput::placeholder {
-    color: #aaa;
-    transition: color 0.3s ease;
+  color: #aaa;
+  transition: color 0.3s ease;
 }
 
 .searchInput:focus {
-    border-color: #ff66b2;
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
-    animation: fadeInGlow 1s ease-out;
+  border-color: #ff66b2;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+  animation: fadeInGlow 1s ease-out;
 }
 
 .searchInput:focus::placeholder {
-    color: #ff66b2;
+  color: #ff66b2;
+}
+
+.searchInput:focus {
+  outline: none;
 }
 
 .filters {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 20px;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .filterButtons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
 }
 
 .filterBtn {
-    padding: 12px 24px;
-    background: linear-gradient(45deg, rgba(255, 0, 179, 0.6), rgba(102, 0, 255, 0.6));
-    color: white;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  padding: 14px 30px;
+  background-color: #9b4dca;  
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  text-transform: uppercase;
+  cursor: pointer;  
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Osigurava da tekst ostane u jednoj liniji */
+}
+
+
+.filterBtn.active {
+  background-color: #732d91; 
+  border: 2px solid #ff1493;  
 }
 
 .filterBtn:hover {
-    background: linear-gradient(45deg, rgba(255, 105, 180, 0.8), rgba(255, 0, 179, 0.7));
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    animation: glow 1.5s ease-in-out infinite alternate;
+  background-color: #8e44ad;  
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+  color: #ff1493;  
 }
 
 .filterBtn:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.6);
+  outline: none;
 }
 
-@keyframes fadeInGlow {
-    0% {
-        transform: scale(0.9);
-        opacity: 0.8;
-        box-shadow: 0 0 0 rgba(255, 105, 180, 0.3);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-        box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
-    }
+.filterBtn:active {
+  background-color: #732d91;  
+  transform: translateY(0);
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.05);
-        opacity: 0.9;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+.filterBtn:hover {
+  animation: pulseGlow 1.5s infinite;
 }
 
-.filterOptions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; 
-    margin-top: 20px;
-    width: fit-content;
+.filters img.filterIcon:hover {
+  cursor: pointer; 
 }
 
-.optionBtn {
-    background: rgba(255, 255, 255, 0.4); 
-    color: #333;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
-    backdrop-filter: blur(10px); 
+@keyframes pulseGlow {
+  0% {
+      box-shadow: 0 0 15px rgba(255, 20, 147, 0.8), 0 0 30px rgba(255, 20, 147, 0.6);
+  }
+  50% {
+      box-shadow: 0 0 25px rgba(255, 20, 147, 1), 0 0 50px rgba(255, 20, 147, 0.8);
+  }
+  100% {
+      box-shadow: 0 0 15px rgba(255, 20, 147, 0.8), 0 0 30px rgba(255, 20, 147, 0.6);
+  }
 }
 
-.optionBtn:hover {
-    background: rgba(255, 255, 255, 0.6); 
-    transform: translateY(-3px); 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-}
-
-.optionBtn:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.6); 
-}
-
-@media (max-width: 768px) {
-    .filterOptions {
-        width: 90%;
-    }
-}
