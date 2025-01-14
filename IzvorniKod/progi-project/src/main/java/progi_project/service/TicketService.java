@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import progi_project.model.User;
 import progi_project.model.Ticket;
@@ -41,8 +42,20 @@ public class TicketService {
     public List<Ticket> getTicketsExpired() {
         return ticketRepository.getTicketsExpired();
     }
-    public Ticket updateTicket(Ticket ticket) {
-        return ticketRepository.save(ticket);
+    public Ticket updateTicket(int id, Ticket updatedTicket) {
+        // Mora se dobaviti postojeca karta jer inace hibernate baca error
+        Ticket existingTicket = ticketRepository.findById(id);
+                                            
+
+        
+        existingTicket.setEventName(updatedTicket.getEventName());
+        existingTicket.setLocation(updatedTicket.getLocation());
+        existingTicket.setEventDate(updatedTicket.getEventDate());
+        existingTicket.setSeatNumber(updatedTicket.getSeatNumber());
+        existingTicket.setTicketType(updatedTicket.getTicketType());
+
+        
+        return ticketRepository.save(existingTicket);
     }
 
     public void deleteTicket(Long id) {
