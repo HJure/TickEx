@@ -402,11 +402,13 @@ const TicketDetails = ({ url }) => {
                             </div>
                             )}
                             <StarRate ocjena={ticket.owner.ocjena} />
-                            {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
-                            {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
-                            <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
-                                Prijavi
-                            </button>
+                            <div className="button-container">
+                                {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
+                                {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
+                                <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
+                                    Prijavi
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}

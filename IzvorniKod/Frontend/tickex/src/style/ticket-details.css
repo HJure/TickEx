@@ -181,3 +181,10 @@
   padding: 10px;
   margin-left: 55%;
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Adds spacing between buttons */
+  margin-top: 50px;
+}
