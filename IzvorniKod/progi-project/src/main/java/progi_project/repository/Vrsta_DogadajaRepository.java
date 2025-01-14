@@ -18,5 +18,6 @@ public interface Vrsta_DogadajaRepository extends JpaRepository<Vrsta_Dogadaja, 
     List<String> findAllNames();
    @Query(value = "SELECT iddog FROM vrsta_dogadaja WHERE nazvrdog = :vrdog", nativeQuery = true)
     int findIdByName(@Param("vrdog") String vrdog);
+   
 }
 

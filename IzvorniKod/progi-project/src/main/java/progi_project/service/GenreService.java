@@ -62,6 +62,10 @@ public class GenreService {
         
         genreRepository.deleteByIdkorAndIddog(idkor, genreId);
     }
+	
+    public List<Genre> findByidkor(int idkor){
+    	return genreRepository.findByidkor(idkor);
+    }
 
     
     
