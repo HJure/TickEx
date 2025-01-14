@@ -117,6 +117,14 @@ const TicketDetails = ({ url }) => {
         return diffDays;
     };
 
+    const handleEditTicket = async (ticket) => {
+        try {
+            navigate(`/edit-ticket`, { state: { ticket } });
+        } catch (error) {
+            console.error("Cannot edit ticket:", error);
+        }
+    };
+
     const handleDelete = () => {
         const deleteUrl = `${url}/${id}/status`.replace(/([^:]\/)\/+/g, "$1"); 
         const access_token = localStorage.getItem("access_token"); 
@@ -307,6 +315,7 @@ const TicketDetails = ({ url }) => {
                                     className="edit"
                                     src="../images/editIcon.png"
                                     alt="edit"
+                                    onClick={() => handleEditTicket(ticket)}
                                 />
                             </div>
                         </div>
