@@ -3,6 +3,7 @@ import '../style/SearchResultsList.css';
 import { handleBuyClick } from '../utils/buyButton.js';
 import { useNavigate, Link } from 'react-router-dom';
 
+
 const handleAcceptExchange = (result) => {
   console.log("Prihvati razmjenu za ulaznicu: ", result);
   // funkcionalnost za prihvat razmjene
@@ -16,9 +17,10 @@ const handleReportClick = async (result, navigate) => {
   }
 };
 
-const handleGoToAuction = (result) => {
+const handleGoToAuction = (result, navigate) => {
   console.log("Idi u aukciju za ulaznicu: ", result);
-  // funkcionalnost za odlazak na aukciju
+  navigate(`/bids`);
+  
 };
 
 const SearchResultsList = ({ results }) => {
@@ -62,7 +64,7 @@ const SearchResultsList = ({ results }) => {
             )}
 
             {result.isExchangeAvailable === "aukcija" && (
-              <button className="btn-buy" onClick={() => handleGoToAuction(result)}>
+              <button className="btn-buy" onClick={() => handleGoToAuction(result, navigate)}>
                 Idi u aukciju
               </button>
             )}
