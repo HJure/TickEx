@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import SearchResultsList from "./SearchResultsList";
-
+import "../style/Buy.css";
 
 function Buy() {
   const [results, setResult] = useState([]);
 
+  const filterResultsByStatus = (results) => {
+    return results.filter((item) => item.isExchangeAvailable === "u prodaji");
+  };
+
+  const filteredResults = filterResultsByStatus(results);
+
   return (
-    <div className="BuySiteDefault">
+    <div className="saleList">
+      <h2>Pretraga prodaja</h2>
       <SearchBar setResult={setResult} />
-      <SearchResultsList results={results} />
+      <SearchResultsList results={filteredResults} />
     </div>
   );
 }

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.EntityManager;
 import progi_project.model.Ticket;
+import progi_project.repository.TicketRepository;
 import progi_project.repository.UserRepository;
 import progi_project.service.TicketService;
 
@@ -27,8 +29,7 @@ public class TicketController {
     private TicketService ticketService;
 
     @Autowired
-    private UserRepository userRepository;
-
+    private TicketRepository ticketRepository;
     @PostMapping
     public Ticket createTicket(@RequestBody Ticket ticket) {
         return ticketService.createTicket(ticket);
@@ -47,8 +48,10 @@ public class TicketController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable int id, @RequestBody Ticket ticket) {
-        ticket.setId(id);
-        Ticket updatedTicket = ticketService.updateTicket(ticket);
+       
+        Ticket updatedTicket = ticketService.updateTicket(id, ticket);
+        
+       
         return ResponseEntity.ok(updatedTicket);
     }
 

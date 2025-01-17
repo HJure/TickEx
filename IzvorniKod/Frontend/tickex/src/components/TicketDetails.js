@@ -14,6 +14,7 @@ const TicketDetails = ({ url }) => {
     const navigate = useNavigate();
     const [canDelete, setCanDelete] = useState(false);
     const [canBringBack, setBringBack] = useState(false);
+    const [rating, setRating] = useState(0);
     //Za vrijeme
     const [weatherData, setWeatherData] = useState({})
     const [weatherLocation, setWeatherLocation] = useState('')
@@ -23,6 +24,8 @@ const TicketDetails = ({ url }) => {
     const [eventType, setEventType] = useState('')
     const [artistSearch, setArtistSearch] = useState('')
     const [artistData, setArtistData] = useState({})
+
+    const userID = localStorage.getItem("userID");
 
     // State for like button image
     
@@ -114,6 +117,14 @@ const TicketDetails = ({ url }) => {
         return diffDays;
     };
 
+    const handleEditTicket = async (ticket) => {
+        try {
+            navigate(`/edit-ticket`, { state: { ticket } });
+        } catch (error) {
+            console.error("Cannot edit ticket:", error);
+        }
+    };
+
     const handleDelete = () => {
         const deleteUrl = `${url}/${id}/status`.replace(/([^:]\/)\/+/g, "$1"); 
         const access_token = localStorage.getItem("access_token"); 
@@ -172,6 +183,31 @@ const TicketDetails = ({ url }) => {
             setBringBack(false);
         });
     };
+
+    const handleRating = async () => {
+        const access_token = localStorage.getItem("access_token");
+        try {
+          const response = await fetch(`${backendUrl}/api/users/rate/${rating}`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(ticket),
+          });
+      
+          const isRated = await response.json();
+      
+          if (isRated) {
+            alert("Rating submitted successfully!");
+          } else {
+            alert("You have already rated this user.");
+          }
+        } catch (error) {
+          console.error("Error occurred while submitting rating:", error);
+          alert("An error occurred while submitting the rating.");
+        }
+      };
 
     const handleLikeClick = () => {
         //if like image === like.png DELETE ../tickets/{ticket_id}/favorite i setLikeImage unlike.png
@@ -279,6 +315,7 @@ const TicketDetails = ({ url }) => {
                                     className="edit"
                                     src="../images/editIcon.png"
                                     alt="edit"
+                                    onClick={() => handleEditTicket(ticket)}
                                 />
                             </div>
                         </div>
@@ -349,12 +386,38 @@ const TicketDetails = ({ url }) => {
                             </p>
                             <br/>
                             <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
+                            {ticket.isExchangeAvailable === "prodano" && ticket.owner.id !== parseInt(userID) && (
+                                <div>Email: {ticket.owner.email}</div>
+                            )}
+                            {ticket.owner.id !== parseInt(userID) && ticket.isExchangeAvailable === "prodano" && (
+                            <div className="ticket-rating">
+                                <div className="stars">
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <span
+                                            key={star}
+                                            className={`star ${star <= rating ? "selected" : ""}`}
+                                            onClick={() => setRating(star)}
+                                            style={{
+                                            cursor: "pointer",
+                                            fontSize: "24px",
+                                            color: star <= rating ? "yellow" : "lightgray",
+                                    }}
+                                >
+                                ★
+                                    </span>
+                                ))}
+                            </div>
+                            <button onClick={handleRating}>Submit Rating</button>
+                            </div>
+                            )}
                             <StarRate ocjena={ticket.owner.ocjena} />
-                            {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
-                            {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
-                            <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
-                                Prijavi
-                            </button>
+                            <div className="button-container">
+                                {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
+                                {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
+                                <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
+                                    Prijavi
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}

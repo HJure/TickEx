@@ -31,4 +31,5 @@ public class Vrsta_DogadajaService {
     public void deleteById(int id) {
         vrstaDogadajaRepository.deleteById(id);
     }
+    
 }

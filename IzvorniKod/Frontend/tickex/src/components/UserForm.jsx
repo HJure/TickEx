@@ -28,47 +28,45 @@ const UserForm = () => {
         const datumUla = new Date().toISOString().split('T')[0];
         const user = { email, imeKor, prezimeKor, datumUla, preferences };
         setIsPending(true);
-       
-       
+    
         fetch(`${backendUrl}/api/users/register`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user)
+            body: JSON.stringify(user),
         })
-        .then(() => {
-            setTimeout(() => { 
+            .then(() => {
+                setTimeout(() => {
+                    const { accessToken } = parseUrlParams();
+                    localStorage.setItem("access_token", accessToken);
+                    localStorage.setItem("user_email", email);
+                    localStorage.setItem("user_first_name", imeKor);
+                    localStorage.setItem("user_last_name", prezimeKor);
+                    localStorage.setItem("user_registration_date", datumUla);
     
-                const { accessToken } = parseUrlParams();
-                localStorage.setItem("access_token", accessToken);
-                localStorage.setItem("user_email", email);
-                localStorage.setItem("user_first_name", imeKor);
-                localStorage.setItem("user_last_name", prezimeKor);
-                localStorage.setItem("user_registration_date", datumUla);
-
-                console.log('new user added');
+                    console.log('new user added');
+                    setIsPending(false);
+                    navigate('/profile');
+                }, 1500);
+                
+                const url = `${backendUrl}/api/savePreferences?email=${encodeURIComponent(email)}`;
+                const selectedCategories = JSON.parse(localStorage.getItem("selectedCategories") || "[]");
+                console.log("Selected categories before fetching savePreferences: ", selectedCategories);
+    
+                return fetch(url, {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(selectedCategories),
+                });
+            })
+            .then(() => {
+                console.log("Preferences saved successfully");
+            })
+            .catch((err) => {
+                console.log(err);
+                console.log("An error occurred");
                 setIsPending(false);
-                navigate('/profile'); 
-            }, 1500);
-        })
-        .catch((err) => {
-            console.log(err);
-            setIsPending(false);
-            navigate('/signup');
-        });
-        
-        const url = `${backendUrl}/api/savePreferences?email=${encodeURIComponent(email)}`;
-        const selectedCategories = localStorage.getItem("selectedCategories");
-        console.log("Selected categories before ffetching savepref: ", selectedCategories)
-        fetch(url, {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: selectedCategories,
-        })
-       
-        .catch((err) => {
-            console.log(err);
-            console.log('Failed to save preferences');
-        });
+                navigate('/signup');
+            });
     };
 
     return (

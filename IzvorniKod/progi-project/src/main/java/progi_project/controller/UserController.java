@@ -113,7 +113,7 @@ public class UserController {
             .forEach(ticket -> {
                 ticket.setExchangeAvailable("isteklo");
                 ticket.setObrisanoTime(null);
-                ticketService.updateTicket(ticket);
+                ticketService.updateTicket(ticket.getId(), ticket);
             });
 
         return ResponseEntity.ok(tickets);

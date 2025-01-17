@@ -43,4 +43,5 @@ public class Vrsta_DogadajaController {
         vrstaDogadajaService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
 }

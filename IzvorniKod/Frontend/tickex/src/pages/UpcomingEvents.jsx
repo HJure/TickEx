@@ -17,7 +17,8 @@ function UpcomingEvents() {
             const userID = localStorage.getItem("userID");
 
             if (userID) {
-                const filteredTickets = tickets.filter(ticket => ticket.owner.id !== parseInt(userID));
+                const filteredTickets = tickets.filter(ticket => ticket.owner.id !== parseInt(userID) &&
+                ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable));
                 setTickets(filteredTickets);
             } else {
                 setTickets(tickets);
@@ -43,6 +44,8 @@ function UpcomingEvents() {
             return "../Images/Festival.png";
         }else if (nazVrgDog === "Tenis"){
             return "../Images/Tenis.png";
+        }else if (nazVrgDog === "Glazba"){
+            return "../Images/Koncert.png"
         }
     };
 

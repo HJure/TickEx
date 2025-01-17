@@ -1,7 +1,8 @@
 import React from 'react';
 import '../style/SearchResultsList.css';
 import { handleBuyClick } from '../utils/buyButton.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 
 const handleAcceptExchange = (result) => {
   console.log("Prihvati razmjenu za ulaznicu: ", result);
@@ -10,15 +11,16 @@ const handleAcceptExchange = (result) => {
 
 const handleReportClick = async (result, navigate) => {
   try {
-      navigate('/reports', { state: { result } });
+    navigate('/reports', { state: { result } });
   } catch (error) {
-      console.error("Error navigating to reports:", error);
+    console.error("Error navigating to reports:", error);
   }
 };
 
-const handleGoToAuction = (result) => {
+const handleGoToAuction = (result, navigate) => {
   console.log("Idi u aukciju za ulaznicu: ", result);
-  // funkcionalnost za odlazak na aukciju
+  navigate(`/bids`);
+  
 };
 
 const SearchResultsList = ({ results }) => {
@@ -62,13 +64,17 @@ const SearchResultsList = ({ results }) => {
             )}
 
             {result.isExchangeAvailable === "aukcija" && (
-              <button className="btn-buy" onClick={() => handleGoToAuction(result)}>
+              <button className="btn-buy" onClick={() => handleGoToAuction(result, navigate)}>
                 Idi u aukciju
               </button>
             )}
+
+            <Link to={`/tickets/${result.id}`} className="btn-more-info">
+              Više info
+            </Link>
             
             <button className="btn-buy" onClick={() => handleReportClick(result, navigate)}>
-                Prijavi
+              Prijavi
             </button>
           </div>
         </div>

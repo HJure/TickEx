@@ -21,6 +21,7 @@ function Profile({ profile, setProfile }) {
     const [rating, setRating] = useState('');
     const [expiredTickets, setExpiredTickets] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [genres, setGenres] = useState([]);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -181,7 +182,7 @@ function Profile({ profile, setProfile }) {
                     }
     
                     const data = await response.json();
-                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "istekao"));
+                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "isteklo"));
                 } catch (error) {
                     console.error('Error fetching expired tickets:', error);
                 }
@@ -189,6 +190,34 @@ function Profile({ profile, setProfile }) {
         };
     
         fetchExpiredTickets();
+    }, [userID, access_token, backendUrl]);
+
+    useEffect(() => {
+        const fetchGenres = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/savePreferences/user/${userID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error fetching genres');
+                    }
+    
+                    const data = await response.json();
+                    setGenres(data);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        };
+    
+        fetchGenres();
     }, [userID, access_token, backendUrl]);
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
