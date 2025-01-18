@@ -89,4 +89,23 @@ public class ExchangeService {
 	public Exchange save(Exchange exchange) {
 		return exchangeRepository.save(exchange);
 	}
+
+    public Exchange updateExchange(Long id, Exchange exchange) {
+        Exchange existingExchange = exchangeRepository.findById(id).orElseThrow(() -> new RuntimeException("Exchange not found"));
+        existingExchange.setWantedEventName(exchange.getWantedEventName());
+        existingExchange.setWantedLocation(exchange.getWantedLocation());
+        existingExchange.setWantedDate(exchange.getWantedDate());
+        existingExchange.setWantedSeatNumber(exchange.getWantedSeatNumber());
+        existingExchange.setWantedTicketType(exchange.getWantedTicketType());
+        existingExchange.setEventName(exchange.getEventName());
+        existingExchange.setLocation(exchange.getLocation());
+        existingExchange.setEventDate(exchange.getEventDate());
+        existingExchange.setSeatNumber(exchange.getSeatNumber());
+        existingExchange.setTicketType(exchange.getTicketType());
+        existingExchange.setEventTypeId(exchange.getEventTypeId());
+        existingExchange.setArtistName(exchange.getArtistName());
+        return exchangeRepository.save(existingExchange);
+
+        
+    }
 }

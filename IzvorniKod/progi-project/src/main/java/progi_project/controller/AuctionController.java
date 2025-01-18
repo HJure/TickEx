@@ -3,11 +3,7 @@ package progi_project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import progi_project.model.Auction;
 import progi_project.model.Bid;
@@ -39,4 +35,9 @@ public class AuctionController {
     public Bid createBid(@RequestBody Bid bid) {
         return auctionService.createBid(bid);
     } 
+
+    @PutMapping("/{id}")
+    public Auction updateAuction(@PathVariable Long id, @RequestBody Auction auction) {
+        return auctionService.updateAuction(id, auction);
+    }
 }

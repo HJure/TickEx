@@ -48,4 +48,18 @@ public class SaleService {
 	public void save(Sale sale) {
 		saleRepository.save(sale);	
 	}
+
+    public Sale updateSale(Long id, Sale sale) {
+        Sale existingSale = saleRepository.findById(id).orElseThrow(() -> new RuntimeException("Sale not found"));
+        existingSale.setPrice(sale.getPrice());
+        existingSale.setBuyer(sale.getBuyer());
+        existingSale.setEventName(sale.getEventName());
+        existingSale.setLocation(sale.getLocation());
+        existingSale.setEventDate(sale.getEventDate());
+        existingSale.setSeatNumber(sale.getSeatNumber());
+        existingSale.setTicketType(sale.getTicketType());
+        existingSale.setEventTypeId(sale.getEventTypeId());
+        existingSale.setArtistName(sale.getArtistName());
+        return saleRepository.save(existingSale);
+    }
 }
