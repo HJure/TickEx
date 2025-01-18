@@ -85,13 +85,13 @@
   padding: 5px;
 }
 
-.ticket-info p {
+.ticket-info .div-p {
   display: flexbox;
   font-weight: 400;
   color: #7e0d88; 
 }
 
-.ticket-info p .answer {
+.ticket-info .div-p .answer {
   font-size: 18px;
   color: #d14a73; 
 }

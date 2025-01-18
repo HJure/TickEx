@@ -15,34 +15,29 @@ const TicketDetails = ({ url }) => {
     const [canDelete, setCanDelete] = useState(false);
     const [canBringBack, setBringBack] = useState(false);
     const [rating, setRating] = useState(0);
-    //Za vrijeme
+
     const [weatherData, setWeatherData] = useState({})
     const [weatherLocation, setWeatherLocation] = useState('')
-    //Like image
-    const [likeImage, setLikeImage] = useState("../images/unlike.png");  // Initial image is 'unlike'
-    //Za artista
+
+    const [likeImage, setLikeImage] = useState("../images/unlike.png");  
+
     const [eventType, setEventType] = useState('')
     const [artistSearch, setArtistSearch] = useState('')
     const [artistData, setArtistData] = useState({})
 
     const userID = localStorage.getItem("userID");
-
-    // State for like button image
     
     const { data: favorites, isFavsPending, favsError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
     
    
     useEffect(() => {
         if (favorites && favorites.length > 0) {
-            // Check if the ticketId is in the list of favorites 
             const isLiked = favorites.some(fav => fav.ticketId === parseInt(id));
-            // If liked, change the image to 'like.png', otherwise 'unlike.png'
             setLikeImage(isLiked ? "../images/like.png" : "../images/unlike.png");
         } else {
-            // If no favorites, set to the default 'unlike' image
             setLikeImage("../images/unlike.png");
         }
-    }, [favorites, id]); // Only rerun when 'favorites' or 'ticketId' changes
+    }, [favorites, id]); 
 
     useEffect(() => {
         const userID = localStorage.getItem("userID"); 
@@ -232,7 +227,7 @@ const TicketDetails = ({ url }) => {
             })  .then(response => {
                 if (!response.ok) {
                     return response.text().then(errorMessage => {
-                        throw new Error(errorMessage); // Use the message from the backend
+                        throw new Error(errorMessage); 
                     });
                 }
                 return response.json();
@@ -270,7 +265,7 @@ const TicketDetails = ({ url }) => {
             })  .then(response => {
                 if (!response.ok) {
                     return response.text().then(errorMessage => {
-                        throw new Error(errorMessage); // Use the message from the backend
+                        throw new Error(errorMessage); 
                     });
                 }
                 return response.json();
@@ -321,7 +316,7 @@ const TicketDetails = ({ url }) => {
                         </div>
                         <div className="ticket-info">
                             <br/>
-                            <p>
+                            <div className="div-p">
                                 <div>
                                     <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
                                 </div>
@@ -383,7 +378,7 @@ const TicketDetails = ({ url }) => {
                                     </div>
                                     </>
                                 )}
-                            </p>
+                            </div>
                             <br/>
                             <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
                             {ticket.isExchangeAvailable === "prodano" && ticket.owner.id !== parseInt(userID) && (
