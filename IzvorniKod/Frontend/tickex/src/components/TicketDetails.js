@@ -31,13 +31,13 @@ const TicketDetails = ({ url }) => {
     
    
     useEffect(() => {
-        if (favorites && favorites.length > 0) {
-            const isLiked = favorites.some(fav => fav.ticketId === parseInt(id));
+        const userID = localStorage.getItem("userID");
+        if (userID && favorites) {
+            const isLiked = favorites.some(fav => fav.id === parseInt(id)); 
             setLikeImage(isLiked ? "../images/like.png" : "../images/unlike.png");
-        } else {
-            setLikeImage("../images/unlike.png");
         }
-    }, [favorites, id]); 
+    }, [favorites, id]);  
+    
 
     useEffect(() => {
         const userID = localStorage.getItem("userID"); 
@@ -50,7 +50,8 @@ const TicketDetails = ({ url }) => {
             setWeatherLocation(ticket.location);
             setEventType(ticket.eventTypeId.nazVrDog);
         }
-    }, [ticket]);
+    }, [ticket]);  
+    
 
     const handleReportClick = async (ticket, navigate) => {
         try {
@@ -203,20 +204,16 @@ const TicketDetails = ({ url }) => {
           alert("An error occurred while submitting the rating.");
         }
       };
-
-    const handleLikeClick = () => {
-        //if like image === like.png DELETE ../tickets/{ticket_id}/favorite i setLikeImage unlike.png
-        //inace POST na ../tickets/{ticket_id}/favorite i setLikeImage like.png
-        // treba u body poslati userID kojeg backend uzima kao Integer
-        
+      const handleLikeClick = () => {
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
-        console.log(likeImage === "../images.like.png");
-        if (likeImage === "../images/unlike.png"){
-            const userID = localStorage.getItem("userID");
-            const access_token = localStorage.getItem("access_token"); 
-            fetch (`${backendUrl}/api/favorites`,{
+    
+        const userID = localStorage.getItem("userID");
+        const access_token = localStorage.getItem("access_token");
+    
+        if (likeImage === "../images/unlike.png") {
+            fetch(`${backendUrl}/api/favorites`, {
                 method: 'POST',
-                headers:{
+                headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 },
@@ -224,37 +221,20 @@ const TicketDetails = ({ url }) => {
                     ticketId: id,
                     userId: userID
                 })
-            })  .then(response => {
-                if (!response.ok) {
-                    return response.text().then(errorMessage => {
-                        throw new Error(errorMessage); 
-                    });
-                }
-                return response.json();
             })
+            .then(response => response.json()) 
             .then(data => {
-                console.log('Ticket favorited');
+                console.log('Response:', data);
             })
             .catch(error => {
-                console.error('Error:', error.message);  
-                
-                if(error.message === "Error: Oglas vise nije aktivan"){
-                    
-                    alert(error.message);  
-                    setLikeImage("../images/unlike.png");
-                }
-                if(error.message === "Error: Nemoguce lajkati svoj oglas"){
-                    
-                    alert(error.message);  
-                    setLikeImage("../images/unlike.png");
-                }
+                console.error('Error:', error.message);
+                alert(error.message);  
+                setLikeImage("../images/unlike.png");  
             });
-        }else if(likeImage === "../images/like.png"){
-            const userID = localStorage.getItem("userID");
-            const access_token = localStorage.getItem("access_token"); 
-            fetch (`${backendUrl}/api/favorites`,{
+        } else if (likeImage === "../images/like.png") {
+            fetch(`${backendUrl}/api/favorites`, {
                 method: 'DELETE',
-                headers:{
+                headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 },
@@ -262,24 +242,18 @@ const TicketDetails = ({ url }) => {
                     ticketId: id,
                     userId: userID
                 })
-            })  .then(response => {
-                if (!response.ok) {
-                    return response.text().then(errorMessage => {
-                        throw new Error(errorMessage); 
-                    });
-                }
-                return response.json();
             })
+            .then(response => response.json())  
             .then(data => {
-                console.log('Ticket removed from favorites');
+                console.log('Response:', data);
+                navigate(-1);
             })
             .catch(error => {
-                console.error('Error:', error.message);  
-                
+                console.error('Error:', error.message);
+                alert(error.message);  
             });
         }
     };
-    
 
     const goBack = () => {
         navigate(-1); 
@@ -299,7 +273,7 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            <div className="images">
+                            {userID && (<div className="images">
                                 <img 
                                         className="like" 
                                         src={likeImage} 
@@ -312,7 +286,7 @@ const TicketDetails = ({ url }) => {
                                     alt="edit"
                                     onClick={() => handleEditTicket(ticket)}
                                 />
-                            </div>
+                            </div>)}
                         </div>
                         <div className="ticket-info">
                             <br/>

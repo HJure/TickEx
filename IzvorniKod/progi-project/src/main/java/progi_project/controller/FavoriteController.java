@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,27 +28,30 @@ public class FavoriteController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addFavorite(@RequestBody FavoriteRequest favoriteRequest) {
+    public ResponseEntity<Object> addFavorite(@RequestBody FavoriteRequest favoriteRequest) {
         Integer userId = favoriteRequest.getUserId();
-        Integer ticketId = favoriteRequest.getTicketId();   
+        Integer ticketId = favoriteRequest.getTicketId();
         
         try {
             favoriteService.addFavorite(userId, ticketId);
-            return ResponseEntity.ok("Favorite added successfully");
+            return ResponseEntity.ok().body(new ResponseMessage("Favorite added successfully"));
         } catch (Exception e) {
-           return ResponseEntity.badRequest()
-                .body("Error: " + e.getMessage());
+            return ResponseEntity.badRequest()
+                .body(new ResponseMessage("Error: " + e.getMessage()));
         }
-        
-
-        
     }
 
     @DeleteMapping
-    public ResponseEntity<String> removeFavorite(@RequestBody FavoriteRequest favoriteRequest) {
-        favoriteService.removeFavorite(favoriteRequest.getUserId(), favoriteRequest.getTicketId()); 
-        return ResponseEntity.ok("Favorite removed successfully");
+    public ResponseEntity<Object> removeFavorite(@RequestBody FavoriteRequest favoriteRequest) {
+        try {
+            favoriteService.removeFavorite(favoriteRequest.getUserId(), favoriteRequest.getTicketId());
+            return ResponseEntity.ok().body(new ResponseMessage("Favorite removed successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(new ResponseMessage("Error: " + e.getMessage()));
+        }
     }
+
     public static class FavoriteRequest {
         private Integer userId;
         private Integer ticketId;
@@ -75,6 +77,22 @@ public class FavoriteController {
 
         public void setTicketId(Integer ticketId) {
             this.ticketId = ticketId;
+        }
+    }
+
+    public static class ResponseMessage {
+        private String message;
+
+        public ResponseMessage(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }

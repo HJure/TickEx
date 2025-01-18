@@ -229,8 +229,45 @@ function Profile({ profile, setProfile }) {
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
     
-    const { data: likedTickets, isPending: isFavoritesPending, error: favoritesError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`);                                
-    //console.log(JSON.stringify(likedTickets)); 
+   // Stanja za likedTickets
+const [likedTickets, setLikedTickets] = useState([]);
+const [isFavoritesPending, setIsFavoritesPending] = useState(false);
+const [favoritesError, setFavoritesError] = useState(null);
+
+useEffect(() => {
+    const fetchLikedTickets = async () => {
+        if (userID) {
+            setIsFavoritesPending(true);
+            setFavoritesError(null);
+            try {
+                const response = await fetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${access_token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error fetching liked tickets');
+                }
+
+                const data = await response.json();
+                setLikedTickets(data);
+            } catch (error) {
+                setFavoritesError(error.message);
+                console.error('Error fetching liked tickets:', error);
+            } finally {
+                setIsFavoritesPending(false);
+            }
+        }
+    };
+
+    fetchLikedTickets();
+}, [userID, access_token, backendUrl]);
+                                
+    console.log((likedTickets)); 
     //const { data: recommendedTickets, isPending: isRecommendedPending, error: recommendedError } = useFetch(`${backendUrl}/api/recommended?userId=${parseInt(userID)}`);
    
     const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
