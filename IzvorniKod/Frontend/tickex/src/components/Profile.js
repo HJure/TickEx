@@ -21,7 +21,7 @@ function Profile({ profile, setProfile }) {
     const [rating, setRating] = useState('');
     const [expiredTickets, setExpiredTickets] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [genres, setGenres] = useState([]);
+    const [recommendedTickets, setGenres] = useState([]);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -196,7 +196,7 @@ function Profile({ profile, setProfile }) {
         const fetchGenres = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`${backendUrl}/api/savePreferences/user/${userID}`, {
+                    const response = await fetch(`${backendUrl}/api/tickets/recommended?userId=${parseInt(userID)}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${access_token}`,
@@ -231,7 +231,7 @@ function Profile({ profile, setProfile }) {
     
     const { data: likedTickets, isPending: isFavoritesPending, error: favoritesError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`);                                
     //console.log(JSON.stringify(likedTickets)); 
-
+    //const { data: recommendedTickets, isPending: isRecommendedPending, error: recommendedError } = useFetch(`${backendUrl}/api/recommended?userId=${parseInt(userID)}`);
    
     const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
 
@@ -295,6 +295,8 @@ function Profile({ profile, setProfile }) {
                 return <div className="my_offers" ><TicketList tickets={expiredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'liked':
                 return <div className="my_offers" ><TicketList tickets={likedTickets} isPending={isFavoritesPending} error={favoritesError} /></div>;
+            case 'recommended':
+                return <div className="my_offers" ><TicketList tickets={recommendedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'exchangeChains':
                 return (
                     <div className="exchange-chains">

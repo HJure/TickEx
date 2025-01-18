@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.EntityManager;
 import progi_project.model.Ticket;
+
 import progi_project.repository.TicketRepository;
 import progi_project.repository.UserRepository;
 import progi_project.service.TicketService;
@@ -39,7 +41,10 @@ public class TicketController {
     public Ticket getTicketById(@PathVariable int id) {
         return ticketService.findById(id);
     }
-
+    @GetMapping("/recommended")
+    public List<Ticket> getRecommended(@RequestParam int userId) {
+        return ticketService.getRecommendedTickets(userId);
+    }
     @GetMapping
     public List<Ticket> getAllTickets() {
         //vrati neistekle oglase
