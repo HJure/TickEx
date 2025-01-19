@@ -29,8 +29,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(withDefaults()).csrf().disable()
             .authorizeHttpRequests(auth -> auth.requestMatchers("/shop/**","/", "/error", "/users/register", 
-            	"/tickets/**", "/users/**", "/vrsta-dogadaja", "/exchanges/**", "/sales", "/reports", 
-            	"/auctions","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**").permitAll().requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
+            	"/tickets/**", "/users/**", "/vrsta-dogadaja", "/exchanges/**", "/sales/**", "/reports", 
+            	"/auctions/**","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**").permitAll().requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated())
                 .oauth2Login()
                 .successHandler(customOAuth2SuccessHandler)

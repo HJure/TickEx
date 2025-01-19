@@ -22,6 +22,7 @@ function Profile({ profile, setProfile }) {
     const [expiredTickets, setExpiredTickets] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [recommendedTickets, setGenres] = useState([]);
+    const [chains, setChains] = useState(null);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -229,48 +230,72 @@ function Profile({ profile, setProfile }) {
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
     
-   // Stanja za likedTickets
-const [likedTickets, setLikedTickets] = useState([]);
-const [isFavoritesPending, setIsFavoritesPending] = useState(false);
-const [favoritesError, setFavoritesError] = useState(null);
 
-useEffect(() => {
-    const fetchLikedTickets = async () => {
-        if (userID) {
-            setIsFavoritesPending(true);
-            setFavoritesError(null);
-            try {
-                const response = await fetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${access_token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                });
+    const [likedTickets, setLikedTickets] = useState([]);
+    const [isFavoritesPending, setIsFavoritesPending] = useState(false);
+    const [favoritesError, setFavoritesError] = useState(null);
 
-                if (!response.ok) {
-                    throw new Error('Error fetching liked tickets');
+    useEffect(() => {
+        const fetchLikedTickets = async () => {
+            if (userID) {
+                setIsFavoritesPending(true);
+                setFavoritesError(null);
+                try {
+                    const response = await fetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error fetching liked tickets');
+                    }
+
+                    const data = await response.json();
+                    setLikedTickets(data);
+                } catch (error) {
+                    setFavoritesError(error.message);
+                    console.error('Error fetching liked tickets:', error);
+                } finally {
+                    setIsFavoritesPending(false);
                 }
-
-                const data = await response.json();
-                setLikedTickets(data);
-            } catch (error) {
-                setFavoritesError(error.message);
-                console.error('Error fetching liked tickets:', error);
-            } finally {
-                setIsFavoritesPending(false);
             }
-        }
-    };
+        };
 
-    fetchLikedTickets();
-}, [userID, access_token, backendUrl]);
+        fetchLikedTickets();
+    }, [userID, access_token, backendUrl]);
                                 
-    console.log((likedTickets)); 
-    //const { data: recommendedTickets, isPending: isRecommendedPending, error: recommendedError } = useFetch(`${backendUrl}/api/recommended?userId=${parseInt(userID)}`);
-   
-    const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
+
+    useEffect(() => {
+        const fetchChains = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/chain/${userID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error fetching chains');
+                    }
+    
+                    const data = await response.json();
+                    setChains(data);  
+                } catch (error) {
+                    console.error('Error fetching chains:', error);
+                } 
+            }
+        };
+    
+        fetchChains();
+    }, [userID, access_token, backendUrl]);
 
     const handleEditProfile = () => {
         setIsEditing(true);

@@ -213,7 +213,7 @@ const EditTicket = () => {
         console.log("Ticket payload:", JSON.stringify(ticket));
 
         const endpoint = {
-            "prodaja": `${backendUrl}/api/sales/${ticket.id}`,
+            "u prodaji": `${backendUrl}/api/sales/${ticket.id}`,
             "razmjena": `${backendUrl}/api/exchanges/${ticket.id}`,
             "aukcija": `${backendUrl}/api/auctions/${ticket.id}`
         }[namjena];

@@ -4,7 +4,6 @@ import SavePreferences from "./SavePreferences";
 import { parseUrlParams } from '../utils/parseUrlParams';
 import '../style/UserForm.css';
 
-
 const UserForm = () => {
     const [imeKor, setImeKor] = useState('');
     const [prezimeKor, setPrezimeKor] = useState('');
@@ -28,7 +27,7 @@ const UserForm = () => {
         const datumUla = new Date().toISOString().split('T')[0];
         const user = { email, imeKor, prezimeKor, datumUla, preferences };
         setIsPending(true);
-    
+
         fetch(`${backendUrl}/api/users/register`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -42,16 +41,16 @@ const UserForm = () => {
                     localStorage.setItem("user_first_name", imeKor);
                     localStorage.setItem("user_last_name", prezimeKor);
                     localStorage.setItem("user_registration_date", datumUla);
-    
+
                     console.log('new user added');
                     setIsPending(false);
                     navigate('/profile');
                 }, 1500);
-                
+
                 const url = `${backendUrl}/api/savePreferences?email=${encodeURIComponent(email)}`;
                 const selectedCategories = JSON.parse(localStorage.getItem("selectedCategories") || "[]");
                 console.log("Selected categories before fetching savePreferences: ", selectedCategories);
-    
+
                 return fetch(url, {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
@@ -94,7 +93,7 @@ const UserForm = () => {
                     onChange={(e) => setPrezimeKor(e.target.value)}
                 />
                 <label>Označite kategorije koje vas zanimaju.</label>
-                <div className ="likedCategories">
+                <div className="likedCategories">
                     <SavePreferences setPreferences={setPreferences} />
                 </div>
                 {!isPending && <button>Submit</button>}

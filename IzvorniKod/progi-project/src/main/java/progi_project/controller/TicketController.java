@@ -51,6 +51,12 @@ public class TicketController {
         return ticketService.getTicketsNotExpired();
     }
 
+    @GetMapping("/expired")
+    public List<Ticket> getTicketsExpired() {
+        //vrati istekle oglase
+        return ticketService.getTicketsExpired();
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable int id, @RequestBody Ticket ticket) {
        

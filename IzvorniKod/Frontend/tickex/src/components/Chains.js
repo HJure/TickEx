@@ -3,13 +3,44 @@ import '../style/Chains.css';
 
 const Chains = ({ chains }) => {
     const userId = localStorage.getItem('userID');
-    const [updatedChains, setUpdatedChains] = useState(chains ||[]);
+    const [updatedChains, setUpdatedChains] = useState(Array.isArray(chains) ? chains : []);
+    const [users, setUsers] = useState({});
+    const [tickets, setTickets] = useState({});
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
-    const allResponsesTrue = (responses) => responses.every(Boolean);
+    const allResponsesTrue = (responses) => responses?.every(Boolean);
+
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch(`${backendUrl}/api/users`);
+            const data = await response.json();
+            const usersMap = {};
+            data.forEach((user) => {
+                usersMap[user.id] = `${user.imeKor} ${user.prezimeKor}`;
+            });
+            setUsers(usersMap);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    const fetchTickets = async () => {
+        try {
+            const endpoints = [`${backendUrl}/api/tickets`, `${backendUrl}/api/tickets/expired`];
+            const ticketResponses = await Promise.all(endpoints.map((url) => fetch(url).then((res) => res.json())));
+
+            const ticketsMap = {};
+            ticketResponses.flat().forEach((ticket) => {
+                ticketsMap[ticket.id] = ticket.eventName;
+            });
+
+            setTickets(ticketsMap);
+        } catch (error) {
+            console.error('Error fetching tickets:', error);
+        }
+    };
 
     const handleResponse = (chainId, userIndex, responseStatus) => {
-
         setUpdatedChains((prevState) =>
             prevState.map((chain) =>
                 chain.id === chainId
@@ -63,70 +94,23 @@ const Chains = ({ chains }) => {
             });
     };
 
-    const checkAndUpdateChains = () => {
-        fetch(`${backendUrl}/api/chain/checkExpiration`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userId: localStorage.getItem('userID'), 
-            })
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to check chain time');
-                }
-                return response.json();
-            })
-            .then((updatedChainsData) => {
-                setUpdatedChains(updatedChainsData);
-    
-                updatedChainsData.forEach((chain) => {
-                    fetch(`${backendUrl}/api/chain/${chain.id}/checkCompletion`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                        .then((response) => response.text())
-                        .then((message) => {
-                            if (message === 'Uspješno obavljena razmjena' || message === 'Neuspješno obavljena razmjena') {
-                                setUpdatedChains((prevState) =>
-                                    prevState.map((prevChain) =>
-                                        prevChain.id === chain.id
-                                            ? { ...prevChain, completed: true }
-                                            : prevChain
-                                    )
-                                );
-                                alert(message);
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error checking chain completion:', error);
-                        });
-                });
-            })
-            .catch((error) => {
-                console.error('Error checking chain time:', error);
-            });
-    };
-
     useEffect(() => {
-        checkAndUpdateChains();
+        fetchUsers();
+        fetchTickets();
     }, []);
 
-    
-    const userChains = updatedChains.map((chain) => {
-        const { idkor, idogl, response } = chain;
-        return idkor.map((userId, index) => ({
-            userId,
-            ticketId: idogl[index],
-            response: response[index],
-            userIndex: index,
-            chainId: chain.id,
-        }));
-    });
+    const userChains = updatedChains.length
+        ? updatedChains.map((chain) => {
+              const { idkor, idogl, response } = chain;
+              return idkor.map((userId, index) => ({
+                  userId,
+                  ticketId: idogl[index],
+                  response: response[index],
+                  userIndex: index,
+                  chainId: chain.id,
+              }));
+          })
+        : [];
 
     return (
         <div className="chains-list">
@@ -137,8 +121,8 @@ const Chains = ({ chains }) => {
                             {chainGroup.map((chainItem, idx) => (
                                 <div key={idx} className="chain-container">
                                     <div className="chain-item">
-                                        <p>Korisnik ID: {chainItem.userId}</p>
-                                        <p>Karta ID: {chainItem.ticketId}</p>
+                                        <p>Korisnik: {users[chainItem.userId] || `ID: ${chainItem.userId}`}</p>
+                                        <p>Karta: {tickets[chainItem.ticketId] || `ID: ${chainItem.ticketId}`}</p>
                                         {!updatedChains[index]?.completed &&
                                             chainItem.userId === Number(userId) && (
                                                 <div>
@@ -166,7 +150,6 @@ const Chains = ({ chains }) => {
                                                     : 'Neuspješno obavljena razmjena'}
                                             </p>
                                         )}
-                                        {}
                                         <div className="user-responses">
                                             {chainItem.response !== null ? (
                                                 <p>Odgovor: {chainItem.response ? 'Prihvaćeno' : 'Odbijeno'}</p>
