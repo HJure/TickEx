@@ -2,8 +2,10 @@ package progi_project.model;
 
 
 import java.io.Serializable;
+
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,6 +28,9 @@ public class Favorite {
     @ManyToOne
     @JoinColumn(name = "idogl", referencedColumnName = "idogl", insertable = false, updatable = false)
     private Ticket ticket;
+    
+    @Column(name= "status", nullable = true)
+    private boolean like;
 
     @Id
     private int idkor;  
@@ -58,8 +63,16 @@ public class Favorite {
         this.ticket = ticket;
         this.idogl = ticket.getId();   
     }
+    
+    public boolean isLike() {
+		return like;
+	}
 
-    @Embeddable
+	public void setLike(boolean like) {
+		this.like = like;
+	}
+
+	@Embeddable
     public static class FavoriteId implements Serializable {
 
         private int idkor;

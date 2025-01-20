@@ -111,7 +111,7 @@ public class UserController {
             .filter(ticket -> "obrisano".equals(ticket.getisExchangeAvailable()) && ticket.getObrisanoTime() != null)
             .filter(ticket -> ticket.getObrisanoTime().isBefore(now.minusMinutes(expirationMinutes)))
             .forEach(ticket -> {
-                ticket.setExchangeAvailable("isteklo");
+                ticket.setExchangeAvailable("istekao");
                 ticket.setObrisanoTime(null);
                 ticketService.updateTicket(ticket.getId(), ticket);
             });

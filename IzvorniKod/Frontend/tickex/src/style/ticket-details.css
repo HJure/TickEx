@@ -41,6 +41,15 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
+.hide {
+  height: 5%;
+  width: 5%;
+  border-radius: 6px;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
 #artistName {
   color: #d14a73
 }
@@ -204,6 +213,11 @@
   cursor: pointer;
 }
 
+.hide {
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
 .ticket-rating {
   display: flex;
   flex-direction: column;
@@ -341,6 +355,12 @@
   }
 
   .edit{
+    width: 7%;
+    height: 7%;
+    margin: 10px 0;
+  }
+
+  .hide{
     width: 7%;
     height: 7%;
     margin: 10px 0;

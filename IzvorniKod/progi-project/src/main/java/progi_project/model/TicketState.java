@@ -6,6 +6,6 @@ public enum TicketState {
     RAZMJENA,
     NEPOZNATO,
     OBRISANO,
-    ISTEKLO,
+    ISTEKAO,
     PRODANO
 }
