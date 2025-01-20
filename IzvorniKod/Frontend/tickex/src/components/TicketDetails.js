@@ -20,6 +20,7 @@ const TicketDetails = ({ url }) => {
     const [weatherLocation, setWeatherLocation] = useState('')
 
     const [likeImage, setLikeImage] = useState("../images/unlike.png");  
+    const [hideImage, setHideImage] = useState("../images/show.png"); 
 
     const [eventType, setEventType] = useState('')
     const [artistSearch, setArtistSearch] = useState('')
@@ -259,6 +260,11 @@ const TicketDetails = ({ url }) => {
         }
     };
 
+    const handleHideTicket = () => {
+        setHideImage(hideImage === "../images/show.png" ? "../images/hidden.png" : "../images/show.png");
+        //skrivanje karata
+    };
+
     const goBack = () => {
         navigate(-1); 
     };
@@ -277,7 +283,7 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            {userID && userID == ticket.owner.id && (<div className="images">
+                            {userID && userID != ticket.owner.id && (<div className="images">
                                 <img 
                                         className="like" 
                                         src={likeImage} 
@@ -289,6 +295,12 @@ const TicketDetails = ({ url }) => {
                                     src="../images/editIcon.png"
                                     alt="edit"
                                     onClick={() => handleEditTicket(ticket)}
+                                />
+                                 <img
+                                    className="hide"
+                                    src={hideImage}
+                                    alt="hide"
+                                    onClick={() => handleHideTicket(ticket)}
                                 />
                             </div>)}
                         </div>
