@@ -20,6 +20,7 @@ import Reports from './components/Reports';
 import UserTicketsPage from './components/UserTicketsPage';
 import EditTicket from './components/editTicket';
 import Bids from './components/Bids';
+import AboutPage from './components/AboutPage';
 
 function App() {
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/user/:userId/tickets" element={<UserTicketsPage />} />
                 <Route path="/edit-ticket" element={<EditTicket url={`${backendUrl}/api/tickets/`}/>} />
                 <Route path ="/bids" element={<Bids />} />
+                <Route path="/about" element={<AboutPage />} />
             </Routes>
             <Footer />
             </div>

@@ -29,6 +29,10 @@ const TicketDetails = ({ url }) => {
     
     const { data: favorites, isFavsPending, favsError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
     
+    const [isRatingVisible, setIsRatingVisible] = useState(false); 
+    const toggleRatingVisibility = () => {
+        setIsRatingVisible((prevState) => !prevState); 
+    };
    
     useEffect(() => {
         const userID = localStorage.getItem("userID");
@@ -291,38 +295,38 @@ const TicketDetails = ({ url }) => {
                         <div className="ticket-info">
                             <br/>
                             <div className="div-p">
-                                <div>
+                                <div className="e">
                                     <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
                                 </div>
                                 {ticket.isExchangeAvailable === "prodaja" && (
-                                    <div>
+                                    <div className="e">
                                     <span>Cijena:</span> <span className="answer">{ticket.price} €</span>
                                     </div>
                                 )}
                                 {ticket.isExchangeAvailable === "aukcija" && (
-                                    <div>
+                                    <div className="e">
                                     <span>Početna cijena:</span> <span className="answer">{ticket.startPrice} €</span>
                                     </div>
                                 )}
-                                <div>
+                                <div className="e">
                                     <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Vrijeme:</span>
                                     <span className="answer">
                                     {weatherData?.days
@@ -332,7 +336,7 @@ const TicketDetails = ({ url }) => {
                                         : "-"}
                                     </span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Prosj. Temperatura:</span>
                                     <span className="answer">
                                     {weatherData?.days
@@ -344,10 +348,10 @@ const TicketDetails = ({ url }) => {
                                 </div>
                                 {ticket.eventTypeId.nazVrDog === 'Glazba' && (
                                     <>
-                                    <div>
+                                    <div className="e">
                                         <span>Artist:</span> <span id="artistName">{ticket.artistName}</span>
                                     </div>
-                                    <div>
+                                    <div className="e">
                                         <span>Artist info:</span> <span id="artistProfile">{artistData.profile ? artistData.profile : "-"}</span>
                                     </div>
                                     </>
@@ -356,35 +360,38 @@ const TicketDetails = ({ url }) => {
                             <br/>
                             <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
                             {ticket.isExchangeAvailable === "prodano" && ticket.owner.id !== parseInt(userID) && (
-                                <div>Email: {ticket.owner.email}</div>
-                            )}
-                            {ticket.owner.id !== parseInt(userID) && ticket.isExchangeAvailable === "prodano" && (
-                            <div className="ticket-rating">
-                                <div className="stars">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <span
-                                            key={star}
-                                            className={`star ${star <= rating ? "selected" : ""}`}
-                                            onClick={() => setRating(star)}
-                                            style={{
-                                            cursor: "pointer",
-                                            fontSize: "24px",
-                                            color: star <= rating ? "yellow" : "lightgray",
-                                    }}
-                                >
-                                ★
-                                    </span>
-                                ))}
-                            </div>
-                            <button onClick={handleRating}>Submit Rating</button>
-                            </div>
+                                <div className="email">Email: {ticket.owner.email}</div>
                             )}
                             <StarRate ocjena={ticket.owner.ocjena} />
+                            {ticket.owner.id !== parseInt(userID) && ticket.isExchangeAvailable === "prodano" &&  (<button onClick={toggleRatingVisibility} className="toggle-rating-btn">
+                                {isRatingVisible ? "Sakrij ocjenjivanje" : "Ocijeni prodavača"}
+                            </button>)}
+                            {isRatingVisible && ticket.owner.id !== parseInt(userID) && ticket.isExchangeAvailable === "prodano" &&( 
+                                <div className="ticket-rating">
+                                    <div className="stars">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <span
+                                                key={star}
+                                                className={`star ${star <= rating ? "selected" : ""}`}
+                                                onClick={() => setRating(star)}
+                                                style={{
+                                                    cursor: "pointer",
+                                                    fontSize: "24px",
+                                                    color: star <= rating ? "yellow" : "lightgray",
+                                                }}
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <button onClick={handleRating}>Pošalji ocjenu</button>
+                                </div>
+                            )}
                             <div className="button-container">
                                 {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
                                 {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
                                 <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
-                                    Prijavi
+                                    Prijavi korisnika
                                 </button>
                             </div>
                         </div>

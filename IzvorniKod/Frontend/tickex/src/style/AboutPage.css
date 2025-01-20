@@ -1,0 +1,109 @@
+.about-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 2s ease-in-out;
+    border: #8a0da0 1px solid;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    animation: titleGlow 3s infinite alternate;
+}
+
+@keyframes titleGlow {
+    0% {
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff;
+    }
+    100% {
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.about-description {
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #f0f0f0;
+    margin-bottom: 40px;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.about-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.about-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.about-subtitle {
+    font-size: 1.8rem;
+    color: #8a0da0;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    color: #f7f7f7;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.about-section p:hover {
+    color: #ff00ff;
+}
+
+@media (max-width: 768px) {
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-subtitle {
+        font-size: 1.5rem;
+    }
+
+    .about-description,
+    .about-section p {
+        font-size: 1rem;
+    }
+    
+    .about-container {
+        padding: 15px;
+    }
+}

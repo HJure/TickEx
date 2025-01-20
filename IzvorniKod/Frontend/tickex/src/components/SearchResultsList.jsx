@@ -4,11 +4,6 @@ import { handleBuyClick } from '../utils/buyButton.js';
 import { useNavigate, Link } from 'react-router-dom';
 
 
-const handleAcceptExchange = (result) => {
-  console.log("Prihvati razmjenu za ulaznicu: ", result);
-  // funkcionalnost za prihvat razmjene
-};
-
 const handleReportClick = async (result, navigate) => {
   try {
     navigate('/reports', { state: { result } });
@@ -54,12 +49,6 @@ const SearchResultsList = ({ results }) => {
             {result.isExchangeAvailable === "u prodaji" && (
               <button className="btn-buy" onClick={() => handleBuyClick(result)}>
                 Kupi
-              </button>
-            )}
-
-            {result.isExchangeAvailable === "razmjena" && (
-              <button className="btn-buy" onClick={() => handleAcceptExchange(result)}>
-                Prihvati
               </button>
             )}
 

@@ -102,3 +102,61 @@
     background-color: #a128cd;
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
   }
+
+@media (max-width: 768px) {
+  .ab_container {
+      flex-direction: column;
+      padding: 15px;
+  }
+
+  .about-content-left h1 {
+      font-size: 1.5rem;
+  }
+
+  .about-content-left p {
+      font-size: 1rem;
+  }
+
+  .aboutBtn {
+      font-size: 16px;
+      padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  #o_nama{
+    font-size: small;
+  }
+
+  .about-content-left p {
+      font-size: 0.01rem;
+  }
+
+  .about-p{
+    font-size: xx-small;
+  }
+
+  .aboutBtn {
+      font-size: 10px;
+      padding: 5px 12px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+  .ab_container {
+      padding: 30px;
+  }
+
+  .about-content-left h1 {
+      font-size: 2.5rem;
+  }
+
+  .about-content-left p {
+      font-size: 1.4rem;
+  }
+
+  .aboutBtn {
+      font-size: 22px;
+  }
+}

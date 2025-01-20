@@ -198,3 +198,147 @@ body {
   transform: scale(1.1);
   filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.8));
 }
+
+@media screen and (min-width: 660px) and (max-width: 768px) {
+  .searchBar {
+    max-width: 80%;
+    padding: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+
+  .searchBar img.searchIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+  .searchInput {
+    flex-grow: 1;
+    font-size: x-small;
+    padding: 8px;
+    margin-right: 2px;
+    height: 30%;
+    margin-top: 2px;
+    width: 50%;
+  }
+
+  .searchBar img.filterIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .searchArea{
+    margin-right: 10px;
+  }
+
+  .filterBtn{
+    font-size: small;
+  }
+}
+@media screen and (max-width: 660px) {
+  .searchBar {
+    max-width: 90% !important;
+    padding: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    min-width: 70%;
+  }
+
+  .searchBar img.searchIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+  .searchInput {
+    flex-grow: 1;
+    font-size: xx-small;
+    padding: 8px;
+    margin-right: 2px;
+    height: 30%;
+    margin-top: 2px;
+    width: 50%;
+  }
+
+  .searchBar img.filterIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .searchArea{
+    margin-right: 10px;
+  }
+
+  .filterBtn{
+    font-size: x-small;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .searchBar {
+    min-width: 600px;
+    padding: 15px 25px;
+  }
+
+  .filters {
+    gap: 25px;
+  }
+
+  .filterBtn {
+    padding: 14px 30px;
+    font-size: 1.2rem;
+  }
+
+  .dateFilter {
+    gap: 20px;
+  }
+
+  .dateFilter input[type="date"] {
+    width: 200px;
+  }
+}
+
+@media  screen and (min-width: 768px) and (max-width: 1200px){
+  .searchBar {
+    max-width: 90%;
+    padding: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+
+  .searchBar img.searchIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+  .searchInput {
+    flex-grow: 1;
+    font-size: medium;
+    padding: 8px;
+    margin-right: 2px;
+    height: 30%;
+    margin-top: 2px;
+    width: 50%;
+  }
+
+  .searchBar img.filterIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .searchArea{
+    margin-right: 10px;
+  }
+
+  .filterBtn{
+    font-size: large;
+  }
+}

@@ -169,3 +169,83 @@
         transform: translateX(0);
     }
 }
+
+@media (max-width: 768px) {
+    .create {
+        max-width: 350px;
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .create h2 {
+        font-size: 22px;
+    }
+
+    .create input,
+    .create textarea,
+    .create select {
+        font-size: 14px;
+    }
+
+    .create button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .warning {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .create {
+        max-width: 80%;
+        padding: 10px;
+    }
+
+    .create h2 {
+        font-size: 20px;
+    }
+
+    .create input,
+    .create textarea,
+    .create select {
+        font-size: 13px;
+    }
+
+    .create button {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .warning {
+        font-size: 0.8em;
+    }
+}
+
+@media (min-width: 1200px) {
+    .create {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 25px;
+    }
+
+    .create h2 {
+        font-size: 26px;
+    }
+
+    .create input,
+    .create textarea,
+    .create select {
+        font-size: 18px;
+    }
+
+    .create button {
+        font-size: 18px;
+        padding: 12px 18px;
+    }
+
+    .warning {
+        font-size: 1.1em;
+    }
+}

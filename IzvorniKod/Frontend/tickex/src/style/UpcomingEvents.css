@@ -55,7 +55,8 @@
 }
 
 .card {
-    margin: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     min-height: 260px;
     min-width: 200px;
     color: #000;
@@ -124,4 +125,120 @@
 .card:hover h2 {
     transform: translateY(-5px);
     transition: transform 0.2s ease-in-out, color 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+
+    .events-container {
+        padding: 15px;
+    }
+
+    .cards-container-box {
+        grid-template-columns: repeat(2, 1fr);
+        width: fit-content;
+    }
+
+    .card {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        max-height: 240px;
+        max-width: 150px;
+    }
+
+    .imageDiv img {
+        width: 40%;
+        height: 40%;
+    }
+
+    .card h1 {
+        font-size: 1.5rem;
+    }
+
+    .card h2 {
+        font-size: 1.2rem;
+    }
+
+    .card h4 {
+        font-size: 0.9rem;
+    }
+
+    .moreInfo {
+        font-size: 0.9rem;
+        padding: 8px 18px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .events-container {
+        padding: 10px;
+    }
+
+    .cards-container-box {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        max-height: 240px;
+        max-width: 150px;
+    }
+
+    .imageDiv img {
+        width: 50%;
+        height: 50%;
+    }
+
+    .card h1 {
+        font-size: 1.3rem;
+    }
+
+    .card h2 {
+        font-size: 1rem;
+    }
+
+    .card h4 {
+        font-size: 0.8rem;
+    }
+
+    .moreInfo {
+        font-size: 0.8rem;
+        padding: 6px 15px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+
+    .cards-container-box {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .card {
+        margin: 15px;
+        min-height: 280px;
+        min-width: 220px;
+    }
+
+    .imageDiv img {
+        width: 25%;
+        height: 25%;
+    }
+
+    .card h1 {
+        font-size: 2.2rem;
+    }
+
+    .card h2 {
+        font-size: 1.6rem;
+    }
+
+    .card h4 {
+        font-size: 1.2rem;
+    }
+
+    .moreInfo {
+        font-size: 1.1rem;
+        padding: 12px 24px;
+    }
 }

@@ -23,6 +23,11 @@
   overflow: hidden;
 }
 
+.title h2{
+  align-self: center;
+  justify-self: center;
+}
+
 .titleDiv{
   text-align: center;
 }
@@ -72,9 +77,10 @@
   color: #333;
   line-height: 1.6;
   margin-top: 0;
-  display: flow-root;
+  display: flexbox;
   flex-wrap: wrap; 
   gap: 10px;
+  justify-items: center;
 }
 
 .ticket-info span {
@@ -94,6 +100,12 @@
 .ticket-info .div-p .answer {
   font-size: 18px;
   color: #d14a73; 
+}
+
+.e{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ticket-details img {
@@ -190,4 +202,214 @@
 .edit{
   box-shadow: none !important;
   cursor: pointer;
+}
+
+.ticket-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(205, 173, 240, 0.8), rgba(211, 211, 211, 0.8));
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  border: 1px solid #b535f1; 
+}
+
+.ticket-rating .stars {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.ticket-rating .star {
+  font-size: 36px;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  color: #545054 !important; 
+}
+
+.ticket-rating .star.selected {
+  color: #b535f1 !important; 
+  transform: scale(1.2);
+}
+
+.ticket-rating .star:hover {
+  transform: scale(1.2);
+  color: #d14a73;
+}
+
+.ticket-rating button {
+  background: linear-gradient(135deg, #b535f1, #d14a73);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  justify-self: center;
+}
+
+.ticket-rating button:hover {
+  background: linear-gradient(135deg, #7e0d88, #b535f1); 
+  transform: translateY(-3px);
+}
+
+.ticket-rating button:active {
+  transform: translateY(0);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-rating .rating-title {
+  font-size: 20px;
+  color: #7e0d88; 
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.email{
+  justify-self: center;
+  margin-bottom: 10px;
+}
+
+.toggle-rating-btn {
+  background: linear-gradient(135deg, #b535f1, #d14a73) !important;
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  padding: 12px 24px !important;
+  border: none !important;
+  border-radius: 12px !important; 
+  cursor: pointer !important;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease !important;
+  margin-top: 30px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; 
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+.toggle-rating-btn:hover {
+  background: linear-gradient(135deg, #9d24c6, #e0528a); 
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-rating-btn:active {
+  transform: translateY(2px); 
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3); 
+}
+
+.toggle-rating-btn:focus {
+  outline: 2px solid #b535f1;
+  outline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+  .ticket-details {
+    max-width: 80%;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .ticket-details h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .ticket-info {
+    font-size: 14px;
+    gap: 5px;
+  }
+
+  .title h2{
+    width: fit-content !important;
+  }
+
+  .ticket-info span {
+    font-size: 16px;
+  }
+
+  .ticket-details img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+
+  .edit{
+    width: 7%;
+    height: 7%;
+    margin: 10px 0;
+  }
+
+  .backward {
+    margin-left: 0;
+    height: 30px;
+    width: 40px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-buy {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ticket-details {
+    max-width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+  }
+
+  .ticket-details h2 {
+    font-size: 32px;
+  }
+
+  .ticket-info {
+    font-size: 15px;
+    gap: 8px;
+  }
+
+  .ticket-info span {
+    font-size: 17px;
+  }
+
+  .btn-buy {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  .ticket-details {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+
+  .ticket-details h2 {
+    font-size: 36px;
+  }
+
+  .ticket-info {
+    font-size: 16px;
+  }
+
+  .ticket-info span {
+    font-size: 18px;
+  }
+
+  .btn-buy {
+    margin-left: 55%;
+  }
 }
