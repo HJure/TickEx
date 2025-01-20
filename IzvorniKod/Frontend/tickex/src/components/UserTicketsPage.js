@@ -59,9 +59,9 @@ const UserTicketsPage = () => {
     const deactivateUser = async () => {
         if (window.confirm("Are you sure you want to deactivate this profile? This action cannot be undone.")) {
             try {
-                const currentUserId = localStorage.getItem('userId');
-
-                const response = await fetch(`${backendUrl}/api/deactivate`, {
+                const currentUserId = localStorage.getItem('userID');
+    
+                const response = await fetch(`${backendUrl}/api/deaktivira`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${access_token}`,
@@ -74,16 +74,19 @@ const UserTicketsPage = () => {
                 });
     
                 if (!response.ok) {
-                    throw new Error('Error while deactivating user');
+                    // Try to parse the response body for details
+                    const errorDetails = await response.text(); // Use .text() or .json() depending on the backend response format
+                    throw new Error(`Error while deactivating user: ${response.status} - ${response.statusText}\nDetails: ${errorDetails}`);
                 }
     
                 alert('User profile deactivated successfully.');
                 navigate('/'); // Redirect to home or another page
             } catch (error) {
-                console.error('Error deactivating user:', error);
+                console.error(error);
             }
         }
     };
+    
     
 
     const deleteTicket = async (ticketId) => {
