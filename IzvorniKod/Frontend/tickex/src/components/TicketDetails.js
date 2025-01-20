@@ -293,7 +293,7 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            {userID && parseInt(userID) === ticket.owner.id && (<div className="images">
+                            {userID && parseInt(userID) !== ticket.owner.id && (<div className="images">
                                 <img 
                                         className="like" 
                                         src={likeImage} 
