@@ -51,36 +51,84 @@ body {
         transform: translateX(0);
     }
 }
-.auctionContainer{
-    background: linear-gradient(135deg, #6a5acd, #ff1493); 
-    color: white;
+
+.auctionContainer h2 {
     text-align: center;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: inset 0 0 300px rgba(0, 0, 0, 0.1);
-}
-.searchArea{
-    background: linear-gradient(135deg, #8e7ef4, #f79ecd); 
-}
-.searchBar{
-    padding: 1%;
-    border: 1px solid #000;
-    border-radius: 10px;
-    width: 30%;
-    height: 1rem;
-    display: flex;
-    justify-content:center;
-    gap: 0.5em;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-}
-input{
-    font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    align-self: center;
-    height: 100%;
-    width: 100%;
-    font-size: 1.25rem;
+    color: #e8a5bb;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: color 0.3s ease; 
 }
 
+.auctionContainer h2:hover {
+    color: #652670; 
+}
+
+.auctionContainer {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #c646dc;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    min-height: 200px;
+    
+  }
+
+@media (max-width: 768px) {
+    .auctionContainer {
+        max-width: 80%;
+        padding: 15px;
+    }
+
+    .auctionContainer h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .auctionContainer {
+        max-width: 80%;
+        padding: 10px;
+        margin-top: 0;
+    }
+
+    .auctionContainer h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    h3{
+        width: 60%;
+        font-size: small !important;
+    }
+
+    .button{
+        font-size: small;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+    .auctionContainer {
+        max-width: 80%;
+        padding: 25px;
+    }
+
+    .auctionContainer h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+
+}
+
+@media (min-width: 480px) {
+    h3{
+        font-size: medium !important;
+    }
+    
+    .button{
+        font-size: medium;
+    }
+}

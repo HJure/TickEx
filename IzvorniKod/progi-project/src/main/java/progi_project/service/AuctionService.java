@@ -50,4 +50,18 @@ public class AuctionService {
         // pretpostavka da se ponuda može mijenjati do isteka aukcije
         return bidRepository.save(bid);
     }
+
+    public Auction updateAuction(Long id, Auction auction) {
+        Auction existingAuction = auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction not found"));
+        existingAuction.setStartPrice(auction.getStartPrice());
+        existingAuction.setDuration(auction.getDuration());
+        existingAuction.setEventName(auction.getEventName());
+        existingAuction.setLocation(auction.getLocation());
+        existingAuction.setEventDate(auction.getEventDate());
+        existingAuction.setSeatNumber(auction.getSeatNumber());
+        existingAuction.setTicketType(auction.getTicketType());
+        existingAuction.setEventTypeId(auction.getEventTypeId());
+        existingAuction.setArtistName(auction.getArtistName());
+        return auctionRepository.save(existingAuction);
+    }
 }

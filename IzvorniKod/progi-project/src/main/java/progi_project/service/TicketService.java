@@ -1,5 +1,6 @@
 package progi_project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import progi_project.model.User;
 import progi_project.model.Ticket;
+
 import progi_project.repository.TicketRepository;
 import progi_project.repository.UserRepository;
 
@@ -83,6 +85,14 @@ public class TicketService {
         return ticketRepository.markExpiredTickets();
     }
   
+    public List<Ticket> getRecommendedTickets(int userId) {
+        List<Integer> ids =  ticketRepository.findRecommendedTicketsById(userId);
+        List<Ticket> tickets = new ArrayList<Ticket>();
+        for (int id : ids) {
+            tickets.add(ticketRepository.findById(id));
+        }
+        return tickets;
+    }
 
     
 

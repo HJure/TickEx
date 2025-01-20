@@ -1,6 +1,6 @@
-import '../style/ticket-details.css';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import "../style/ReportDetails.css";
 
 const ReportDetails = () => {
     const location = useLocation();
@@ -60,17 +60,23 @@ const ReportDetails = () => {
     };
 
     return (
-        <div style={{width: "90%", margin: "16px auto 16px", backgroundColor: "#9955EB", padding: "16px", borderRadius: "8px", border: "solid black 2px"}}>
+        <div className="report-details-container">
             <h1>Report Details</h1>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+            <div className="report-details">
                 <div>
                     <strong>Reporter:</strong> {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}  ({localStorage.getItem("user_email")})
                 </div>
                 <div>
                     <strong>Reported:</strong> {result.owner.imeKor} {result.owner.prezimeKor} ({result.owner.email})
                 </div>
-                <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} placeholder="Unesi razlog za prijavu korisnika" style={{backgroundColor: "white" }}/>
-                <button onClick={handleButtonClick} style={{marginLeft: "10px", backgroundColor: "#8945DB", borderRadius: "8px", border: "solid black 2px", color: "white"}}>Prijavi</button>
+                <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Unesi razlog za prijavu korisnika"
+                    className="report-input"
+                />
+                <button onClick={handleButtonClick} className="report-button">Prijavi</button>
             </div>
         </div>
     );

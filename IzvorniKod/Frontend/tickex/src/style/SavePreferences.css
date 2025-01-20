@@ -39,3 +39,52 @@ input[type="checkbox"]:hover {
 .savePreferences label{
     display: inline;
 }
+
+@media (max-width: 768px) {
+    .checkbox-wrapper {
+        width: 50%;
+        justify-content: space-between;
+    }
+
+    input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+    }
+
+    .categoryName {
+        font-size: 16px;
+        padding-top: 8%;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkbox-wrapper {
+        width: 70%;
+    }
+
+    input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+    }
+
+    .categoryName {
+        font-size: 14px;
+        padding-top: 5%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .checkbox-wrapper {
+        width: 15%;
+    }
+
+    input[type="checkbox"] {
+        width: 25px;
+        height: 25px;
+    }
+
+    .categoryName {
+        font-size: 20px;
+        padding-top: 15%;
+    }
+}

@@ -122,7 +122,7 @@ const Create = () => {
     };       
 
     const handleProcessExchange = (id) => {
-        console.log("id: ", id);
+        //console.log("id: ", id);
         fetch(`${backendUrl}/api/exchanges/${id}/process`, {
           method: "POST",
           headers: {
@@ -209,7 +209,7 @@ const Create = () => {
     if (namjena === "aukcija") {
         const userConfirmed = window.confirm("Upozorenje: aukcija se u budućnosti ne može povući, želite li nastaviti?");
         if (!userConfirmed) {
-            console.log("Odbijen zahtjev");
+            //console.log("Odbijen zahtjev");
             return;
         }
     }
@@ -232,7 +232,7 @@ const Create = () => {
                 return response.json(); 
             })
             .then(data => {
-                console.log("ID", data); 
+                //console.log("ID", data); 
                 setTimeout(() => {
                     navigate(`/profile`);
                 }, 1500);
@@ -255,12 +255,12 @@ const Create = () => {
             })
             .then(() => {
                 setTimeout(() => { 
-                    console.log('New ticket added');
+                    //console.log('New ticket added');
                     navigate('/profile'); 
                 }, 1500);
             })
             .catch(error => {
-                console.error("Error while adding the ticket:", error);
+                //console.error("Error while adding the ticket:", error);
                 setIsPending(false);
             });
             
@@ -319,7 +319,7 @@ const Create = () => {
                             onChange={(e) => {
                                 setPrice(e.target.value);
                                 setWarnings(prev => ({ ...prev, price: validatePrice(e.target.value) }));
-                                console.log(warnings);
+                                //console.log(warnings);
                             }}     
                         />
                         {warnings.price && <p className="warning">{warnings.price}</p>}

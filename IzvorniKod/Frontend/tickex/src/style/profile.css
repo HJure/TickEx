@@ -1,18 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Oxanium:wght@200..800&display=swap');
 
 .profilediv {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  margin-left: 20px;
-  margin-right: 20px;
-  width: 100%;
+  margin: 50px 20px;
   display: grid;
-  grid-template-areas: 'bar cont cont cont cont cont cont cont cont cont cont cont cont cont cont';
- 
+  grid-template-areas: 
+    'bar cont';
+  grid-template-columns: auto 1fr; 
+  height: calc(90vh - 100px); 
 }
 
 .profile-container {
-    overflow-y: auto;
     border: 1px solid #710290;
     display: flex;
     flex-direction: column;
@@ -22,7 +19,7 @@
     height: fit-content;
     width: fit-content;
     padding: 40px 30px;
-    margin: auto;
+    margin: 0;
     margin-bottom: 25px;
     background-color: #4158d0;
     background-image: linear-gradient(43deg, #f3de7d 0%, #f48beb 46%, #9016ae 100%);
@@ -52,6 +49,7 @@
     color: white;
     display: inline-flex;
     align-items: center;
+    margin: 10px;
 }
 
 .loading-text {
@@ -61,7 +59,15 @@
 }
 
 .profile-content {
-    grid-area: cont;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: flex-start; 
+  padding: 20px;
+  overflow-y: auto; 
+  flex-wrap: wrap;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .sidebar {
@@ -312,7 +318,7 @@ a{
 
 .profile-container button {
   padding: 10px 20px;
-  margin: 5px;
+  margin: 3px;
   border: none;
   border-radius: 25px;
   background-color: #a128cd;
@@ -321,6 +327,10 @@ a{
   cursor: pointer;
   font-family: 'Kanit', sans-serif;
   transition: all 0.3s ease;
+}
+
+.profile-container button:first-of-type{
+  margin-top: 20px;
 }
 
 .profile-container button:hover {
@@ -350,4 +360,84 @@ a{
   height: 25px; 
   margin-left: 10px;
   vertical-align: middle; 
+}
+
+@media (max-width: 768px) {
+  .profilediv {
+    grid-template-areas: 
+      'bar'
+      'cont';
+    grid-template-columns: 1fr;
+    height: auto; 
+    margin: 20px 10px;
+  }
+
+  .profile-container {
+    margin-top: 30px;
+    width: 90%;
+    padding: 20px 15px;
+    border-radius: 15px; 
+  }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-info {
+    font-size: 16px;
+    margin: 5px;
+  }
+
+  .sidebar {
+    padding: 15px;
+    text-align: center;
+  }
+
+  .newBlog {
+    font-size: 16px; 
+    padding: 10px 20px;
+    margin-top: 30px;
+  }
+
+  .tickets, .trashes {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .my_offers{
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .profilediv {
+    margin: 50px auto;
+    max-width: 2000px; 
+    grid-template-columns: 300px 1fr; 
+  }
+
+  .profile-container {
+    max-width: 600px; 
+    padding: 50px 40px;
+    border-radius: 40px;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .profile-info {
+    font-size: 20px;
+  }
+
+  .newBlog {
+    font-size: 20px;
+    padding: 15px 30px;
+  }
+
+  .tickets, .trashes {
+    gap: 40px;
+  }
 }

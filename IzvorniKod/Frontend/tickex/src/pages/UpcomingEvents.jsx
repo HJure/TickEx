@@ -39,7 +39,7 @@ function UpcomingEvents() {
         }else if (nazVrgDog === "Nogomet"){
             return "../Images/Nogomet.png";
         }else if (nazVrgDog === "Tematski park"){
-            return "../Images/Tematski park.png";
+            return "../Images/Tematski_park.png";
         }else if (nazVrgDog === "Festival"){
             return "../Images/Festival.png";
         }else if (nazVrgDog === "Tenis"){

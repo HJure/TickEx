@@ -103,7 +103,6 @@ body {
     }
 }
 
-/* Shake animation */
 @keyframes shake {
     0% {
         transform: translateX(-5px);
@@ -123,6 +122,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .shop-container {
+        padding: 80px 15px;
+    }
+
     .shop-container h1 {
         font-size: 2.8rem;
     }
@@ -139,5 +142,55 @@ body {
     .shop-link {
         font-size: 1.1rem;
         padding: 15px 30px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .shop-container h1 {
+        font-size: 4.5rem;
+    }
+
+    .shop-description {
+        font-size: 1.6rem;
+    }
+
+    .shop-link {
+        font-size: 1.4rem;
+        padding: 20px 40px;
+    }
+
+    .shop-menu {
+        gap: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .shop-container {
+        padding: 60px 10px;
+        min-height: 80vh;
+    }
+
+    .shop-container h1 {
+        font-size: 2.5rem;
+    }
+
+    .shop-description {
+        font-size: 1.1rem;
+    }
+
+    .shop-menu {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .shop-link {
+        font-size: 1.1rem;
+        padding: 12px 25px;
+    }
+    
+    .shop-container h1,
+    .shop-description {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

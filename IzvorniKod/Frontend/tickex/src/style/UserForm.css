@@ -144,3 +144,88 @@ input.checkbox li {
     color: white;
   }
 
+@media (max-width: 768px) {
+    .userInfo {
+        width: 80%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .userInfo h2 {
+        font-size: 20px;
+    }
+
+    .userInfo input,
+    .userInfo textarea,
+    .userInfo select {
+        font-size: 14px;
+    }
+
+    .userInfo button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .warning {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .userInfo {
+        width: 75%;
+        margin: 10px auto;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .userInfo h2 {
+        font-size: 18px;
+    }
+
+    .userInfo input,
+    .userInfo textarea,
+    .userInfo select {
+        font-size: 13px;
+    }
+
+    .userInfo button {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .warning {
+        font-size: 0.75em;
+    }
+
+    .checkbox-wrapper {
+        width: 40%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .userInfo {
+        width: 30%;
+        margin: 60px auto;
+        padding: 25px;
+    }
+
+    .userInfo h2 {
+        font-size: 28px;
+    }
+
+    .userInfo input,
+    .userInfo textarea,
+    .userInfo select {
+        font-size: 18px;
+    }
+
+    .userInfo button {
+        font-size: 18px;
+        padding: 12px 20px;
+    }
+
+    .warning {
+        font-size: 1em;
+    }
+}

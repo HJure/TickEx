@@ -35,6 +35,7 @@ const EditTicket = () => {
     const [wantedSeatNumber, setwantedSeatNumber] = useState('');
     const [wantedTicketType, setwantedTicketType] = useState('');
     const [artistName, setartistName] = useState('');
+
     useEffect(() => {
         if (ticket) {
             setEventName(ticket.eventName);
@@ -44,24 +45,24 @@ const EditTicket = () => {
             setTicketType(ticket.ticketType);
             setnazVrDog(ticket.eventTypeId.nazVrDog);
             setEventTypeId(ticket.eventTypeId.id);
-            setPrice(ticket.price);
             setNamjena(ticket.isExchangeAvailable)
             setartistName(ticket.artistName);
             if (ticket.id) setTicketId(ticket.id);
         }
-    }, [ticket]);
-
-    useEffect(() => {
         if (namjena === "aukcija") {
             setStartPrice(ticket.startPrice);
             setDuration(ticket.duration);
         } else if (namjena === "razmjena") {
+            setwantedEventName(ticket.wantedEventName);
             setwantedLocation(ticket.wantedLocation);
             setwantedDate(ticket.wantedDate);
             setwantedSeatNumber(ticket.wantedSeatNumber);
             setwantedTicketType(ticket.wantedTicketType);
         }
-    }, [namjena, ticket]);
+        else if (namjena === "prodaja") {
+            setPrice(ticket.price);
+        }
+    }, [ticket, namjena]);
 
     const navigate = useNavigate();
 
@@ -175,9 +176,7 @@ const EditTicket = () => {
         }
 
         console.log(namjena);
-         let ticket;
-        if (namjena === "u prodaji") {
-            ticket = {
+        let newticket = {
                 id: ticketId,
                 eventTypeId: { id: eventTypeId, nazVrDog: nazVrDog },
                 eventName,
@@ -188,32 +187,22 @@ const EditTicket = () => {
                 artistName: nazVrDog === "Glazba" ? artistName : null,
                 owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla, statusKor, ocjena },
                 isExchangeAvailable: namjena === "prodaja" ? "u prodaji" : namjena,
-                price: price ? parseInt(price) : null,
-                buyer: null,
                 obrisanoTime: null
-            };
+        };
+
+       
+        if (namjena === "prodaja") {
+            newticket.price = parseInt(price);
+            newticket.buyer = null;
         } else if (namjena === "razmjena") {
-            ticket.wantedEventName = wantedEventName;
-            ticket.wantedLocation = wantedLocation;
-            ticket.wantedDate = wantedDate;
-            ticket.wantedSeatNumber = wantedSeatNumber ? parseInt(wantedSeatNumber) : null;
-            ticket.wantedTicketType = wantedTicketType || null;
-        } else {
-            ticket = {
-                id: ticketId,
-                eventTypeId: { id: eventTypeId, nazVrDog: nazVrDog },
-                eventName,
-                eventDate: new Date(eventDate).toISOString().split('T')[0],
-                location,
-                seatNumber: seatNumber ? parseInt(seatNumber) : null,
-                ticketType: ticketType || null,
-                artistName: nazVrDog === "Glazba" ? artistName : null,
-                owner: { id: localStorage.getItem("userID"), email, imeKor, prezimeKor, datumUla, statusKor, ocjena },
-                isExchangeAvailable: namjena === "prodaja" ? "u prodaji" : namjena,
-                startPrice: startPrice ? parseInt(startPrice) : null,
-                duration: duration || new Date(duration).toISOString().split('T')[0],
-                obrisanoTime: null
-            };
+            newticket.wantedEventName = wantedEventName;
+            newticket.wantedLocation = wantedLocation;
+            newticket.wantedDate = wantedDate;
+            newticket.wantedSeatNumber = wantedSeatNumber ? parseInt(wantedSeatNumber) : null;
+            newticket.wantedTicketType = wantedTicketType || null;
+        } else if (namjena === "aukcija") {
+            newticket.startPrice = parseInt(startPrice);
+            newticket.duration = new Date(duration).toISOString();
         }
 
         if (!ticket.id) {
@@ -223,18 +212,27 @@ const EditTicket = () => {
 
         console.log("Ticket payload:", JSON.stringify(ticket));
 
+        const endpoint = {
+            "u prodaji": `${backendUrl}/api/sales/${ticket.id}`,
+            "razmjena": `${backendUrl}/api/exchanges/${ticket.id}`,
+            "aukcija": `${backendUrl}/api/auctions/${ticket.id}`
+        }[namjena];
+        console.log("endpoint", endpoint)
+        console.log("new", newticket);
+
         setIsPending(true);
-        fetch(`${backendUrl}/api/tickets/${ticket.id}`, {
+
+        fetch(endpoint, {
             method: 'PUT',
             headers: { 
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${access_token}` 
             },
-            body: JSON.stringify(ticket),
+            body: JSON.stringify(newticket),
             }).then(() => {
                 setTimeout(() => { 
                     console.log('Ticket updated');
-                    navigate('/profile'); 
+                    navigate(-1); 
                     }, 1500);
             }).catch(error => {
                 console.error("Error while updating the ticket:", error);
@@ -247,11 +245,7 @@ const EditTicket = () => {
             <form onSubmit={handleSubmit}>
 
                 <label>Namjena:</label>
-                <select value={namjena} onChange={(e) => {setNamjena(e.target.value);}} required>
-                    <option value="prodaja">Prodaja</option>
-                    <option value="razmjena">Razmjena</option>
-                    <option value="aukcija">Aukcija</option>
-                </select>
+                <input type="text" value={namjena} disabled />
 
                 <label>Vrsta događaja:</label>
                 <select value={nazVrDog} onChange={handleEventTypeChange} required>

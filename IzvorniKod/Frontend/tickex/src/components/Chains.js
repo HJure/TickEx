@@ -3,13 +3,14 @@ import '../style/Chains.css';
 
 const Chains = ({ chains }) => {
     const userId = localStorage.getItem('userID');
-    const [updatedChains, setUpdatedChains] = useState(chains ||[]);
+    const [updatedChains, setUpdatedChains] = useState(Array.isArray(chains) ? chains : []);
+    const [users, setUsers] = useState({});
+    const [tickets, setTickets] = useState({});
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
-    const allResponsesTrue = (responses) => responses.every(Boolean);
+    const allResponsesTrue = (responses) => responses?.every(Boolean);
 
     const handleResponse = (chainId, userIndex, responseStatus) => {
-
         setUpdatedChains((prevState) =>
             prevState.map((chain) =>
                 chain.id === chainId
@@ -70,7 +71,7 @@ const Chains = ({ chains }) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                userId: localStorage.getItem('userID'), 
+                userId: localStorage.getItem('userID'),
             })
         })
             .then((response) => {
@@ -113,20 +114,57 @@ const Chains = ({ chains }) => {
     };
 
     useEffect(() => {
-        checkAndUpdateChains();
-    }, []);
-
+        const fetchData = async () => {
+            const fetchUsers = async () => {
+                try {
+                    const response = await fetch(`${backendUrl}/api/users`);
+                    const data = await response.json();
+                    const usersMap = {};
+                    data.forEach((user) => {
+                        usersMap[user.id] = `${user.imeKor} ${user.prezimeKor}`;
+                    });
+                    setUsers(usersMap);
+                } catch (error) {
+                    console.error('Error fetching users:', error);
+                }
+            };
     
-    const userChains = updatedChains.map((chain) => {
-        const { idkor, idogl, response } = chain;
-        return idkor.map((userId, index) => ({
-            userId,
-            ticketId: idogl[index],
-            response: response[index],
-            userIndex: index,
-            chainId: chain.id,
-        }));
-    });
+            const fetchTickets = async () => {
+                try {
+                    const endpoint = `${backendUrl}/api/tickets`;
+                    const response = await fetch(endpoint);
+                    const ticketData = await response.json();
+
+                    const ticketsMap = {};
+                    ticketData.forEach((ticket) => {
+                        ticketsMap[ticket.id] = ticket.eventName;
+                    });
+
+                    setTickets(ticketsMap);
+                } catch (error) {
+                    console.error('Error fetching tickets:', error);
+                }
+            };
+    
+            await fetchUsers();
+            await fetchTickets();
+        };
+    
+        fetchData();
+    }, [backendUrl]); 
+
+    const userChains = updatedChains.length
+        ? updatedChains.map((chain) => {
+              const { idkor, idogl, response } = chain;
+              return idkor.map((userId, index) => ({
+                  userId,
+                  ticketId: idogl[index],
+                  response: response[index],
+                  userIndex: index,
+                  chainId: chain.id,
+              }));
+          })
+        : [];
 
     return (
         <div className="chains-list">
@@ -137,8 +175,8 @@ const Chains = ({ chains }) => {
                             {chainGroup.map((chainItem, idx) => (
                                 <div key={idx} className="chain-container">
                                     <div className="chain-item">
-                                        <p>Korisnik ID: {chainItem.userId}</p>
-                                        <p>Karta ID: {chainItem.ticketId}</p>
+                                        <p>Korisnik: {users[chainItem.userId] || `ID: ${chainItem.userId}`}</p>
+                                        <p>Karta: {tickets[chainItem.ticketId] || `ID: ${chainItem.ticketId}`}</p>
                                         {!updatedChains[index]?.completed &&
                                             chainItem.userId === Number(userId) && (
                                                 <div>
@@ -166,7 +204,6 @@ const Chains = ({ chains }) => {
                                                     : 'Neuspješno obavljena razmjena'}
                                             </p>
                                         )}
-                                        {}
                                         <div className="user-responses">
                                             {chainItem.response !== null ? (
                                                 <p>Odgovor: {chainItem.response ? 'Prihvaćeno' : 'Odbijeno'}</p>

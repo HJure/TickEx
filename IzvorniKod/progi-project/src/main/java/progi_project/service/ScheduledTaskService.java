@@ -11,10 +11,10 @@ import progi_project.repository.TicketRepository;
 
 @Service
 public class ScheduledTaskService  {
-    
+   
     @Autowired
     private TicketRepository ticketRepository;
-
+    
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void markExpiredTicketsOnStartup() {
@@ -26,5 +26,5 @@ public class ScheduledTaskService  {
     public void markExpiredTickets() {
         ticketRepository.markExpiredTickets();
         System.out.println("Number of tickets marked as expired: " + ticketRepository.markExpiredTickets());
-     }
+    }
 }

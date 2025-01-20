@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +49,9 @@ public class ExchangeController {
         Exchange savedExchange = exchangeService.save(exchange);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedExchange.getId());
     }
-	 
+	
+    @PutMapping("/{id}")
+    public Exchange updateExchange(@PathVariable Long id, @RequestBody Exchange exchange) {
+        return exchangeService.updateExchange(id, exchange);
+    }
 }

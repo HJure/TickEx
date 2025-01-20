@@ -92,6 +92,29 @@ body {
     height: auto;
 }
 
+.chain-item button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); 
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    margin: 5px; 
+}
+.chain-item button:hover {
+    background: #db23db;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+.chain-item button:active {
+    transform: scale(0.95); 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+}
+
 @media (max-width: 768px) {
     .chains {
         flex-direction: column;
@@ -114,5 +137,85 @@ body {
 
     .arrow {
         width: 25px;
+    }
+
+    .chain-item {
+        min-width: 180px;
+    }
+
+    .chain-item p {
+        font-size: 1rem;
+    }
+
+    .chain-item button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chains {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .chain-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chain-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .arrow-container {
+        width: auto;
+        margin-left: 15px;
+    }
+
+    .arrow {
+        width: 20px;
+    }
+
+    .chain-item {
+        min-width: 160px;
+        min-height: 130px;
+    }
+
+    .chain-item p {
+        font-size: 0.9rem;
+    }
+
+    .chain-item button {
+        font-size: 0.8rem;
+        padding: 7px 14px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+    .chains {
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .chain-group {
+        flex-direction: row;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .chain-item {
+        min-width: 220px;
+        min-height: 170px;
+    }
+
+    .chain-item p {
+        font-size: 1.2rem;
+    }
+
+    .chain-item button {
+        font-size: 1.1rem;
+        padding: 12px 24px;
     }
 }

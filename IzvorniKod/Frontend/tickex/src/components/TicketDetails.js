@@ -15,34 +15,34 @@ const TicketDetails = ({ url }) => {
     const [canDelete, setCanDelete] = useState(false);
     const [canBringBack, setBringBack] = useState(false);
     const [rating, setRating] = useState(0);
-    //Za vrijeme
+
     const [weatherData, setWeatherData] = useState({})
     const [weatherLocation, setWeatherLocation] = useState('')
-    //Like image
-    const [likeImage, setLikeImage] = useState("../images/unlike.png");  // Initial image is 'unlike'
-    //Za artista
+
+    const [likeImage, setLikeImage] = useState("../images/unlike.png");  
+    const [hideImage, setHideImage] = useState("../images/show.png"); 
+
     const [eventType, setEventType] = useState('')
     const [artistSearch, setArtistSearch] = useState('')
     const [artistData, setArtistData] = useState({})
 
     const userID = localStorage.getItem("userID");
-
-    // State for like button image
     
-    const { data: favorites, isFavsPending, favsError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
+    const { data: favorites} = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
     
+    const [isRatingVisible, setIsRatingVisible] = useState(false); 
+    const toggleRatingVisibility = () => {
+        setIsRatingVisible((prevState) => !prevState); 
+    };
    
     useEffect(() => {
-        if (favorites && favorites.length > 0) {
-            // Check if the ticketId is in the list of favorites 
-            const isLiked = favorites.some(fav => fav.ticketId === parseInt(id));
-            // If liked, change the image to 'like.png', otherwise 'unlike.png'
+        const userID = localStorage.getItem("userID");
+        if (userID && favorites) {
+            const isLiked = favorites.some(fav => fav.id === parseInt(id)); 
             setLikeImage(isLiked ? "../images/like.png" : "../images/unlike.png");
-        } else {
-            // If no favorites, set to the default 'unlike' image
-            setLikeImage("../images/unlike.png");
         }
-    }, [favorites, id]); // Only rerun when 'favorites' or 'ticketId' changes
+    }, [favorites, id]);  
+    
 
     useEffect(() => {
         const userID = localStorage.getItem("userID"); 
@@ -55,7 +55,8 @@ const TicketDetails = ({ url }) => {
             setWeatherLocation(ticket.location);
             setEventType(ticket.eventTypeId.nazVrDog);
         }
-    }, [ticket]);
+    }, [ticket]);  
+    
 
     const handleReportClick = async (ticket, navigate) => {
         try {
@@ -66,45 +67,55 @@ const TicketDetails = ({ url }) => {
       };
 
     const api_key = 'JYLAZZ9VPACY4FFAAYWSEDJDJ'
-    const searchWeather = async () => {
-        const urlWeather = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}?unitGroup=metric&include=days&key=${api_key}&contentType=json`
-        const resWeather = await fetch(urlWeather)
-        if(resWeather.status == 200){
-            const searchWeatherData = await resWeather.json()
-            setWeatherData(searchWeatherData)
-        }
-    };
-
+    
     useEffect(() => {
         if (weatherLocation) {
-            searchWeather()
+            const searchWeather = async () => {
+                const urlWeather = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}?unitGroup=metric&include=days&key=${api_key}&contentType=json`;
+            
+                try {
+                    const resWeather = await fetch(urlWeather);
+    
+                    if (resWeather.ok) {
+                        const searchWeatherData = await resWeather.json();
+                        setWeatherData(searchWeatherData);
+                    } else {
+                        setWeatherData({});
+                    }
+                } catch (error) {
+                    setWeatherData({});
+                }
+            };
+    
+            searchWeather();
         }
     }, [weatherLocation]);
 
 
     useEffect(() => {
-        if (eventType === 'Glazba') {
+        if (eventType === 'Glazba' && ticket?.artistName) {
             setArtistSearch(ticket.artistName)
         }
-    }, [eventType]);
+    }, [eventType, ticket?.artistName, setArtistSearch]);
 
     const artistSearchToken = "htgBjiTrQMVOEEhWSSiWXEHDxIYVEDNpibEUWEkY"
-    const searchArtistFunc = async () => {
-        const artistAPI_ID = `https://api.discogs.com/database/search?token=${artistSearchToken}&type=artist&q=${artistSearch}`;
-        const resArtist_ID = await fetch(artistAPI_ID)
-        const searchArtistData_ID = await resArtist_ID.json()
-        const artistID = searchArtistData_ID.results[0] ? searchArtistData_ID.results[0].id : null
-        if (artistID != null){
-            const artistAPI = `https://api.discogs.com/artists/${artistID}`
-            const resArtist = await fetch(artistAPI)
-            const searchArtistData = await resArtist.json()
-            setArtistData(searchArtistData)
-        }
-    };
 
     useEffect(() => {
         if (artistSearch) {
-            searchArtistFunc()
+            const searchArtistFunc = async () => {
+                const artistAPI_ID = `https://api.discogs.com/database/search?token=${artistSearchToken}&type=artist&q=${artistSearch}`;
+                const resArtist_ID = await fetch(artistAPI_ID)
+                const searchArtistData_ID = await resArtist_ID.json()
+                const artistID = searchArtistData_ID.results[0] ? searchArtistData_ID.results[0].id : null
+                if (artistID != null){
+                    const artistAPI = `https://api.discogs.com/artists/${artistID}`
+                    const resArtist = await fetch(artistAPI)
+                    const searchArtistData = await resArtist.json()
+                    setArtistData(searchArtistData)
+                }
+            };
+    
+            searchArtistFunc();
         }
     }, [artistSearch]);
 
@@ -138,7 +149,7 @@ const TicketDetails = ({ url }) => {
             body: JSON.stringify({ status: "obrisano" })
         })
         .then(() => {
-            console.log('Ticket deleted');
+            //console.log('Ticket deleted');
             setIsDeleting(true); 
             setTimeout(() => {
                 navigate('/profile'); 
@@ -172,7 +183,7 @@ const TicketDetails = ({ url }) => {
             body: JSON.stringify({ status: newStatus })
         })
         .then(() => {
-            console.log('Ticket status updated');
+            //console.log('Ticket status updated');
             setBringBack(true); 
             setTimeout(() => {
                 navigate('/profile'); 
@@ -208,20 +219,16 @@ const TicketDetails = ({ url }) => {
           alert("An error occurred while submitting the rating.");
         }
       };
-
-    const handleLikeClick = () => {
-        //if like image === like.png DELETE ../tickets/{ticket_id}/favorite i setLikeImage unlike.png
-        //inace POST na ../tickets/{ticket_id}/favorite i setLikeImage like.png
-        // treba u body poslati userID kojeg backend uzima kao Integer
-        
+      const handleLikeClick = () => {
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
-        console.log(likeImage === "../images.like.png");
-        if (likeImage === "../images/unlike.png"){
-            const userID = localStorage.getItem("userID");
-            const access_token = localStorage.getItem("access_token"); 
-            fetch (`${backendUrl}/api/favorites`,{
+    
+        const userID = localStorage.getItem("userID");
+        const access_token = localStorage.getItem("access_token");
+    
+        if (likeImage === "../images/unlike.png") {
+            fetch(`${backendUrl}/api/favorites`, {
                 method: 'POST',
-                headers:{
+                headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 },
@@ -229,37 +236,20 @@ const TicketDetails = ({ url }) => {
                     ticketId: id,
                     userId: userID
                 })
-            })  .then(response => {
-                if (!response.ok) {
-                    return response.text().then(errorMessage => {
-                        throw new Error(errorMessage); // Use the message from the backend
-                    });
-                }
-                return response.json();
             })
+            .then(response => response.json()) 
             .then(data => {
-                console.log('Ticket favorited');
+                //console.log('Response:', data);
             })
             .catch(error => {
-                console.error('Error:', error.message);  
-                
-                if(error.message === "Error: Oglas vise nije aktivan"){
-                    
-                    alert(error.message);  
-                    setLikeImage("../images/unlike.png");
-                }
-                if(error.message === "Error: Nemoguce lajkati svoj oglas"){
-                    
-                    alert(error.message);  
-                    setLikeImage("../images/unlike.png");
-                }
+                console.error('Error:', error.message);
+                alert(error.message);  
+                setLikeImage("../images/unlike.png");  
             });
-        }else if(likeImage === "../images/like.png"){
-            const userID = localStorage.getItem("userID");
-            const access_token = localStorage.getItem("access_token"); 
-            fetch (`${backendUrl}/api/favorites`,{
+        } else if (likeImage === "../images/like.png") {
+            fetch(`${backendUrl}/api/favorites`, {
                 method: 'DELETE',
-                headers:{
+                headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json"
                 },
@@ -267,24 +257,23 @@ const TicketDetails = ({ url }) => {
                     ticketId: id,
                     userId: userID
                 })
-            })  .then(response => {
-                if (!response.ok) {
-                    return response.text().then(errorMessage => {
-                        throw new Error(errorMessage); // Use the message from the backend
-                    });
-                }
-                return response.json();
             })
+            .then(response => response.json())  
             .then(data => {
-                console.log('Ticket removed from favorites');
+                //console.log('Response:', data);
+                navigate(-1);
             })
             .catch(error => {
-                console.error('Error:', error.message);  
-                
+                console.error('Error:', error.message);
+                alert(error.message);  
             });
         }
     };
-    
+
+    const handleHideTicket = () => {
+        setHideImage(hideImage === "../images/show.png" ? "../images/hidden.png" : "../images/show.png");
+        //skrivanje karata
+    };
 
     const goBack = () => {
         navigate(-1); 
@@ -304,7 +293,7 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            <div className="images">
+                            {userID && parseInt(userID) !== ticket.owner.id && (<div className="images">
                                 <img 
                                         className="like" 
                                         src={likeImage} 
@@ -317,43 +306,49 @@ const TicketDetails = ({ url }) => {
                                     alt="edit"
                                     onClick={() => handleEditTicket(ticket)}
                                 />
-                            </div>
+                                 <img
+                                    className="hide"
+                                    src={hideImage}
+                                    alt="hide"
+                                    onClick={() => handleHideTicket(ticket)}
+                                />
+                            </div>)}
                         </div>
                         <div className="ticket-info">
                             <br/>
-                            <p>
-                                <div>
+                            <div className="div-p">
+                                <div className="e">
                                     <span>Mjesto:</span> <span className="answer">{ticket.location}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Datum:</span> <span className="answer">{ticket.eventDate.split('T')[0]}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Vrsta ulaznice:</span> <span className="answer">{ticket.ticketType !== null ? ticket.ticketType : "-"}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Status:</span> <span className="answer">{ticket.isExchangeAvailable}</span>
                                 </div>
                                 {ticket.isExchangeAvailable === "prodaja" && (
-                                    <div>
+                                    <div className="e">
                                     <span>Cijena:</span> <span className="answer">{ticket.price} €</span>
                                     </div>
                                 )}
                                 {ticket.isExchangeAvailable === "aukcija" && (
-                                    <div>
+                                    <div className="e">
                                     <span>Početna cijena:</span> <span className="answer">{ticket.startPrice} €</span>
                                     </div>
                                 )}
-                                <div>
+                                <div className="e">
                                     <span>Vrsta događaja:</span> <span className="answer">{ticket.eventTypeId.nazVrDog}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Broj sjedala:</span> <span className="answer">{ticket.seatNumber !== null ? ticket.seatNumber : "-"}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Vrijeme:</span>
                                     <span className="answer">
                                     {weatherData?.days
@@ -363,7 +358,7 @@ const TicketDetails = ({ url }) => {
                                         : "-"}
                                     </span>
                                 </div>
-                                <div>
+                                <div className="e">
                                     <span>Prosj. Temperatura:</span>
                                     <span className="answer">
                                     {weatherData?.days
@@ -376,46 +371,49 @@ const TicketDetails = ({ url }) => {
                                 {ticket.eventTypeId.nazVrDog === 'Glazba' && (
                                     <>
                                     <div>
-                                        <span>Artist:</span> <span id="artistName">{ticket.artistName}</span>
+                                        <span>Artist:</span> <span id="artistName">{ticket?.artistName ?? '-'}</span>
                                     </div>
-                                    <div>
+                                    <div className="e">
                                         <span>Artist info:</span> <span id="artistProfile">{artistData.profile ? artistData.profile : "-"}</span>
                                     </div>
                                     </>
                                 )}
-                            </p>
+                            </div>
                             <br/>
                             <p className="ticket-posted-by">Objavio: {ticket.owner.imeKor} {ticket.owner.prezimeKor}</p>
                             {ticket.isExchangeAvailable === "prodano" && ticket.owner.id !== parseInt(userID) && (
-                                <div>Email: {ticket.owner.email}</div>
-                            )}
-                            {ticket.owner.id !== parseInt(userID) && ticket.isExchangeAvailable === "prodano" && (
-                            <div className="ticket-rating">
-                                <div className="stars">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <span
-                                            key={star}
-                                            className={`star ${star <= rating ? "selected" : ""}`}
-                                            onClick={() => setRating(star)}
-                                            style={{
-                                            cursor: "pointer",
-                                            fontSize: "24px",
-                                            color: star <= rating ? "yellow" : "lightgray",
-                                    }}
-                                >
-                                ★
-                                    </span>
-                                ))}
-                            </div>
-                            <button onClick={handleRating}>Submit Rating</button>
-                            </div>
+                                <div className="email">Email: {ticket.owner.email}</div>
                             )}
                             <StarRate ocjena={ticket.owner.ocjena} />
+                            {ticket.owner.id !== parseInt(userID) && ticket.isExchangeAvailable === "prodano" &&  (<button onClick={toggleRatingVisibility} className="toggle-rating-btn">
+                                {isRatingVisible ? "Sakrij ocjenjivanje" : "Ocijeni prodavača"}
+                            </button>)}
+                            {isRatingVisible && ticket.owner.id !== parseInt(userID) && ticket.isExchangeAvailable === "prodano" &&( 
+                                <div className="ticket-rating">
+                                    <div className="stars">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <span
+                                                key={star}
+                                                className={`star ${star <= rating ? "selected" : ""}`}
+                                                onClick={() => setRating(star)}
+                                                style={{
+                                                    cursor: "pointer",
+                                                    fontSize: "24px",
+                                                    color: star <= rating ? "yellow" : "lightgray",
+                                                }}
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <button onClick={handleRating}>Pošalji ocjenu</button>
+                                </div>
+                            )}
                             <div className="button-container">
                                 {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
                                 {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
                                 <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
-                                    Prijavi
+                                    Prijavi korisnika
                                 </button>
                             </div>
                         </div>

@@ -113,6 +113,7 @@ CREATE TABLE svida
 (
   idKor INT NOT NULL,
   idOgl INT NOT NULL,
+  status BOOLEAN, /*1 lajka, 0 sakriva, NULL nista */
   PRIMARY KEY (idKor, idOgl),
   FOREIGN KEY (idKor) REFERENCES KORISNIK(idKor),
   FOREIGN KEY (idOgl) REFERENCES OGLAS(idOgl)

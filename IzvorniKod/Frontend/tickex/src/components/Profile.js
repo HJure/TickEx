@@ -21,7 +21,8 @@ function Profile({ profile, setProfile }) {
     const [rating, setRating] = useState('');
     const [expiredTickets, setExpiredTickets] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [genres, setGenres] = useState([]);
+    const [recommendedTickets, setGenres] = useState([]);
+    const [chains, setChains] = useState(null);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -196,7 +197,7 @@ function Profile({ profile, setProfile }) {
         const fetchGenres = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`${backendUrl}/api/savePreferences/user/${userID}`, {
+                    const response = await fetch(`${backendUrl}/api/tickets/recommended/${userID}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${access_token}`,
@@ -229,11 +230,72 @@ function Profile({ profile, setProfile }) {
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ticket.isExchangeAvailable === "obrisano") : [];
     
-    const { data: likedTickets, isPending: isFavoritesPending, error: favoritesError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`);                                
-    //console.log(JSON.stringify(likedTickets)); 
 
-   
-    const { data: chains } = useFetch(`${backendUrl}/api/chain/${userID}`);
+    const [likedTickets, setLikedTickets] = useState([]);
+    const [isFavoritesPending, setIsFavoritesPending] = useState(false);
+    const [favoritesError, setFavoritesError] = useState(null);
+
+    useEffect(() => {
+        const fetchLikedTickets = async () => {
+            if (userID) {
+                setIsFavoritesPending(true);
+                setFavoritesError(null);
+                try {
+                    const response = await fetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error fetching liked tickets');
+                    }
+
+                    const data = await response.json();
+                    setLikedTickets(data);
+                } catch (error) {
+                    setFavoritesError(error.message);
+                    console.error('Error fetching liked tickets:', error);
+                } finally {
+                    setIsFavoritesPending(false);
+                }
+            }
+        };
+
+        fetchLikedTickets();
+    }, [userID, access_token, backendUrl]);
+                                
+
+    useEffect(() => {
+        const fetchChains = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/chain/${userID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error fetching chains');
+                    }
+    
+                    const data = await response.json();
+                    setChains(data);  
+                } catch (error) {
+                    console.error('Error fetching chains:', error);
+                } 
+            }
+        };
+    
+        fetchChains();
+    }, [userID, access_token, backendUrl]);
 
     const handleEditProfile = () => {
         setIsEditing(true);
@@ -295,6 +357,8 @@ function Profile({ profile, setProfile }) {
                 return <div className="my_offers" ><TicketList tickets={expiredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'liked':
                 return <div className="my_offers" ><TicketList tickets={likedTickets} isPending={isFavoritesPending} error={favoritesError} /></div>;
+            case 'recommended':
+                return <div className="my_offers" ><TicketList tickets={recommendedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
             case 'exchangeChains':
                 return (
                     <div className="exchange-chains">
