@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import '../style/SavePreferences.css';
 
 const SavePreferences = ({ setPreferences }) => {
-    const access_token = localStorage.getItem("access_token");
+    //const access_token = localStorage.getItem("access_token");
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';

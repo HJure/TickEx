@@ -27,7 +27,7 @@ const TicketDetails = ({ url }) => {
 
     const userID = localStorage.getItem("userID");
     
-    const { data: favorites, isFavsPending, favsError } = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
+    const { data: favorites} = useFetch(`${backendUrl}/api/favorites?userId=${parseInt(localStorage.getItem("userID"))}`);
     
     const [isRatingVisible, setIsRatingVisible] = useState(false); 
     const toggleRatingVisibility = () => {
@@ -66,45 +66,55 @@ const TicketDetails = ({ url }) => {
       };
 
     const api_key = 'JYLAZZ9VPACY4FFAAYWSEDJDJ'
-    const searchWeather = async () => {
-        const urlWeather = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}?unitGroup=metric&include=days&key=${api_key}&contentType=json`
-        const resWeather = await fetch(urlWeather)
-        if(resWeather.status == 200){
-            const searchWeatherData = await resWeather.json()
-            setWeatherData(searchWeatherData)
-        }
-    };
-
+    
     useEffect(() => {
         if (weatherLocation) {
-            searchWeather()
+            const searchWeather = async () => {
+                const urlWeather = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}?unitGroup=metric&include=days&key=${api_key}&contentType=json`;
+            
+                try {
+                    const resWeather = await fetch(urlWeather);
+    
+                    if (resWeather.ok) {
+                        const searchWeatherData = await resWeather.json();
+                        setWeatherData(searchWeatherData);
+                    } else {
+                        setWeatherData({});
+                    }
+                } catch (error) {
+                    setWeatherData({});
+                }
+            };
+    
+            searchWeather();
         }
     }, [weatherLocation]);
 
 
     useEffect(() => {
-        if (eventType === 'Glazba') {
+        if (eventType === 'Glazba' && ticket?.artistName) {
             setArtistSearch(ticket.artistName)
         }
-    }, [eventType]);
+    }, [eventType, ticket?.artistName, setArtistSearch]);
 
     const artistSearchToken = "htgBjiTrQMVOEEhWSSiWXEHDxIYVEDNpibEUWEkY"
-    const searchArtistFunc = async () => {
-        const artistAPI_ID = `https://api.discogs.com/database/search?token=${artistSearchToken}&type=artist&q=${artistSearch}`;
-        const resArtist_ID = await fetch(artistAPI_ID)
-        const searchArtistData_ID = await resArtist_ID.json()
-        const artistID = searchArtistData_ID.results[0] ? searchArtistData_ID.results[0].id : null
-        if (artistID != null){
-            const artistAPI = `https://api.discogs.com/artists/${artistID}`
-            const resArtist = await fetch(artistAPI)
-            const searchArtistData = await resArtist.json()
-            setArtistData(searchArtistData)
-        }
-    };
 
     useEffect(() => {
         if (artistSearch) {
-            searchArtistFunc()
+            const searchArtistFunc = async () => {
+                const artistAPI_ID = `https://api.discogs.com/database/search?token=${artistSearchToken}&type=artist&q=${artistSearch}`;
+                const resArtist_ID = await fetch(artistAPI_ID)
+                const searchArtistData_ID = await resArtist_ID.json()
+                const artistID = searchArtistData_ID.results[0] ? searchArtistData_ID.results[0].id : null
+                if (artistID != null){
+                    const artistAPI = `https://api.discogs.com/artists/${artistID}`
+                    const resArtist = await fetch(artistAPI)
+                    const searchArtistData = await resArtist.json()
+                    setArtistData(searchArtistData)
+                }
+            };
+    
+            searchArtistFunc();
         }
     }, [artistSearch]);
 
@@ -138,7 +148,7 @@ const TicketDetails = ({ url }) => {
             body: JSON.stringify({ status: "obrisano" })
         })
         .then(() => {
-            console.log('Ticket deleted');
+            //console.log('Ticket deleted');
             setIsDeleting(true); 
             setTimeout(() => {
                 navigate('/profile'); 
@@ -172,7 +182,7 @@ const TicketDetails = ({ url }) => {
             body: JSON.stringify({ status: newStatus })
         })
         .then(() => {
-            console.log('Ticket status updated');
+            //console.log('Ticket status updated');
             setBringBack(true); 
             setTimeout(() => {
                 navigate('/profile'); 
@@ -228,7 +238,7 @@ const TicketDetails = ({ url }) => {
             })
             .then(response => response.json()) 
             .then(data => {
-                console.log('Response:', data);
+                //console.log('Response:', data);
             })
             .catch(error => {
                 console.error('Error:', error.message);
@@ -249,7 +259,7 @@ const TicketDetails = ({ url }) => {
             })
             .then(response => response.json())  
             .then(data => {
-                console.log('Response:', data);
+                //console.log('Response:', data);
                 navigate(-1);
             })
             .catch(error => {
@@ -277,7 +287,7 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            {userID && userID == ticket.owner.id && (<div className="images">
+                            {userID && parseInt(userID) === ticket.owner.id && (<div className="images">
                                 <img 
                                         className="like" 
                                         src={likeImage} 
@@ -348,8 +358,8 @@ const TicketDetails = ({ url }) => {
                                 </div>
                                 {ticket.eventTypeId.nazVrDog === 'Glazba' && (
                                     <>
-                                    <div className="e">
-                                        <span>Artist:</span> <span id="artistName">{ticket.artistName}</span>
+                                    <div>
+                                        <span>Artist:</span> <span id="artistName">{ticket?.artistName ?? '-'}</span>
                                     </div>
                                     <div className="e">
                                         <span>Artist info:</span> <span id="artistProfile">{artistData.profile ? artistData.profile : "-"}</span>

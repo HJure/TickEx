@@ -10,36 +10,6 @@ const Chains = ({ chains }) => {
 
     const allResponsesTrue = (responses) => responses?.every(Boolean);
 
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch(`${backendUrl}/api/users`);
-            const data = await response.json();
-            const usersMap = {};
-            data.forEach((user) => {
-                usersMap[user.id] = `${user.imeKor} ${user.prezimeKor}`;
-            });
-            setUsers(usersMap);
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    };
-
-    const fetchTickets = async () => {
-        try {
-            const endpoints = [`${backendUrl}/api/tickets`, `${backendUrl}/api/tickets/expired`];
-            const ticketResponses = await Promise.all(endpoints.map((url) => fetch(url).then((res) => res.json())));
-
-            const ticketsMap = {};
-            ticketResponses.flat().forEach((ticket) => {
-                ticketsMap[ticket.id] = ticket.eventName;
-            });
-
-            setTickets(ticketsMap);
-        } catch (error) {
-            console.error('Error fetching tickets:', error);
-        }
-    };
-
     const handleResponse = (chainId, userIndex, responseStatus) => {
         setUpdatedChains((prevState) =>
             prevState.map((chain) =>
@@ -144,11 +114,45 @@ const Chains = ({ chains }) => {
     };
 
     useEffect(() => {
-        checkAndUpdateChains();
-        fetchUsers();
-        fetchTickets();
-    }, []);
+        const fetchData = async () => {
+            const fetchUsers = async () => {
+                try {
+                    const response = await fetch(`${backendUrl}/api/users`);
+                    const data = await response.json();
+                    const usersMap = {};
+                    data.forEach((user) => {
+                        usersMap[user.id] = `${user.imeKor} ${user.prezimeKor}`;
+                    });
+                    setUsers(usersMap);
+                } catch (error) {
+                    console.error('Error fetching users:', error);
+                }
+            };
     
+            const fetchTickets = async () => {
+                try {
+                    const endpoint = `${backendUrl}/api/tickets`;
+                    const response = await fetch(endpoint);
+                    const ticketData = await response.json();
+
+                    const ticketsMap = {};
+                    ticketData.forEach((ticket) => {
+                        ticketsMap[ticket.id] = ticket.eventName;
+                    });
+
+                    setTickets(ticketsMap);
+                } catch (error) {
+                    console.error('Error fetching tickets:', error);
+                }
+            };
+    
+            await fetchUsers();
+            await fetchTickets();
+        };
+    
+        fetchData();
+    }, [backendUrl]); 
+
     const userChains = updatedChains.length
         ? updatedChains.map((chain) => {
               const { idkor, idogl, response } = chain;

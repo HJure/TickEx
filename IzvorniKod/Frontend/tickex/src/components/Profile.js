@@ -197,7 +197,7 @@ function Profile({ profile, setProfile }) {
         const fetchGenres = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`${backendUrl}/api/tickets/recommended?userId=${parseInt(userID)}`, {
+                    const response = await fetch(`${backendUrl}/api/tickets/recommended/${userID}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${access_token}`,
