@@ -3,9 +3,6 @@ import "../style/SearchBar.css";
 
 const SearchBar = ({ setResult }) => {
   const [data, setData] = useState(null);
-  const [eventTypes, setEventTypes] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [performers, setPerformers] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
   const ID = localStorage.getItem("userID");
@@ -14,26 +11,8 @@ const SearchBar = ({ setResult }) => {
   useEffect(() => {
     fetch(`${backendUrl}/api/tickets`)
       .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        const uniqueLocations = [...new Set(data.map((item) => item.location))];
-        setLocations(uniqueLocations);
-
-        const uniquePerformers = [
-          ...new Set(
-            data
-              .map((item) => item.artistName)
-              .filter((performer) => performer !== null)
-          ),
-        ];
-        setPerformers(uniquePerformers);
-      })
+      .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data:", error));
-
-    fetch(`${backendUrl}/api/vrsta-dogadaja`)
-      .then((response) => response.json())
-      .then((data) => setEventTypes(data))
-      .catch((error) => console.error("Error fetching event types:", error));
   }, [backendUrl]);
 
   const [input, setInput] = useState("");
@@ -96,7 +75,7 @@ const SearchBar = ({ setResult }) => {
       setSelectedDate("");
     }
   };
-
+  
   return (
     <div className="searchArea">
       <div className="searchBar">
