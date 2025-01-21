@@ -36,4 +36,10 @@ public class DeaktiviraService {
     public List<Deaktivira> getDeactivationsByUser(int deaktiviraIdKor) {
         return deaktiviraRepository.findAllByDeaktiviraIdKor(deaktiviraIdKor);
     }
+
+    @Transactional
+    public void deleteDeactivationsForUser(int userId) {
+        deaktiviraRepository.deleteAllByDeaktiviranIdKor(userId);
+    }
+
 }

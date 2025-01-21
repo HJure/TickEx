@@ -16,5 +16,8 @@ public interface DeaktiviraRepository extends JpaRepository<Deaktivira, Integer>
     List<Deaktivira> findAllByDeaktiviraIdKor(int deaktiviraIdKor);
 
     boolean existsByDeaktiviranIdKor(int deaktiviranIdKor);
+
+    void deleteAllByDeaktiviranIdKor(int deaktiviranIdKor);
+
 }
 

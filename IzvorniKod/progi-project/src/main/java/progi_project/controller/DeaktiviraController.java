@@ -38,5 +38,23 @@ public class DeaktiviraController {
         List<Deaktivira> deactivations = deaktiviraService.getDeactivationsByUser(deaktiviraIdKor);
         return ResponseEntity.ok(deactivations);
     }
+
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<String> deleteDeactivationsForUser(@PathVariable int userId) {
+        try {
+            deaktiviraService.deleteDeactivationsForUser(userId);
+            return ResponseEntity.ok("Deactivation records deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/is-deactivated/{userId}")
+    public ResponseEntity<Boolean> isUserDeactivated(@PathVariable int userId) {
+        boolean isDeactivated = deaktiviraService.isUserDeactivated(userId);
+        return ResponseEntity.ok(isDeactivated);
+    }
+
+
 }
 

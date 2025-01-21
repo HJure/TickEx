@@ -13,6 +13,8 @@ const UserTicketsPage = () => {
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
     const access_token = localStorage.getItem('access_token');
     const navigate = useNavigate();
+    const [isDeactivated, setIsDeactivated] = useState(false);
+
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -47,10 +49,30 @@ const UserTicketsPage = () => {
 
                 const ticketsData = await ticketsResponse.json();
                 setTickets(ticketsData);
+
+                const deactivationResponse = await fetch(`${backendUrl}/api/deaktivira/is-deactivated/${userId}`, 
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+
+                if (deactivationResponse.ok) {
+                    const deactivations = await deactivationResponse.json();
+                    setIsDeactivated(deactivations);
+                } else {
+                    throw new Error('Error while checking user deactivation status');
+                }
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
-        };
+        
+    };
+        
 
         fetchUserData();
     }, [backendUrl, access_token, userId]);
@@ -80,12 +102,37 @@ const UserTicketsPage = () => {
                 }
     
                 alert('User profile deactivated successfully.');
-                navigate('/'); // Redirect to home or another page
+                navigate(`/user/${userId}/tickets`); // Redirect to home or another page
             } catch (error) {
                 console.error(error);
             }
         }
     };
+
+    const reactivateUser = async () => {
+        if (window.confirm("Are you sure you want to reactivate this profile?")) {
+            try {
+                const response = await fetch(`${backendUrl}/api/deaktivira/user/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${access_token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Error while reactivating user');
+                }
+    
+                alert('User profile reactivated successfully.');
+                setIsDeactivated(false);
+                navigate(`/user/${userId}/tickets`);
+            } catch (error) {
+                console.error('Error reactivating user:', error);
+            }
+        }
+    };
+    
     
     
 
@@ -122,12 +169,24 @@ const UserTicketsPage = () => {
                     <p className="profile-info">
                         Ocjena: {userOcjena}
                     </p>
-                    <button 
-                        className="delete-profile-button"
-                        onClick={deactivateUser}
-                    >
-                        Izbaci Profil
-                    </button>
+                    <div>
+                        {isDeactivated ? (
+                            <button 
+                                className="reactivate-profile-button"
+                                onClick={reactivateUser}
+                            >
+                                Reactivate Profile
+                            </button>
+                        ) : (
+                            <button 
+                                className="delete-profile-button"
+                                onClick={deactivateUser}
+                            >
+                                Deactivate Profile
+                            </button>
+                        )}
+                    </div>
+
                 </div>
             </div>
             {/* Tickets Section */}
