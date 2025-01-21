@@ -153,6 +153,10 @@ const Chains = ({ chains }) => {
         fetchData();
     }, [backendUrl]); 
 
+    useEffect(() => {
+        checkAndUpdateChains();
+    }, []);
+
     const userChains = updatedChains.length
         ? updatedChains.map((chain) => {
               const { idkor, idogl, response } = chain;

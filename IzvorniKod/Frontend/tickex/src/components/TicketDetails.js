@@ -59,6 +59,11 @@ const TicketDetails = ({ url }) => {
     
 
     const handleReportClick = async (ticket, navigate) => {
+        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
+            alert('Oglas više nije aktivan!');
+            return; 
+        }
+
         try {
             navigate('/reports', { state: { ticket } });
         } catch (error) {
@@ -129,6 +134,12 @@ const TicketDetails = ({ url }) => {
     };
 
     const handleEditTicket = async (ticket) => {
+
+        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
+            alert('Oglas više nije aktivan!');
+            return; 
+        }
+
         try {
             navigate(`/edit-ticket`, { state: { ticket } });
         } catch (error) {
@@ -137,6 +148,11 @@ const TicketDetails = ({ url }) => {
     };
 
     const handleDelete = () => {
+        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
+            alert('Oglas više nije aktivan!');
+            return; 
+        }
+
         const deleteUrl = `${url}/${id}/status`.replace(/([^:]\/)\/+/g, "$1"); 
         const access_token = localStorage.getItem("access_token"); 
     
@@ -162,6 +178,12 @@ const TicketDetails = ({ url }) => {
     };
 
     const handleBack = () => {
+
+        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
+            alert('Oglas više nije aktivan!');
+            return; 
+        }
+
         let newStatus = "u prodaji";
         if (ticket.price > 0) {
             newStatus = "u prodaji";
@@ -220,9 +242,19 @@ const TicketDetails = ({ url }) => {
         }
       };
       const handleLikeClick = () => {
+        const userID = localStorage.getItem("userID");
+    
+        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
+            alert('Oglas više nije aktivan!');
+            return; 
+        }
+        else if (ticket.owner.id === parseInt(userID)) {
+            alert('Nemoguće lajkati vlastiti oglas!');
+            return; 
+        }
+    
         setLikeImage(likeImage === "../images/unlike.png" ? "../images/like.png" : "../images/unlike.png");
     
-        const userID = localStorage.getItem("userID");
         const access_token = localStorage.getItem("access_token");
     
         if (likeImage === "../images/unlike.png") {
@@ -269,8 +301,15 @@ const TicketDetails = ({ url }) => {
             });
         }
     };
+    
 
     const handleHideTicket = () => {
+
+        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
+            alert('Oglas više nije aktivan!');
+            return; 
+        }
+
         setHideImage(hideImage === "../images/show.png" ? "../images/hidden.png" : "../images/show.png");
         //skrivanje karata
     };
@@ -293,26 +332,29 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            {userID && parseInt(userID) !== ticket.owner.id && (<div className="images">
+                           <div className="images">
+                           {userID && parseInt(userID) === ticket.owner.id && (
+                                <img
+                                    className="edit"
+                                    src="../images/editIcon.png"
+                                    alt="edit"
+                                    onClick={() => handleEditTicket(ticket)}
+                                />)}
+                           {userID && parseInt(userID) !== ticket.owner.id && (<>
                                 <img 
                                         className="like" 
                                         src={likeImage} 
                                         alt="like" 
                                         onClick={handleLikeClick}
                                     />
-                                <img
-                                    className="edit"
-                                    src="../images/editIcon.png"
-                                    alt="edit"
-                                    onClick={() => handleEditTicket(ticket)}
-                                />
                                  <img
                                     className="hide"
                                     src={hideImage}
                                     alt="hide"
                                     onClick={() => handleHideTicket(ticket)}
                                 />
-                            </div>)}
+                                </>)}
+                            </div>
                         </div>
                         <div className="ticket-info">
                             <br/>
@@ -348,6 +390,26 @@ const TicketDetails = ({ url }) => {
                                 <div className="e">
                                     <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
                                 </div>
+                                {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željena ulaznica:</span> <span className="answer">{ticket.wantedEventName}</span>
+                                    </div>
+                                )}
+                                 {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željeno mjesto:</span> <span className="answer">{ticket.wantedLocation}</span>
+                                    </div>
+                                )}
+                                 {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željeni datum:</span> <span className="answer">{ticket.wantedDate.split('T')[0]}</span>
+                                    </div>
+                                )}
+                                 {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željeni broj sjedala:</span> <span className="answer">{ticket.wantedSeatNumber !== null ? ticket.seatNumber : "-"}</span>
+                                    </div>
+                                )}
                                 <div className="e">
                                     <span>Vrijeme:</span>
                                     <span className="answer">

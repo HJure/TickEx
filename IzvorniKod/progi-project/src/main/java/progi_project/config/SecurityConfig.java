@@ -30,7 +30,7 @@ public class SecurityConfig {
         http.cors(withDefaults()).csrf().disable()
             .authorizeHttpRequests(auth -> auth.requestMatchers("/shop/**","/", "/error", "/users/register", 
             	"/tickets/**", "/users/**", "/vrsta-dogadaja", "/exchanges/**", "/sales/**", "/reports", 
-            	"/auctions/**","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**", "/bids", "/deaktivira/**").permitAll().requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
+            	"/auctions/**","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**", "/bids", "/deaktivira/**", "/emails/**").permitAll().requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated())
                 .oauth2Login()
                 .successHandler(customOAuth2SuccessHandler)
