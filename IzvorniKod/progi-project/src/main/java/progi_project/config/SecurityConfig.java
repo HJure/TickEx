@@ -13,8 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -26,20 +24,13 @@ public class SecurityConfig {
     @Autowired
     private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 
-     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Osigurajte da statički resursi ne preklapaju rute API-a
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/");
-    }
-
     @SuppressWarnings({"removal"})
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(withDefaults()).csrf().disable()
             .authorizeHttpRequests(auth -> auth.requestMatchers("/shop/**","/", "/error", "/users/register", 
             	"/tickets/**", "/users/**", "/vrsta-dogadaja", "/exchanges/**", "/sales/**", "/reports", 
-            	"/auctions/**","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**", "/bids", "/emails/**").permitAll().requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
+            	"/auctions/**","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**", "/bids").permitAll().requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated())
                 .oauth2Login()
                 .successHandler(customOAuth2SuccessHandler)

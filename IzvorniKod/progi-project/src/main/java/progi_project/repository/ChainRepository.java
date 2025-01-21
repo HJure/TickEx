@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import progi_project.model.Chain;
-import progi_project.model.Ticket;
 
 @Repository
 public interface ChainRepository extends JpaRepository<Chain, Long> {
@@ -28,8 +27,4 @@ public interface ChainRepository extends JpaRepository<Chain, Long> {
     @Transactional
     @Query(value = "UPDATE sudjeluje SET odgovor = ARRAY_FILL(FALSE, ARRAY[ARRAY_LENGTH(odgovor, 1)]) WHERE idsudj = :chainId", nativeQuery = true)
 	void updateAllResponses(@Param("chainId") int chainId);
-
-	@Query(value = "SELECT * FROM sudjeluje WHERE :ticketId = ANY(idogl)", nativeQuery = true)
-    List<Chain> findChainsByTicket(@Param("ticketId") int ticketId);
-
 }

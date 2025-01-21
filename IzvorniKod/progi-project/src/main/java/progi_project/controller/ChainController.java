@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import progi_project.model.Chain;
-import progi_project.model.Ticket;
 import progi_project.service.ChainService;
-import progi_project.service.TicketService;
 
 @RestController
 @RequestMapping("/chain")
@@ -27,9 +25,6 @@ public class ChainController {
 	
 	@Autowired
     private ChainService chainService;
-
-    @Autowired
-    private TicketService ticketService;
 	
 	@Value("${chain.minutes}")
     private long chainMinutes;
@@ -103,11 +98,4 @@ public class ChainController {
 
 	    return ResponseEntity.ok(chains);
 	}
-
-	@GetMapping("/ticket/{ticketId}")
-	public List<Chain> getChainsForTicket(@PathVariable int ticketId) {
-		Ticket ticket = ticketService.findById(ticketId);  
-		return chainService.findChainsByTicket(ticket);  
-	}
-
 }
