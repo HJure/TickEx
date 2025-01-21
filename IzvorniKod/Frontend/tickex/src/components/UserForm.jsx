@@ -42,14 +42,14 @@ const UserForm = () => {
                     localStorage.setItem("user_last_name", prezimeKor);
                     localStorage.setItem("user_registration_date", datumUla);
 
-                    console.log('new user added');
+                    //console.log('new user added');
                     setIsPending(false);
                     navigate('/profile');
                 }, 1500);
 
                 const url = `${backendUrl}/api/savePreferences?email=${encodeURIComponent(email)}`;
                 const selectedCategories = JSON.parse(localStorage.getItem("selectedCategories") || "[]");
-                console.log("Selected categories before fetching savePreferences: ", selectedCategories);
+                //console.log("Selected categories before fetching savePreferences: ", selectedCategories);
 
                 return fetch(url, {
                     method: 'POST',
@@ -58,11 +58,11 @@ const UserForm = () => {
                 });
             })
             .then(() => {
-                console.log("Preferences saved successfully");
+                //console.log("Preferences saved successfully");
             })
             .catch((err) => {
                 console.log(err);
-                console.log("An error occurred");
+                //console.log("An error occurred");
                 setIsPending(false);
                 navigate('/signup');
             });

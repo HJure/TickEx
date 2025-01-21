@@ -42,7 +42,7 @@ public class FavoriteService {
         User user = userRepository.findById(userId);
         Ticket ticket = ticketRepository.findById(ticketId);
         
-        Favorite favorite = new Favorite(user, ticket);
+        Favorite favorite = new Favorite(user, ticket,true);
         try{
             //System.out.println(favorite.toString());
             return favoriteRepository.save(favorite);
@@ -55,7 +55,7 @@ public class FavoriteService {
         
     }
     public List<Ticket> getFavoriteTickets(int userId){
-        List<Favorite> favorites = favoriteRepository.findByidkor(userId);
+        List<Favorite> favorites = favoriteRepository.getFavorites(userId);
         List<Ticket> tickets = new ArrayList<Ticket>();
         for(Favorite f : favorites){
             
@@ -76,12 +76,33 @@ public class FavoriteService {
     public List<Favorite> getAllFavorites() {
         return favoriteRepository.findAll();
     }
+    
+    public List<Ticket> getHiddenTickets(int userId) {
+		return favoriteRepository.getHidden(userId);
+	}
     public List<Favorite> getAllUserFavorites(int userId){
-        return favoriteRepository.findByidkor(userId);
+        return favoriteRepository.getFavorites(userId);
     }
     public List<Favorite> getAllTicketFavorites(int ticketId){
         //finds every user who favorited a ticket
         return favoriteRepository.findByidogl(ticketId);
     }
+
+	public void hide(int userId, int ticketId) {
+		User user = userRepository.findById(userId);
+        Ticket ticket = ticketRepository.findById(ticketId);
+        
+        Favorite favorite = new Favorite(user, ticket,false);
+        try{
+            favoriteRepository.save(favorite);
+        }catch(Exception  e){
+            String msg = nonActiveTicketError(e.getMessage());
+            throw new RuntimeException(msg);
+        }
+	}
+
+	public void unhide(int userId, int ticketId) {
+		favoriteRepository.deleteByIdkorAndIdogl(userId, ticketId);
+	}
     
 }

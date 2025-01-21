@@ -310,8 +310,64 @@ const TicketDetails = ({ url }) => {
             return; 
         }
 
-        setHideImage(hideImage === "../images/show.png" ? "../images/hidden.png" : "../images/show.png");
-        //skrivanje karata
+        const access_token = localStorage.getItem("access_token");
+
+    if (hideImage === "../images/show.png") {
+        const userConfirmed = window.confirm("Upozorenje: Jednom sakrivena karta se više neće nikad prikazivati!");
+        if (!userConfirmed) {
+            return;
+        }
+        fetch(`${backendUrl}/api/favorites/hide`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ticketId: ticket.id,
+                userId: userID,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.message === "Hidden successfully") {
+                    console.log("Ticket successfully hidden");
+                    setHideImage("../images/hidden.png");
+                } else {
+                    throw new Error(data.message || "Unknown error occurred");
+                }
+                navigate(-1);
+            })
+            .catch((error) => {
+                console.error("Error:", error.message);
+                alert("Došlo je do greške pri sakrivanju karte: " + error.message);
+            });
+    } else if (hideImage === "../images/hidden.png") {
+        fetch(`${backendUrl}/api/favorites/unhide`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ticketId: ticket.id,
+                userId: userID,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.message === "Unhidden successfully") {
+                    console.log("Ticket successfully unhidden");
+                    setHideImage("../images/show.png");
+                } else {
+                    throw new Error(data.message || "Unknown error occurred");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error.message);
+                alert("Došlo je do greške pri prikazivanju karte: " + error.message);
+            });
+    }
     };
 
     const goBack = () => {
@@ -472,11 +528,17 @@ const TicketDetails = ({ url }) => {
                                 </div>
                             )}
                             <div className="button-container">
-                                {canDelete && <button onClick={handleDelete} className="delete-button">Obriši kartu</button>}
+                                {canDelete && ticket.isExchangeAvailable !== "aukcija" && (
+                                    <button onClick={handleDelete} className="delete-button">
+                                        Obriši kartu
+                                    </button>
+                                )}
                                 {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
-                                <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
-                                    Prijavi korisnika
+                                {ticket.owner.id !== parseInt(localStorage.getItem("userID")) && (
+                                    <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
+                                        Prijavi korisnika
                                 </button>
+                                )}
                             </div>
                         </div>
                     </div>

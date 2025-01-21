@@ -11,6 +11,6 @@ import progi_project.model.Bid;
 
 @Repository
 public interface BidRepository extends JpaRepository<Bid, Long> {
-    @Query("SELECT b FROM Bid b WHERE b.id.auctionId = :id ORDER BY b.offer DESC")
+    @Query("SELECT b FROM Bid b WHERE b.auction.id = :id ORDER BY b.offer DESC")
     List<Bid> getBids(@Param("id") int id);
 }

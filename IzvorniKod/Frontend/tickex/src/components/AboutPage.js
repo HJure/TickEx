@@ -38,7 +38,7 @@ const AboutPage = () => {
       <div className="about-section">
         <h2 className="about-subtitle">4. Obavijesti i ažuriranja</h2>
         <p>
-          Primit ćete obavijesti o novim oglasima koji odgovaraju vašim preferencijama putem e-pošte ili obavijesti u aplikaciji.
+          Primit ćete obavijesti o novim oglasima koji odgovaraju vašim preferencijama putem kategorije "ZA VAS" na stranici vašeg profila.
           Također ćete biti obaviješteni kada je postignuta potvrda zamjene od strane drugih korisnika.
         </p>
       </div>

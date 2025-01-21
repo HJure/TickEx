@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
@@ -16,6 +19,10 @@ public class Auction extends Ticket{
 
     @Column(name = "trajanje", nullable = false)
     private LocalDate duration;
+    
+    @ManyToOne
+    @JoinColumn(name = "pobjednik", nullable = true)
+    private User winner;
 
     public int getStartPrice() {
         return startPrice;
@@ -33,5 +40,13 @@ public class Auction extends Ticket{
 		this.duration = duration;
 	}
 
+	public User getWinner() {
+		return winner;
+	}
+
+	public void setWinner(User winner) {
+		this.winner = winner;
+	}
+	
 }
 

@@ -105,8 +105,10 @@ CREATE TABLE AUKCIJA
   pocCijena INT NOT NULL,
   trajanje DATE NOT NULL,
   idOgl INT NOT NULL,
+  pobjednik INT,
   PRIMARY KEY (idOgl),
-  FOREIGN KEY (idOgl) REFERENCES OGLAS(idOgl)
+  FOREIGN KEY (idOgl) REFERENCES OGLAS(idOgl),
+  FOREIGN KEY (pobjednik) REFERENCES KORISNIK(idKor)
 );
 
 CREATE TABLE svida

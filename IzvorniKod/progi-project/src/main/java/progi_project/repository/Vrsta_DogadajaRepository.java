@@ -19,5 +19,7 @@ public interface Vrsta_DogadajaRepository extends JpaRepository<Vrsta_Dogadaja, 
    @Query(value = "SELECT iddog FROM vrsta_dogadaja WHERE nazvrdog = :vrdog", nativeQuery = true)
     int findIdByName(@Param("vrdog") String vrdog);
    
+   @Query(value = "SELECT nazvrdog FROM vrsta_dogadaja vd JOIN zainteresiran z ON vd.iddog = z.iddog WHERE z.idkor = :userId", nativeQuery = true)
+   List<String> interestedIn(@Param("userId") int userId);
 }
 

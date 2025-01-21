@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import progi_project.model.Ticket;
-
+import progi_project.service.FavoriteService;
 import progi_project.service.TicketService;
 
 @RestController
@@ -25,6 +25,9 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+    
+    @Autowired
+    private FavoriteService favoriteService;
 
     @PostMapping
     public Ticket createTicket(@RequestBody Ticket ticket) {
@@ -44,6 +47,15 @@ public class TicketController {
     @GetMapping
     public List<Ticket> getAllTickets() {
         return ticketService.getAllTickets();
+    }
+    
+    @GetMapping("/nothidden/{id}")
+    public List<Ticket> getAllTickets(@PathVariable int id) {
+    	List<Ticket> allTickets = ticketService.getAllTickets();
+    	List<Ticket> hiddenTickets = favoriteService.getHiddenTickets(id);
+    	System.out.println("Proba:" + allTickets.size() + " "+ hiddenTickets.size());
+    	allTickets.removeAll(hiddenTickets);
+        return allTickets;
     }
 
     @GetMapping("/active")

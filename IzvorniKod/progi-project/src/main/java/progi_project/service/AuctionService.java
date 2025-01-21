@@ -32,11 +32,11 @@ public class AuctionService {
     public void resolveAuction(Auction auction) {
         List<Bid> bids = bidRepository.getBids(auction.getId());
         if (bids.isEmpty()) {
-            auction.setExchangeAvailable("nepoznato");
+            auction.setExchangeAvailable("istekao");
         } else {
             Bid highestBid = bids.get(0);
             auction.setExchangeAvailable("prodano");
-            auction.setOwner(highestBid.getUser());
+            auction.setWinner(highestBid.getUser());
         }
 
         auctionRepository.save(auction);
@@ -64,4 +64,8 @@ public class AuctionService {
         existingAuction.setArtistName(auction.getArtistName());
         return auctionRepository.save(existingAuction);
     }
+
+	public List<Bid> getAllBidsForAuction(int id) {
+		return bidRepository.getBids(id);
+	}
 }

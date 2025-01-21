@@ -26,9 +26,9 @@ public class AuctionController {
         auctionService.createAuction(auction);
     } 
 
-    @GetMapping("/bids")
-    public List<Bid> getBids() {
-        return auctionService.getAllBids();
+    @GetMapping("/bids/{id}")
+    public List<Bid> getBids(@PathVariable int id) {
+        return auctionService.getAllBidsForAuction(id);
     }
     
     @PostMapping("/bids")

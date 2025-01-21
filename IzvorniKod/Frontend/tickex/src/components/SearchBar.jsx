@@ -9,7 +9,7 @@ const SearchBar = ({ setResult }) => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
 
   useEffect(() => {
-    fetch(`${backendUrl}/api/tickets`)
+    fetch(`${backendUrl}/api/tickets/nothidden/${ID}`)
       .then((response) => response.json())
       .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data:", error));

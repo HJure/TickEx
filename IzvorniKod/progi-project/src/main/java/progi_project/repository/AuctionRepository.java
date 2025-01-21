@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import progi_project.model.Auction;
+import progi_project.model.Bid;
 
 @Repository
 public interface AuctionRepository extends JpaRepository<Auction, Long> {
@@ -18,4 +19,5 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 
     @Query("SELECT a FROM Auction a WHERE a.duration <= :currentTime")
     List<Auction> findExpiredAuctions(@Param("currentTime") LocalDate currentTime);
+
 }

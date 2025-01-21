@@ -23,6 +23,7 @@ function Profile({ profile, setProfile }) {
     const [isAdmin, setIsAdmin] = useState(false);
     const [recommendedTickets, setGenres] = useState([]);
     const [chains, setChains] = useState(null);
+    const [interestedList, setInterestedList] = useState([]);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -63,7 +64,7 @@ function Profile({ profile, setProfile }) {
                 setEmail(res.data.email);
             }).catch((err) => {
                 if (err.response && err.response.status === 401) {
-                    console.log("Token might be expired or invalid. Logging out...");
+                    //console.log("Token might be expired or invalid. Logging out...");
                     logOut();
                 } else {
                     console.error("Error fetching profile:", err);
@@ -183,7 +184,7 @@ function Profile({ profile, setProfile }) {
                     }
     
                     const data = await response.json();
-                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "isteklo"));
+                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "istekao"));
                 } catch (error) {
                     console.error('Error fetching expired tickets:', error);
                 }
@@ -221,10 +222,11 @@ function Profile({ profile, setProfile }) {
         fetchGenres();
     }, [userID, access_token, backendUrl]);
 
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets`);
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets/nothidden/${userID}`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
-    const purchasedTickets = tickets ? tickets.filter(ticket => ticket.buyer?.id === parseInt(userID)) : [];
+    const purchasedTickets = tickets ? tickets.filter(ticket => ticket.buyer?.id === parseInt(userID) || 
+                                                    ticket.winner?.id === parseInt(userID)) : [];
     const soldTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)  
                                     && ticket.isExchangeAvailable === "prodano") : [];
     const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
@@ -296,6 +298,18 @@ function Profile({ profile, setProfile }) {
     
         fetchChains();
     }, [userID, access_token, backendUrl]);
+
+    useEffect(() => {
+        fetch(`${backendUrl}/api/vrsta-dogadaja/zainteresiran/${userID}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch interested list");
+                }
+                return response.json();
+            })
+            .then((data) => setInterestedList(data))
+            .catch((error) => console.error("Error fetching interested list:", error));
+    }, [userID, backendUrl]);
 
     const handleEditProfile = () => {
         setIsEditing(true);
@@ -371,6 +385,19 @@ function Profile({ profile, setProfile }) {
                         <img src={profile.picture} alt="user" className="profile-image" />
                         <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
                         <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
+                        <p className="profile-info">Datum ulaska: {localStorage.getItem("user_registration_date")}</p>
+                        
+                        <h3 className="profile-subheading">Zainteresiran za:</h3>
+                            <ul className="interested-list">
+                                {interestedList.length > 0 ? (
+                                    interestedList.map((item, index) => (
+                                    <li key={index} className="interested-item">{item}</li>
+                                    ))
+                            ) : (
+                            <p className="no-interested">Nema dostupnih interesa</p>
+                        )}
+                            </ul>
+
                         <p className="profile-info">
                             Ocjena: {localStorage.getItem("user_rating") === "0" ? (
                                 <img src="/images/forbidden.png" alt="forbidden" className="rating-image" />

@@ -20,7 +20,7 @@ const Bids = () => {
     }, [result]);
 
     useEffect(() => {
-        fetch(`${backendUrl}/api/auctions/bids`)
+        fetch(`${backendUrl}/api/auctions/bids/${result.id}`)
             .then((response) => response.json())
             .then((data) => {
                 if (Array.isArray(data)) {

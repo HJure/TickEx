@@ -30,7 +30,7 @@ public class Favorite {
     private Ticket ticket;
     
     @Column(name= "status", nullable = true)
-    private boolean like;
+    private Boolean like;
 
     @Id
     private int idkor;  
@@ -40,12 +40,20 @@ public class Favorite {
    
     public Favorite() {}
 
+    public Favorite(User user, Ticket ticket, Boolean like) {
+        this.user = user;
+        this.ticket = ticket;
+        this.idkor = user.getId();
+        this.idogl = ticket.getId();  
+        this.like = like;
+        
+    }
+    
     public Favorite(User user, Ticket ticket) {
         this.user = user;
         this.ticket = ticket;
         this.idkor = user.getId();
-        this.idogl = ticket.getId();   
-        
+        this.idogl = ticket.getId();     
     }
 
     // Getters and Setters
@@ -64,11 +72,11 @@ public class Favorite {
         this.idogl = ticket.getId();   
     }
     
-    public boolean isLike() {
+    public Boolean isLike() {
 		return like;
 	}
 
-	public void setLike(boolean like) {
+	public void setLike(Boolean like) {
 		this.like = like;
 	}
 
