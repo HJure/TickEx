@@ -332,26 +332,29 @@ const TicketDetails = ({ url }) => {
                             <h2>
                                 {ticket.eventName} 
                             </h2>
-                            {userID && parseInt(userID) !== ticket.owner.id && (<div className="images">
+                           <div className="images">
+                           {userID && parseInt(userID) === ticket.owner.id && (
+                                <img
+                                    className="edit"
+                                    src="../images/editIcon.png"
+                                    alt="edit"
+                                    onClick={() => handleEditTicket(ticket)}
+                                />)}
+                           {userID && parseInt(userID) !== ticket.owner.id && (<>
                                 <img 
                                         className="like" 
                                         src={likeImage} 
                                         alt="like" 
                                         onClick={handleLikeClick}
                                     />
-                                <img
-                                    className="edit"
-                                    src="../images/editIcon.png"
-                                    alt="edit"
-                                    onClick={() => handleEditTicket(ticket)}
-                                />
                                  <img
                                     className="hide"
                                     src={hideImage}
                                     alt="hide"
                                     onClick={() => handleHideTicket(ticket)}
                                 />
-                            </div>)}
+                                </>)}
+                            </div>
                         </div>
                         <div className="ticket-info">
                             <br/>
@@ -387,6 +390,26 @@ const TicketDetails = ({ url }) => {
                                 <div className="e">
                                     <span>Izbrisana:</span> <span className="answer">{ticket.obrisanoTime !== null ? ticket.obrisanoTime : "-"}</span>
                                 </div>
+                                {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željena ulaznica:</span> <span className="answer">{ticket.wantedEventName}</span>
+                                    </div>
+                                )}
+                                 {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željeno mjesto:</span> <span className="answer">{ticket.wantedLocation}</span>
+                                    </div>
+                                )}
+                                 {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željeni datum:</span> <span className="answer">{ticket.wantedDate.split('T')[0]}</span>
+                                    </div>
+                                )}
+                                 {ticket.isExchangeAvailable === "razmjena" && (
+                                    <div className="e">
+                                    <span>Željeni broj sjedala:</span> <span className="answer">{ticket.wantedSeatNumber !== null ? ticket.seatNumber : "-"}</span>
+                                    </div>
+                                )}
                                 <div className="e">
                                     <span>Vrijeme:</span>
                                     <span className="answer">
