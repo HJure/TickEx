@@ -73,4 +73,9 @@ public class ChainService {
 	public void updateAllResponses(int chainId) {
 		chainRepository.updateAllResponses(chainId);
 	}
+
+	public List<Chain> findChainsByTicket(Ticket ticket) {
+		return chainRepository.findChainsByTicket(ticket.getId());
+	}
+	
 }

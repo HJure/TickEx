@@ -37,7 +37,7 @@ public class ExchangeController {
     public ResponseEntity<String> processExchange(@PathVariable Integer id) {
         boolean success = exchangeService.processExchangeChain(id);
         if (success) {
-            return ResponseEntity.ok("Exchange chain successfully processed!");
+            return ResponseEntity.ok("Uspješno pronađen lanac zamjene!");
         } else {
             // ako lanac nije pronađen, vratiti poruku "Nema lanaca"
             return ResponseEntity.status(HttpStatus.OK).body("Nema lanaca");
@@ -51,7 +51,9 @@ public class ExchangeController {
     }
 	
     @PutMapping("/{id}")
-    public Exchange updateExchange(@PathVariable Long id, @RequestBody Exchange exchange) {
-        return exchangeService.updateExchange(id, exchange);
+    public ResponseEntity<Integer> updateExchange(@PathVariable Long id, @RequestBody Exchange exchange) {
+        Exchange updatedExchange = exchangeService.updateExchange(id, exchange);
+        return ResponseEntity.ok(updatedExchange.getId());
     }
+    
 }
