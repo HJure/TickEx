@@ -40,12 +40,12 @@ function App() {
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/register" element={<UserForm />} />
                 <Route path="/buy" element={<Buy />} />
-                <Route path="/auction" element={<Auction />} />
+                <Route path="/auctions" element={<Auction />} />
                 <Route path="/reports" element={<ReportDetails />} />
                 <Route path="/reports/dashboard" element={<Reports />} />
                 <Route path="/user/:userId/tickets" element={<UserTicketsPage />} />
                 <Route path="/edit-ticket" element={<EditTicket url={`${backendUrl}/api/tickets/`}/>} />
-                <Route path ="/bids" element={<Bids />} />
+                <Route path ="/auctions/bids" element={<Bids />} />
                 <Route path="/about" element={<AboutPage />} />
             </Routes>
             <Footer />

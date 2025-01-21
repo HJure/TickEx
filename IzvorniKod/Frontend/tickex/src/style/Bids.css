@@ -1,17 +1,116 @@
 .bidContainer{
     display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
     justify-content: center;
     align-items: center;
 }
-
-.standingOffers h1{
-    justify-self:center;
-    font-size: 36px;
-    color: #f4f4f4;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    border-radius: 10px;
-}
 .standingOffers{
     width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    justify-self: center;
+}
+.standingOffers h1{
+    grid-column: 2 / 4;
+    justify-self: center;
+    padding: 2px 70px;
+    font-size: 36px;
+    color: #f4f4f4;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin-bottom: 10%;
+}
+
+.bid{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 220px;
+  overflow: hidden;
+  object-fit: contain;
+  box-sizing: border-box;
+  position: relative;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #cd6e8a 0%, #f5eab0 70%, #a2758d 100%);
+  box-shadow: 0px 0px 5px 1px #000000;
+  transition: 0.3s ease;
+  border-radius: 30px;
+}
+
+.personalOffer{
+    justify-items: center;
+    margin-bottom: 10%;
+}
+.personalOffer h2{
+    font-size: 36px;
+    color: #f4f4f4;
+    padding: 2px 15px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+.personalOffer h3{
+    font-size: 20px;
+    color: #f4f4f4;
+}
+.offer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.offer input {
+    margin-top: 30px;
+    border: 1px solid #e1e4e8;
+    outline: none;
+    font-size: 1.1rem;
+    width: 70%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background: linear-gradient(45deg, rgba(200, 200, 255, 0.5), rgba(255, 255, 255, 0.9));
+    color: #333;
+    transition: all 0.3s ease;
+    position: relative;
+    height: 50%;
+}
+
+.submitBtn{
+    margin-top: 30px;
+    align-self: center;
+    background: linear-gradient(
+        43deg,
+        #d1a4dc 46%,
+        #b464c8 100%
+      );
+    color: rgb(54, 2, 61);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: linkFade 2s infinite alternate;
+}
+
+.submitBtn:hover{
+    background-color: #c46ee9;
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    color: rgb(64, 2, 78);
+    
+}
+
+@keyframes linkFade {
+    0% {
+        opacity: 0.7;
+        transform: translateX(-2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

@@ -13,7 +13,7 @@ const Shop = () => {
                         <Link to="/buy" className="shop-link">Kupnja</Link>
                     </li>
                     <li>
-                        <Link to="/auction" className="shop-link">Aukcija</Link>
+                        <Link to="/auctions" className="shop-link">Aukcija</Link>
                     </li>
                     <li>
                         <Link to="/exchange" className="shop-link">Razmjena</Link>

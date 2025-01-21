@@ -235,16 +235,16 @@ a{
     justify-self: center;
     margin-top: 50px;
     display: inline-block;
-    background: rgb(179, 94, 236);
+    background: linear-gradient(180deg, #e188e2 0%, #db4ace 70%);
     padding: 12px 24px;
     border: 1px solid #4f4f4f;
-    border-radius: 4px;
+    border-radius: 8px;
     transition: all 0.2s ease-in;
     position: relative;
     overflow: hidden;
     font-size: 19px;
     cursor: pointer;
-    color: black;
+    color: #530345;
     z-index: 1;
     text-align: center;
   }
