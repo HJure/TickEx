@@ -18,7 +18,7 @@
     justify-self: center;
     height: fit-content;
     width: fit-content;
-    padding: 40px 30px;
+    padding: 80px 60px;
     margin: 0;
     margin-bottom: 25px;
     background-color: #4158d0;
@@ -68,6 +68,7 @@
   flex-wrap: wrap;
   margin-left: 20px;
   margin-right: 20px;
+  height: fit-content;
 }
 
 .sidebar {
@@ -408,6 +409,14 @@ a{
   .my_offers{
     margin-left: 0;
   }
+
+  input{
+    width: 75% !important;
+  }
+
+  button{
+    width: 90% !important;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -441,3 +450,61 @@ a{
     gap: 40px;
   }
 }
+
+.profile-subheading {
+  font-size: large !important;
+  font-weight: 600;
+  color: #6A4FEB; 
+  text-align: center;
+  margin-bottom: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.interested-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column; 
+  gap: 5px; 
+  justify-content: center;
+  align-items: center;
+}
+
+.interested-list li::before {
+  content: "•"; 
+  color: #FF69B4;
+  font-size: 1.5rem;
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+
+.interested-item {
+  color: #6A4FEB; 
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer; 
+  transition: color 0.3s ease, transform 0.2s ease; 
+  text-transform: capitalize; 
+}
+
+.interested-item:last-child{
+  margin-bottom: 10px;
+}
+
+.interested-item:hover {
+  color: #FF69B4; 
+  transform: translateX(5px); 
+}
+
+.no-interested {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #FFDD57; 
+  font-style: italic;
+  opacity: 0.9;
+  margin-top: 20px;
+  letter-spacing: 0.5px;
+}
+

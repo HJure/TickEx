@@ -67,6 +67,15 @@ public class GenreService {
     	return genreRepository.findByidkor(idkor);
     }
 
-    
+    public void updateGenres(List<String> categories, String userMail) {
+        User user = userRepository.findByEmail(userMail).orElseThrow(() -> new RuntimeException("User not found"));
+        int userId = user.getId();
+
+        // Obriši sve trenutne preferencije korisnika
+        genreRepository.deleteAll(genreRepository.findByidkor(userId));
+
+        // Dodaj nove preferencije
+        addGenres(categories, userMail);
+    }
     
 }

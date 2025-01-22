@@ -61,13 +61,13 @@ const ReportDetails = () => {
 
     return (
         <div className="report-details-container">
-            <h1>Report Details</h1>
+            <h1>Detalji prijava</h1>
             <div className="report-details">
                 <div>
-                    <strong>Reporter:</strong> {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}  ({localStorage.getItem("user_email")})
+                    <strong>Prijavio:</strong> {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}  ({localStorage.getItem("user_email")})
                 </div>
                 <div>
-                    <strong>Reported:</strong> {result.owner.imeKor} {result.owner.prezimeKor} ({result.owner.email})
+                    <strong>Prijavljen:</strong> {result.owner.imeKor} {result.owner.prezimeKor} ({result.owner.email})
                 </div>
                 <input
                     type="text"

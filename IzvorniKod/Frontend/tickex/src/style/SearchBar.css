@@ -342,3 +342,26 @@ body {
     font-size: large;
   }
 }
+
+@media  screen and (min-width: 768px) and (max-width: 880px){
+  .filterBtn{
+    font-size: medium;
+    padding: 10px;
+  }
+}
+@media  screen and (max-width: 750px){
+  .filterBtn{
+    font-size: x-small !important;
+    padding: 10px;
+  }
+}
+@media  screen and (max-width: 470px){
+  .filterBtn{
+    font-size: xx-small !important;
+    padding: 10px;
+  }
+  .filters{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

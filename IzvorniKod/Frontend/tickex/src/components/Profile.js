@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import useFetch from './useFetch';
 import axios from 'axios';
 import TicketList from './TicketList';
-//import SaleList from './SaleList';
 import '../style/profile.css';
 import StarRate from './StarRate'
 import Sidebar from './Sidebar';
 import Chains from './Chains';
+import EditProfile from './EditProfile';
 
 function Profile({ profile, setProfile }) {
     const [email, setEmail] = useState(null);
@@ -220,7 +220,7 @@ function Profile({ profile, setProfile }) {
         };
     
         fetchGenres();
-    }, [userID, access_token, backendUrl]);
+    }, [userID, access_token, backendUrl, isEditing]);
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets/nothidden/${userID}`);
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
@@ -309,12 +309,11 @@ function Profile({ profile, setProfile }) {
             })
             .then((data) => setInterestedList(data))
             .catch((error) => console.error("Error fetching interested list:", error));
-    }, [userID, backendUrl]);
+    }, [userID, backendUrl, isEditing]);
 
     const handleEditProfile = () => {
         setIsEditing(true);
     };
-
 
     const handleSaveChanges = async () => {
         try {
@@ -385,7 +384,7 @@ function Profile({ profile, setProfile }) {
                         <img src={profile.picture} alt="user" className="profile-image" />
                         <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
                         <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
-                        <p className="profile-info">Datum ulaska: {localStorage.getItem("user_registration_date")}</p>
+                        <p className="profile-info">Datum pridruživanja: {localStorage.getItem("user_registration_date")}</p>
                         
                         <h3 className="profile-subheading">Zainteresiran za:</h3>
                             <ul className="interested-list">
@@ -404,15 +403,17 @@ function Profile({ profile, setProfile }) {
                             ) : localStorage.getItem("user_rating")}
                         </p>
                         <StarRate ocjena={localStorage.getItem("user_rating")} />
-                        {isEditing ? (
-                            <div>
-                                <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                                <button onClick={handleSaveChanges}>Spremi promjene</button>
-                                <button onClick={() => setIsEditing(false)}>Otkaži</button>
-                            </div>
-                        ) : (
-                            <button onClick={handleEditProfile}>Uredi podatke!</button>
+                        
+                        <button onClick={() => setIsEditing(true)}>Uredi podatke!</button>
+                        {isEditing && (
+                            <EditProfile
+                                firstName={firstName}
+                                lastName={lastName}
+                                setFirstName={setFirstName}
+                                setLastName={setLastName}
+                                onSave={handleSaveChanges}
+                                onCancel={() => setIsEditing(false)}
+                            />
                         )}
                         {isAdmin ? (
                            <button onClick={() => navigate("/reports/dashboard")}>Pregled prijava</button>

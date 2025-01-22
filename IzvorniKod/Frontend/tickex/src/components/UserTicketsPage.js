@@ -5,7 +5,7 @@ import '../style/UserTicketsPage.css';
 import '../style/profile.css';
 
 const UserTicketsPage = () => {
-    const { userId } = useParams();  // Correct usage of useParams
+    const { userId } = useParams();  
     const [tickets, setTickets] = useState([]);
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -96,13 +96,12 @@ const UserTicketsPage = () => {
                 });
     
                 if (!response.ok) {
-                    // Try to parse the response body for details
-                    const errorDetails = await response.text(); // Use .text() or .json() depending on the backend response format
+                    const errorDetails = await response.text();
                     throw new Error(`Error while deactivating user: ${response.status} - ${response.statusText}\nDetails: ${errorDetails}`);
                 }
     
                 alert('User profile deactivated successfully.');
-                navigate(`/user/${userId}/tickets`); // Redirect to home or another page
+                navigate(`/user/${userId}/tickets`); 
             } catch (error) {
                 console.error(error);
             }
@@ -151,7 +150,7 @@ const UserTicketsPage = () => {
                     throw new Error('Error while deleting ticket');
                 }
 
-                setTickets(tickets.filter(ticket => ticket.id !== ticketId)); // Update the state to remove the ticket
+                setTickets(tickets.filter(ticket => ticket.id !== ticketId)); 
                 alert('Ticket deleted successfully.');
             } catch (error) {
                 console.error('Error deleting ticket:', error);
@@ -161,9 +160,8 @@ const UserTicketsPage = () => {
 
     return (
         <div className="user-tickets-page">
-            {/* User Profile Section */}
             <div>
-                <h2 className="profile-title">Profil - {userName || userId}</h2>
+                <h2 className="title">Profil - {userName || userId}</h2>
                 <div className="profile-container">
                     <p className="profile-info">Email adresa: {userEmail}</p>
                     <p className="profile-info">
@@ -189,11 +187,11 @@ const UserTicketsPage = () => {
 
                 </div>
             </div>
-            {/* Tickets Section */}
+
             <div>
-                <h2 className="tickets-title">Oglasi - {userName || `User ${userId}`}</h2>
+                <h2 className="title">Oglasi - {userName || `User ${userId}`}</h2>
                 {tickets.length > 0 ? (
-                    <div class="ticket-list">
+                    <div className="ticket-list">
                         {tickets.map((ticket) => (
                             <div className="ticket-preview" key={ticket.id}>   
                                 <Link to={`/tickets/${ticket.id}`}>
