@@ -94,6 +94,11 @@ public class TicketService {
         return tickets;
     }
 
+    @Transactional
+    public void deleteAllTicketsForUser(int userId) {
+        ticketRepository.deleteTicketsByUserId(userId);
+    }
+
     
 
    

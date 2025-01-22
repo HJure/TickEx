@@ -67,6 +67,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     @Query("SELECT t FROM Ticket t WHERE t.isExchangeAvailable = 'istekao' ")
     List<Ticket> getTicketsExpired();
 
+    @Modifying
+    @Query("DELETE FROM Ticket t WHERE t.owner.id = :userId")
+    void deleteTicketsByUserId(int userId);
+
     /* // Find tickets by user preferences
     @Query("SELECT t FROM Ticket t JOIN Genre g ON t.eventTypeId.id = g.iddog WHERE g.idkor = :idkor")
     List<Ticket> findAllByUserPreferences(@Param("idkor") int idkor);

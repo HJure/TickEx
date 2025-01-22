@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import progi_project.model.Deaktivira;
 import progi_project.model.DeaktiviraRequest;
 import progi_project.service.DeaktiviraService;
+import progi_project.service.TicketService;
 
 import java.util.List;
 
@@ -16,10 +17,16 @@ public class DeaktiviraController {
     @Autowired
     private DeaktiviraService deaktiviraService;
 
+    @Autowired
+    private TicketService ticketService;
+
     @PostMapping
     public ResponseEntity<String> createDeaktivira(@RequestBody DeaktiviraRequest request) {
         try {
-            deaktiviraService.createDeaktivira(request.getDeaktiviraIdKor(), request.getDeaktiviranIdKor());
+            int deaktiviraIdKor = request.getDeaktiviraIdKor();
+            int deaktiviranIdKor = request.getDeaktiviranIdKor();
+            deaktiviraService.createDeaktivira(deaktiviraIdKor, deaktiviranIdKor);
+            ticketService.deleteAllTicketsForUser(deaktiviranIdKor);
             return ResponseEntity.ok("Deactivation record created successfully.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
