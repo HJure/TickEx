@@ -15,7 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BACKEND_DEPLOY_HOOK: ${{ secrets.BACKEND_DEPLOY_HOOK }}
-
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      BACKEND_URL: ${{ secrets.BACKEND_URL }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      password: ${{ secrets.password }}
+      
     steps:
       - name: Clone the repository
         uses: actions/checkout@v4
