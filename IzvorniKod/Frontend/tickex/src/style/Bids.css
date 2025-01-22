@@ -1,9 +1,9 @@
 .bidContainer{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
+    margin-bottom: 8%;
 }
 .standingOffers{
     width: 100%;
@@ -53,13 +53,13 @@
     border-radius: 10px;
 }
 .personalOffer h3{
-    font-size: 20px;
+    font-size: 28px;
     color: #f4f4f4;
 }
 .offer{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     gap: 30px;
 }
 .offer input {
@@ -77,8 +77,7 @@
     height: 50%;
 }
 
-.submitBtn{
-    margin-top: 30px;
+.offer .submitBtn{
     align-self: center;
     background: linear-gradient(
         43deg,
@@ -113,4 +112,32 @@
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+@media (max-width: 768px) {
+    .auctionContainer {
+        max-width: 80%;
+        padding: 15px;
+    }
+
+    .auctionContainer h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+}
+
+@media (max-width: 480px) {
+  
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+}
+
+@media (min-width: 480px) {
+
 }

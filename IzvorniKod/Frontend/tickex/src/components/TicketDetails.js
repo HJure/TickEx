@@ -71,6 +71,21 @@ const TicketDetails = ({ url }) => {
         }
       };
 
+      const handleGoToBids = async (ticket, navigate) => {
+        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
+            alert('Oglas više nije aktivan!');
+            return; 
+        }
+
+        const result=ticket;
+
+        try {
+            navigate(`/auctions/bids/${result.id}`, { state: { result } });
+        } catch (error) {
+            console.error("Error navigating to reports:", error);
+        }
+      };
+
     const api_key = 'JYLAZZ9VPACY4FFAAYWSEDJDJ'
     
     useEffect(() => {
@@ -538,6 +553,11 @@ const TicketDetails = ({ url }) => {
                                     <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
                                         Prijavi korisnika
                                 </button>
+                                )}
+                                {ticket.owner.id === parseInt(localStorage.getItem("userID")) && (
+                                    <button className="btn-goto" onClick={() => handleGoToBids(ticket, navigate)}>
+                                        Pogledaj ponude
+                                    </button>
                                 )}
                             </div>
                         </div>

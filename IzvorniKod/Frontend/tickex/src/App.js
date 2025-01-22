@@ -45,7 +45,7 @@ function App() {
                 <Route path="/reports/dashboard" element={<Reports />} />
                 <Route path="/user/:userId/tickets" element={<UserTicketsPage />} />
                 <Route path="/edit-ticket" element={<EditTicket url={`${backendUrl}/api/tickets/`}/>} />
-                <Route path ="/auctions/bids" element={<Bids />} />
+                <Route path ="/auctions/bids/:auctionId" element={<Bids />} />
                 <Route path="/about" element={<AboutPage />} />
             </Routes>
             <Footer />

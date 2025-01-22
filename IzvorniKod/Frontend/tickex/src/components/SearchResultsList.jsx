@@ -14,7 +14,7 @@ const handleReportClick = async (result, navigate) => {
 
 const handleGoToAuction = (result, navigate) => {
   console.log("Idi u aukciju za ulaznicu: ", result);
-  navigate('/auctions/bids', {state: { result } });
+  navigate(`/auctions/bids/${result.id}`, {state: { result } });
   
 };
 

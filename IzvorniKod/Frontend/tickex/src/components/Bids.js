@@ -7,6 +7,8 @@ const Bids = () => {
     const [bids, setBids] = useState([]);
     const [startPrice, setStartPrice] = useState([]);
     const [isPending, setIsPending] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const [hasMadeBid, setHasMadeBid] = useState(false);
     const location = useLocation();
     const result = location.state?.result;
 
@@ -19,22 +21,45 @@ const Bids = () => {
         }
     }, [result]);
 
+
+
     useEffect(() => {
         fetch(`${backendUrl}/api/auctions/bids/${result.id}`)
             .then((response) => response.json())
             .then((data) => {
                 if (Array.isArray(data)) {
-                    setBids(data);
-                    console.log(data);
+                    const currentUserID = parseInt(localStorage.getItem("userID"));
+                
+                    if (result.owner?.id === currentUserID) {
+                        setIsOwner(true);
+                        setBids(data);
+                    } else {
+                        const userBids = data.filter((bid) => bid.user.id === currentUserID);
+                        if (userBids.length !== 0){
+                            setHasMadeBid(true);
+                        }
+                        setBids(userBids);
+                    }
                 } else if (data.bids) {
-                    setBids(data.bids);
+                    const currentUserID = parseInt(localStorage.getItem("userID"));
+                
+                    if (result.owner?.id === currentUserID) {
+                        setIsOwner(true);
+                        setBids(data.bids);
+                    } else {
+                        const userBids = data.bids.filter((bid) => bid.user.id === currentUserID);
+                        if (userBids.length !== 0){
+                            setHasMadeBid(true);
+                        }
+                        setBids(userBids);
+                    }
                 } else {
                     console.error("Unexpected response format:", data);
                     setBids([]);
                 }
             })
             .catch((error) => console.error("Error fetching data:", error));
-    }, [backendUrl]);
+    }, [backendUrl, result]);
     
 
       const navigate = useNavigate();
@@ -45,7 +70,7 @@ const Bids = () => {
         let bid = {
             user: { id: localStorage.getItem("userID") },
             auction: { id: result.id },
-            offer: parseInt(input),
+            offer: parseInt(input, 10),
             id: {id: result.id}
         }
 
@@ -85,8 +110,8 @@ const Bids = () => {
         <div className="bidContainer">
             {bids.map( (bid) => (
                 <div className="bid">
-                    <h2>{bid.user.email}: </h2>
-                    <h3>{bid.offer} EUR</h3>
+                    <h2>{bid.user.imeKor} {bid.user.prezimeKor}: </h2>
+                    <h2>{bid.offer} EUR</h2>
                 </div>
             ))}
         </div>
@@ -104,7 +129,21 @@ const Bids = () => {
                     className="bidOffer"
                     onChange={(e) => setInput(e.target.value)}
                 />
-                <button className="submitBtn" onClick={(e) => handleSubmit(e)} disabled={isPending}>
+                <button className="submitBtn" onClick={(e) => {
+                    if (input < startPrice){
+                        const userConfirmed = window.confirm("Nije moguće staviti manju ponudu od početne cijene");
+                        if (!userConfirmed) {
+                            return;
+                        }
+                    }else if (hasMadeBid){
+                        const userConfirmed = window.confirm("Nije moguće više od jednom poslati ponudu");
+                        if (!userConfirmed) {
+                            return;
+                        }
+                    }else{
+                        handleSubmit(e)
+                    }
+                    }} disabled={isPending}>
                     {isPending ? "Šaljem..." : "Pošalji ponudu"}
                 </button>
             </div>
