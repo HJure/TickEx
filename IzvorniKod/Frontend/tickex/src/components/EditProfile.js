@@ -76,7 +76,7 @@ const EditProfile = ({ firstName, lastName, setFirstName, setLastName, onSave, o
                     placeholder="Prezime"
                 />
 
-                <h3 className='n'>Postavke Kategorija</h3>
+                <h3 className='n'>Postavke kategorija</h3>
                 {categories.map((category, index) => (
                     <div key={index} className="checkbox-wrapper">
                         <input

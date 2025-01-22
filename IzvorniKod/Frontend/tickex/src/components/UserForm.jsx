@@ -12,6 +12,7 @@ const UserForm = () => {
     const [preferences, setPreferences] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
+    const access_token = localStorage.getItem("access_token");
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
@@ -25,12 +26,15 @@ const UserForm = () => {
     const submitFunction = (e) => {
         e.preventDefault();
         const datumUla = new Date().toISOString().split('T')[0];
-        const user = { email, imeKor, prezimeKor, datumUla, preferences };
+        const user = { email, imeKor, prezimeKor, datumUla, statusKor: true, ocjena: 0.0 };
         setIsPending(true);
 
         fetch(`${backendUrl}/api/users/register`, {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(user),
         })
             .then(() => {
@@ -53,7 +57,10 @@ const UserForm = () => {
 
                 return fetch(url, {
                     method: 'POST',
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        'Authorization': `Bearer ${access_token}`,
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify(selectedCategories),
                 });
             })
