@@ -1,5 +1,6 @@
 package progi_project.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,48 +25,48 @@ public class GenreController {
     private GenreService genreService;
     
     
-    @PostMapping
-    public ResponseEntity<String> addGenres(@RequestBody List<String> categories, @RequestParam String email) {
-        
-        
-        System.out.println("Received categories: " + categories); 
-        // Validate the input
-        if (categories == null || categories.isEmpty()) {
-            return ResponseEntity.badRequest().body("Categories list cannot be empty.");
-        }
-        if (email == null || email.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email is required.");
-        }
-        // Print received data (or process/save it as needed)
-        System.out.println("Received categories: " + categories);
-        System.out.println("Received email: " + email);
-        try {
-            genreService.addGenres(categories, email);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error saving preferences: " + e.getMessage());
-        }
+   @PostMapping
+public ResponseEntity<Object> addGenres(@RequestBody List<String> categories, @RequestParam String email) {
+    System.out.println("Received categories: " + categories); 
 
-        
-
-        return ResponseEntity.ok("Preferences saved successfully");
-    
+    if (email == null || email.isEmpty()) {
+        return ResponseEntity.badRequest().body("Email is required.");
     }
 
-    @PutMapping
-    public ResponseEntity<String> updatePreferences(@RequestBody List<String> categories, @RequestParam String email) {
-        if (categories == null || categories.isEmpty()) {
-            return ResponseEntity.badRequest().body("Categories list cannot be empty.");
-        }
-        if (email == null || email.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email is required.");
-        }
-        try {
-            genreService.updateGenres(categories, email);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error updating preferences: " + e.getMessage());
-        }
-        return ResponseEntity.ok("Preferences updated successfully");
+    if (categories == null || categories.isEmpty()) {
+        System.out.println("Empty categories list received.");
+        return ResponseEntity.ok(new HashMap<>()); 
     }
+
+    System.out.println("Received email: " + email);
+    try {
+        genreService.addGenres(categories, email);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body("Error saving preferences: " + e.getMessage());
+    }
+
+    return ResponseEntity.ok("Preferences saved successfully");
+}
+
+@PutMapping
+public ResponseEntity<Object> updatePreferences(@RequestBody List<String> categories, @RequestParam String email) {
+
+    if (email == null || email.isEmpty()) {
+        return ResponseEntity.badRequest().body("Email is required.");
+    }
+    if (categories == null || categories.isEmpty()) {
+        System.out.println("Empty categories list received.");
+        return ResponseEntity.ok(new HashMap<>()); 
+    }
+
+    try {
+        genreService.updateGenres(categories, email);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body("Error updating preferences: " + e.getMessage());
+    }
+    return ResponseEntity.ok("Preferences updated successfully");
+}
+
     
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Genre>> getGenresByUserId(@PathVariable int id) {
