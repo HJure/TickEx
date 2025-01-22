@@ -171,7 +171,7 @@ const EditTicket = () => {
                     alert("Uspješno pronađen lanac zamjene! Emailovi su poslani svim korisnicima u lancu.");
                 });
         }
-    }, [idrazmjena]);
+    }, [idrazmjena,backendUrl,access_token]);
 
     const validatePrice = (value) => {
         const intPrice = parseInt(value, 10);
@@ -317,7 +317,8 @@ const EditTicket = () => {
                 "Authorization": `Bearer ${access_token}` 
             },
             body: JSON.stringify(newticket),
-            }) .then(response => {
+            })
+            .then(response => {
                 if (!response.ok) {
                     throw new Error("Failed to change ticket");
                 }

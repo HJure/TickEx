@@ -137,7 +137,7 @@ const Create = () => {
                     alert("Uspješno pronađen lanac zamjene! Emailovi su poslani svim korisnicima u lancu.");
                 });
         }
-    }, [idrazmjena, backendUrl]);
+    }, [idrazmjena, backendUrl, access_token]);
     
     
     const validatePrice = (value) => {
