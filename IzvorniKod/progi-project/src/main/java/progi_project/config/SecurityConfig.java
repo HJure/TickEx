@@ -28,26 +28,29 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(withDefaults()).csrf().disable()
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error", "/users/register", "/tickets/**", "/users/**", "/vrsta-dogadaja").permitAll()
-                                    .anyRequest().authenticated()
-                                    ).oauth2Login()
-                                    .successHandler(customOAuth2SuccessHandler)
-                                    .failureUrl("/login?error=true");
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/shop/**","/", "/error", "/users/register", 
+            	"/tickets/**", "/users/**", "/vrsta-dogadaja", "/exchanges/**", "/sales/**", "/reports", 
+            	"/auctions/**","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**", "/bids", "/deaktivira/**", "/emails/**","/vrsta-dogadaja/**")
+            		.permitAll()
+            		.requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated())
+                .oauth2Login()
+                .successHandler(customOAuth2SuccessHandler)
+                .failureUrl("/login?error=true");
 
         return http.build();
     }
 
-    // Define CORS configuration to allow requests from your React app
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);  // Allow cookies and authorization headers
-        config.setAllowedOrigins(List.of(FRONTEND_URL, "http://localhost:3000"));  // React app URLs
-        config.setAllowedHeaders(List.of("*"));  // Allow all headers
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // Allowed methods
+        config.setAllowCredentials(true); 
+        config.setAllowedOrigins(List.of(FRONTEND_URL, "http://localhost:3000"));  
+        config.setAllowedHeaders(List.of("*"));  
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); 
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);  // Apply CORS to all endpoints
+        source.registerCorsConfiguration("/**", config);  
 
         return new CorsFilter(source);
     }

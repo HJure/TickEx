@@ -1,10 +1,15 @@
 package progi_project.config;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -26,6 +31,9 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
     @Autowired
     private UserService userService;
 
+    @Value("${tickex.admin}")
+    private String adminEmail;
+
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
@@ -36,21 +44,33 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         String email = (String) oauthUser.getAttribute("email");
 
-        // Retrieve the OAuth2AuthorizedClient to get the access token
+        // Vrati OAuth2AuthorizedClient za access token
         OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
             oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
 
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
+        
+        List<String> deaktivirani = userService.getDeactivated();
+        List<SimpleGrantedAuthority> authorities = null;
+        
+        if (email.equals(adminEmail)) {
+            authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else if(!deaktivirani.contains(email)){
+            authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+
+        // ubaci role u token
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(oauthUser, null, authorities);
+
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
 
         String frontendUrl = request.getServerName().equals("localhost") ? "http://localhost:3000" : FRONTEND_URL;
         
         String redirectUrl;
         if (userService.emailExists(email)) {
-            // If email exists in db then users account exists, redirect to frontend homepage with the access token
-        	redirectUrl = frontendUrl + "/profile?access_token=" + accessToken;
+            redirectUrl = frontendUrl + "/profile?access_token=" + accessToken;
         } else {
-            // Else user does not exist, redirect to frontend registration page
-        	redirectUrl = frontendUrl + "/register?email=" + email + "&access_token=" + accessToken;
+            redirectUrl = frontendUrl + "/register?email=" + email + "&access_token=" + accessToken;
         }
         
         response.sendRedirect(redirectUrl);

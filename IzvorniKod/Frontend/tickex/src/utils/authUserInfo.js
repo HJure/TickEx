@@ -11,5 +11,4 @@ export function authUserInfo() {
                 }
             })
             .then((res) => {return res.data.email;})
-            .catch((err) => console.log(err));
 }
