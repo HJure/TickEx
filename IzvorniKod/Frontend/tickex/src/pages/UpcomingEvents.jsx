@@ -10,7 +10,12 @@ function UpcomingEvents() {
     
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
-    const { data: tickets} = useFetch(`${backendUrl}/api/tickets`);
+    const userID = localStorage.getItem("userID");
+
+    const { data: tickets } = useFetch(userID 
+        ? `${backendUrl}/api/tickets/nothidden/${userID}` 
+        : `${backendUrl}/api/tickets`
+    );
     
     useEffect(() => {
         if (tickets) {
