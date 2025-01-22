@@ -53,7 +53,6 @@ public class TicketController {
     public List<Ticket> getAllTickets(@PathVariable int id) {
     	List<Ticket> allTickets = ticketService.getAllTickets();
     	List<Ticket> hiddenTickets = favoriteService.getHiddenTickets(id);
-    	System.out.println("Proba:" + allTickets.size() + " "+ hiddenTickets.size());
     	allTickets.removeAll(hiddenTickets);
         return allTickets;
     }
