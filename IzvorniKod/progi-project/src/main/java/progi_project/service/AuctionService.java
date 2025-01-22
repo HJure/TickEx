@@ -37,6 +37,7 @@ public class AuctionService {
             Bid highestBid = bids.get(0);
             auction.setExchangeAvailable("prodano");
             auction.setWinner(highestBid.getUser());
+            auction.setEndPrice(highestBid.getOffer());
         }
 
         auctionRepository.save(auction);

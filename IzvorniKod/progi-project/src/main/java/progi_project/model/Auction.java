@@ -23,6 +23,9 @@ public class Auction extends Ticket{
     @ManyToOne
     @JoinColumn(name = "pobjednik", nullable = true)
     private User winner;
+    
+    @Column(name = "koncijena", nullable = true)
+    private int endPrice;
 
     public int getStartPrice() {
         return startPrice;
@@ -47,6 +50,16 @@ public class Auction extends Ticket{
 	public void setWinner(User winner) {
 		this.winner = winner;
 	}
+
+	public int getEndPrice() {
+		return endPrice;
+	}
+
+	public void setEndPrice(int endPrice) {
+		this.endPrice = endPrice;
+	}
+	
+	
 	
 }
 

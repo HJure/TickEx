@@ -229,7 +229,7 @@ function Profile({ profile, setProfile }) {
     if (userID) {
                 setTicketsUrl(`${backendUrl}/api/tickets/nothidden/${userID}`);
             }
-        }, [userID]);
+        }, [userID, backendUrl]);
 
     const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(ticketsUrl);
 
