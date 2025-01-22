@@ -82,7 +82,7 @@ const Create = () => {
                     alert("Došlo je do pogreške prilikom obrade razmjene.");
                 });
             };  
-            handleProcessExchange(id);
+            handleProcessExchange(pomoc);
         }
     }, [pomoc, backendUrl]);  
 
@@ -137,7 +137,7 @@ const Create = () => {
                     alert("Uspješno pronađen lanac zamjene! Emailovi su poslani svim korisnicima u lancu.");
                 });
         }
-    }, [idrazmjena, backendUrl, sendEmail]);
+    }, [idrazmjena, backendUrl]);
     
     
     const validatePrice = (value) => {

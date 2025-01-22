@@ -116,7 +116,7 @@ const EditTicket = () => {
                     alert("Došlo je do pogreške prilikom obrade razmjene.");
                 });
             };
-            handleProcessExchange(id);
+            handleProcessExchange(pomoc);
         }
     }, [pomoc, backendUrl]);
 
