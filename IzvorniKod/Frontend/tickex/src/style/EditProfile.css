@@ -9,7 +9,6 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    margin-top: 20px;
 }
 
 .popup-content {
@@ -92,6 +91,9 @@ label {
     label {
         font-size: 14px;
     }
+    .popup-container{
+        margin-top: 15%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -110,7 +112,7 @@ label {
     }
 
     .popup-container{
-        margin-top: 50px;
+        margin-top: 10%;
     }
 }
 

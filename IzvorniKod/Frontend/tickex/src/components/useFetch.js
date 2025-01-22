@@ -7,14 +7,18 @@ const useFetch = (url) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        
+        if (!url || url.includes("null")) {
+            setIsPending(false);
+            setError("Invalid URL");
+            return;
+        }
+    
         const formattedUrl = url.includes('?')
-        ? `${url}&timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1")
-        : `${url}?timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1"); 
-        //`${url}?timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1");
-
+            ? `${url}&timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1")
+            : `${url}?timestamp=${new Date().getTime()}`.replace(/([^:]\/)\/+/g, "$1");
+    
         const abortCont = new AbortController();
-
+    
         fetch(formattedUrl, { signal: abortCont.signal, credentials: "include" })
             .then(res => {
                 if (!res.ok) {
@@ -28,16 +32,15 @@ const useFetch = (url) => {
                 setError(null);
             })
             .catch(err => {
-                if (err.name === 'AbortError') {
-                    //console.log('Fetch aborted');
-                } else {
+                if (err.name !== 'AbortError') {
                     setIsPending(false);
                     setError(err.message);
                 }
             });
-
+    
         return () => abortCont.abort();
     }, [url]);
+    
     return { data, isPending, error };
 }
 

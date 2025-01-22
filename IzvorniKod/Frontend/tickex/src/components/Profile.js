@@ -222,7 +222,17 @@ function Profile({ profile, setProfile }) {
         fetchGenres();
     }, [userID, access_token, backendUrl, isEditing]);
 
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(`${backendUrl}/api/tickets/nothidden/${userID}`);
+
+    const [ticketsUrl, setTicketsUrl] = useState(null);
+
+    useEffect(() => {
+    if (userID) {
+                setTicketsUrl(`${backendUrl}/api/tickets/nothidden/${userID}`);
+            }
+        }, [userID]);
+
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(ticketsUrl);
+
     const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
                                     && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
     const purchasedTickets = tickets ? tickets.filter(ticket => ticket.buyer?.id === parseInt(userID) || 
@@ -300,16 +310,23 @@ function Profile({ profile, setProfile }) {
     }, [userID, access_token, backendUrl]);
 
     useEffect(() => {
-        fetch(`${backendUrl}/api/vrsta-dogadaja/zainteresiran/${userID}`)
-            .then((response) => {
+        const fetchInterestedList = async () => {
+            if (!userID) return; // Osigurajte da je userID postavljen
+            try {
+                const response = await fetch(`${backendUrl}/api/vrsta-dogadaja/zainteresiran/${userID}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch interested list");
                 }
-                return response.json();
-            })
-            .then((data) => setInterestedList(data))
-            .catch((error) => console.error("Error fetching interested list:", error));
+                const data = await response.json();
+                setInterestedList(data);
+            } catch (error) {
+                console.error("Error fetching interested list:", error);
+            }
+        };
+    
+        fetchInterestedList();
     }, [userID, backendUrl, isEditing]);
+    
 
     const handleEditProfile = () => {
         setIsEditing(true);
