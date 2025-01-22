@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import progi_project.model.Deaktivira;
 import progi_project.model.DeaktiviraRequest;
+import progi_project.model.User;
 import progi_project.service.DeaktiviraService;
+import progi_project.service.UserService;
 
 import java.util.List;
 
@@ -15,9 +17,14 @@ public class DeaktiviraController {
 
     @Autowired
     private DeaktiviraService deaktiviraService;
+    
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public ResponseEntity<String> createDeaktivira(@RequestBody DeaktiviraRequest request) {
+    	User korisnik = userService.findById(request.getDeaktiviranIdKor());
+    	korisnik.setStatusKor(false);
         try {
             deaktiviraService.createDeaktivira(request.getDeaktiviraIdKor(), request.getDeaktiviranIdKor());
             return ResponseEntity.ok("Deactivation record created successfully.");
@@ -41,6 +48,8 @@ public class DeaktiviraController {
 
     @DeleteMapping("/user/{userId}")
     public ResponseEntity<String> deleteDeactivationsForUser(@PathVariable int userId) {
+    	User korisnik = userService.findById(userId);
+    	korisnik.setStatusKor(true);
         try {
             deaktiviraService.deleteDeactivationsForUser(userId);
             return ResponseEntity.ok("Deactivation records deleted successfully.");

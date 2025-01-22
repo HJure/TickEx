@@ -49,11 +49,13 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
             oauthToken.getAuthorizedClientRegistrationId(), oauthToken.getName());
 
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
-
-        List<SimpleGrantedAuthority> authorities;
+        
+        List<String> deaktivirani = userService.getDeactivated();
+        List<SimpleGrantedAuthority> authorities = null;
+        
         if (email.equals(adminEmail)) {
             authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
+        } else if(!deaktivirani.contains(email)){
             authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
         }
 

@@ -41,7 +41,7 @@ public class User {
     private LocalDate datumUla;
 
     @Column(name ="statuskor",nullable = false)
-    private boolean statusKor;
+    private Boolean statusKor;
 
     @Column(name ="ocjena",nullable = false)
     private float ocjena;
@@ -112,11 +112,11 @@ public class User {
         this.datumUla = datumUla;
     }
 
-    public boolean isStatusKor() {
+    public Boolean isStatusKor() {
         return statusKor;
     }
 
-    public void setStatusKor(boolean statusKor) {
+    public void setStatusKor(Boolean statusKor) {
         this.statusKor = statusKor;
     }
 

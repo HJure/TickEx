@@ -84,5 +84,9 @@ public class UserService {
                 .map(User::getId)  
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));  // If user is not found, throws an exception
     }
+    
+    public List<String> getDeactivated(){
+    	return userRepository.getDeactivated();
+    }
 }
 
