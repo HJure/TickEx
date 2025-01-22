@@ -328,9 +328,9 @@ function Profile({ profile, setProfile }) {
     }, [userID, backendUrl, isEditing]);
     
 
-    const handleEditProfile = () => {
-        setIsEditing(true);
-    };
+    //const handleEditProfile = () => {
+    //    setIsEditing(true);
+    //};
 
     const handleSaveChanges = async () => {
         try {

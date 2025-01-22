@@ -9,7 +9,7 @@ const UserForm = () => {
     const [prezimeKor, setPrezimeKor] = useState('');
     const [email, setEmail] = useState('');
     const [isPending, setIsPending] = useState(false);
-    const [preferences, setPreferences] = useState([]);
+    //const [preferences, setPreferences] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
     const access_token = localStorage.getItem("access_token");
@@ -101,7 +101,7 @@ const UserForm = () => {
                 />
                 <label>Označite kategorije koje vas zanimaju.</label>
                 <div className="likedCategories">
-                    <SavePreferences setPreferences={setPreferences} />
+                    <SavePreferences />
                 </div>
                 {!isPending && <button>Submit</button>}
                 {isPending && <button disabled>Dodavanje korisnika...</button>}

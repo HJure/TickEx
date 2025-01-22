@@ -56,9 +56,35 @@ const Create = () => {
     
     useEffect(() => {
         if (pomoc) {
-            handleProcessExchange(pomoc);  
+            const handleProcessExchange = (id) => {
+                fetch(`${backendUrl}/api/exchanges/${id}/process`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.text(); 
+                    } else {
+                        throw new Error("Obrada lanca razmjene nije uspjela.");
+                    }
+                })
+                .then((message) => {
+                    if (message === "Nema lanaca") {
+                        alert("Trenutno nije dostupan nijedan lanac, no kad bude dostupan bit ćete obaviješteni.");
+                    } else if (message === "Uspješno pronađen lanac zamjene!") {
+                        setIdRazmjena(id);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Greška prilikom obrade razmjene:", error);
+                    alert("Došlo je do pogreške prilikom obrade razmjene.");
+                });
+            };  
+            handleProcessExchange(id);
         }
-    }, [pomoc]);  
+    }, [pomoc, backendUrl]);  
 
     useEffect(() => {
         if (idrazmjena) {
@@ -79,7 +105,29 @@ const Create = () => {
                                         fetch(`${backendUrl}/api/tickets/${idkarta}`)
                                             .then(res => res.json())
                                             .then(ticket => {
-                                                sendEmail(userEmail, ticket);
+                                                const sendEmail = (email, ticket) => {
+                                                    fetch(`${backendUrl}/api/emails/send`, {
+                                                        method: "POST",
+                                                        headers: {
+                                                            "Content-Type": "application/json",
+                                                            Authorization: `Bearer ${access_token}`, 
+                                                        },
+                                                        body: JSON.stringify({
+                                                            to: email,
+                                                            subject: "Nova karta u lancu razmjene",
+                                                            body: `Nova karta (${ticket.eventName}) je došla u lanac razmjene u kojem sudjelujete. Molim Vas potvrdite razmjenu unutar aplikacije.`,
+                                                        }),
+                                                    })
+                                                        .then((response) => {
+                                                            if (!response.ok) {
+                                                                console.error(`Greška prilikom slanja emaila na ${email}`);
+                                                            }
+                                                        })
+                                                        .catch((error) => {
+                                                            console.error("Greška prilikom slanja emaila:", error);
+                                                        });
+                                                };
+                                                sendEmail(userEmail,ticket)
                                             });
                                     });
                                 });
@@ -89,7 +137,7 @@ const Create = () => {
                     alert("Uspješno pronađen lanac zamjene! Emailovi su poslani svim korisnicima u lancu.");
                 });
         }
-    }, [idrazmjena]);
+    }, [idrazmjena, backendUrl, sendEmail]);
     
     
     const validatePrice = (value) => {
@@ -160,56 +208,7 @@ const Create = () => {
         const selectedDogadaj = dogadaji.find(dogadaj => dogadaj.nazVrDog === selectedNazVrDog);
         setEventTypeId(selectedDogadaj ? selectedDogadaj.id : null);
     };       
-
-    const handleProcessExchange = (id) => {
-        fetch(`${backendUrl}/api/exchanges/${id}/process`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then((response) => {
-            if (response.ok) {
-                return response.text(); 
-            } else {
-                throw new Error("Obrada lanca razmjene nije uspjela.");
-            }
-        })
-        .then((message) => {
-            if (message === "Nema lanaca") {
-                alert("Trenutno nije dostupan nijedan lanac, no kad bude dostupan bit ćete obaviješteni.");
-            } else if (message === "Uspješno pronađen lanac zamjene!") {
-                setIdRazmjena(id);
-            }
-        })
-        .catch((error) => {
-            console.error("Greška prilikom obrade razmjene:", error);
-            alert("Došlo je do pogreške prilikom obrade razmjene.");
-        });
-    };
     
-    const sendEmail = (email, ticket) => {
-        fetch(`${backendUrl}/api/emails/send`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${access_token}`, 
-            },
-            body: JSON.stringify({
-                to: email,
-                subject: "Nova karta u lancu razmjene",
-                body: `Nova karta (${ticket.eventName}) je došla u lanac razmjene u kojem sudjelujete. Molim Vas potvrdite razmjenu unutar aplikacije.`,
-            }),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    console.error(`Greška prilikom slanja emaila na ${email}`);
-                }
-            })
-            .catch((error) => {
-                console.error("Greška prilikom slanja emaila:", error);
-            });
-    };
       
   const handleSubmit = (e) => {
     e.preventDefault();

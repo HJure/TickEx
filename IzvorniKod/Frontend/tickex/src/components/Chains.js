@@ -64,55 +64,6 @@ const Chains = ({ chains }) => {
             });
     };
 
-    const checkAndUpdateChains = () => {
-        fetch(`${backendUrl}/api/chain/checkExpiration`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userId: localStorage.getItem('userID'),
-            })
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to check chain time');
-                }
-                return response.json();
-            })
-            .then((updatedChainsData) => {
-                setUpdatedChains(updatedChainsData);
-    
-                updatedChainsData.forEach((chain) => {
-                    fetch(`${backendUrl}/api/chain/${chain.id}/checkCompletion`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                        .then((response) => response.text())
-                        .then((message) => {
-                            if (message === 'Uspješno obavljena razmjena' || message === 'Neuspješno obavljena razmjena') {
-                                setUpdatedChains((prevState) =>
-                                    prevState.map((prevChain) =>
-                                        prevChain.id === chain.id
-                                            ? { ...prevChain, completed: true }
-                                            : prevChain
-                                    )
-                                );
-                                alert(message);
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error checking chain completion:', error);
-                        });
-                });
-            })
-            .catch((error) => {
-                console.error('Error checking chain time:', error);
-            });
-    };
-
     useEffect(() => {
         const fetchData = async () => {
             const fetchUsers = async () => {
@@ -154,8 +105,57 @@ const Chains = ({ chains }) => {
     }, [backendUrl]); 
 
     useEffect(() => {
+        const checkAndUpdateChains = () => {
+            fetch(`${backendUrl}/api/chain/checkExpiration`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: localStorage.getItem('userID'),
+                })
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to check chain time');
+                    }
+                    return response.json();
+                })
+                .then((updatedChainsData) => {
+                    setUpdatedChains(updatedChainsData);
+
+                    updatedChainsData.forEach((chain) => {
+                        fetch(`${backendUrl}/api/chain/${chain.id}/checkCompletion`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                            .then((response) => response.text())
+                            .then((message) => {
+                                if (message === 'Uspješno obavljena razmjena' || message === 'Neuspješno obavljena razmjena') {
+                                    setUpdatedChains((prevState) =>
+                                        prevState.map((prevChain) =>
+                                            prevChain.id === chain.id
+                                                ? { ...prevChain, completed: true }
+                                                : prevChain
+                                        )
+                                    );
+                                    alert(message);
+                                }
+                            })
+                            .catch((error) => {
+                                console.error('Error checking chain completion:', error);
+                            });
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error checking chain time:', error);
+                });
+        };
+
         checkAndUpdateChains();
-    }, []);
+    }, [backendUrl]);
 
     const userChains = updatedChains.length
         ? updatedChains.map((chain) => {
