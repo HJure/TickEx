@@ -7,7 +7,7 @@ const useFetch = (url) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (!url || url.includes("null")) {
+        if (!url || url.includes("null") || url.includes("NaN")) {
             setIsPending(false);
             setError("Invalid URL");
             return;
