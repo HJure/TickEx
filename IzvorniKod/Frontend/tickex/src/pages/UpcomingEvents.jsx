@@ -40,19 +40,19 @@ function UpcomingEvents() {
 
     const divImage = (nazVrgDog) => {
         if (nazVrgDog === "Kino"){
-            return "../Images/Kino.png";
+            return "../images/Kino.png";
         }else if (nazVrgDog === "Kazaliste"){
-            return "../Images/Kazaliste.png";
+            return "../images/Kazaliste.png";
         }else if (nazVrgDog === "Nogomet"){
-            return "../Images/Nogomet.png";
+            return "../images/Nogomet.png";
         }else if (nazVrgDog === "Tematski park"){
-            return "../Images/Tematski_park.png";
+            return "../images/Tematski_park.png";
         }else if (nazVrgDog === "Festival"){
-            return "../Images/Festival.png";
+            return "../images/Festival.png";
         }else if (nazVrgDog === "Tenis"){
-            return "../Images/Tenis.png";
+            return "../images/Tenis.png";
         }else if (nazVrgDog === "Glazba"){
-            return "../Images/Koncert.png"
+            return "../images/Koncert.png"
         }
     };
 
