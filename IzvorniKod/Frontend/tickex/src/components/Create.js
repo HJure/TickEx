@@ -18,7 +18,8 @@ const Create = () => {
         ticketType: '',
         wantedSeatNumber: '',
         wantedTicketType: '',
-        startPrice: ''
+        startPrice: '',
+        duration:''
     });
     const [isPending, setIsPending] = useState(false);
     const [namjena, setNamjena] = useState('');
@@ -162,6 +163,13 @@ const Create = () => {
         return '';
     };
 
+    const validateDuration = (value) => {
+        if (value && (eventDate < value)) {
+            return 'Aukcija mora završiti prije događaja.';
+        }
+        return '';
+    };
+
     const validateWantedSeatNumber = (value) => {
         if (value && isNaN(parseInt(value, 10))) {
             return 'Željeni broj sjedala mora biti cijeli broj ili ostavite prazno.';
@@ -219,15 +227,17 @@ const Create = () => {
     const startPriceWarning = validateStartPrice(startPrice);
     const wantedSeatNumberWarning = validateWantedSeatNumber(wantedSeatNumber);
     const wantedTicketTypeWarning = validateWantedTicketType(wantedTicketType);
+    const wantedDurationWarning = validateDuration(duration);
 
-    if (priceWarning || seatNumberWarning || ticketTypeWarning || startPriceWarning || wantedSeatNumberWarning || wantedTicketTypeWarning) {
+    if (priceWarning || seatNumberWarning || ticketTypeWarning || startPriceWarning || wantedSeatNumberWarning || wantedTicketTypeWarning || wantedDurationWarning) {
         setWarnings({
             price: priceWarning,
             seatNumber: seatNumberWarning,
             ticketType: ticketTypeWarning,
             startPrice: startPriceWarning,
             wantedSeatNumber: wantedSeatNumberWarning,
-            wantedTicketType: wantedTicketTypeWarning
+            wantedTicketType: wantedTicketTypeWarning,
+            wantedDuration: wantedDurationWarning
         });
         return;
     }
@@ -368,6 +378,15 @@ const Create = () => {
                     </>
                 )}
 
+                <label>Datum:</label>
+                <input 
+                    type="date" 
+                    required 
+                    value={eventDate} 
+                    onChange={(e) => setEventDate(e.target.value)}
+                    min= {minDate}
+                />
+
                 {namjena === "prodaja" && (
                     <>
                         <label>Cijena (EUR):</label>
@@ -402,10 +421,15 @@ const Create = () => {
                         <label>Trajanje aukcije (krajnji datum):</label>
                         <input 
                             type="date" 
-                            required 
+                            required
+                            min= {minDate} 
                             value={duration} 
-                            onChange={(e) => setDuration(e.target.value)}
+                            onChange={(e) => {
+                                setDuration(e.target.value);
+                                setWarnings(prev => ({ ...prev, wantedDuration: validateDuration(e.target.value) }));
+                            }}
                         />
+                        {warnings.wantedDuration && <p className="warning">{warnings.wantedDuration}</p>}
                     </>
                 )}
 
@@ -415,15 +439,6 @@ const Create = () => {
                     required 
                     value={location} 
                     onChange={(e) => setLocation(e.target.value)}
-                />
-
-                <label>Datum:</label>
-                <input 
-                    type="date" 
-                    required 
-                    value={eventDate} 
-                    onChange={(e) => setEventDate(e.target.value)}
-                    min= {minDate}
                 />
 
                 <label>Vrsta ulaznice:</label>

@@ -115,29 +115,132 @@
 }
 
 @media (max-width: 768px) {
-    .auctionContainer {
+    .bidContainer {
         max-width: 80%;
         padding: 15px;
     }
 
-    .auctionContainer h2 {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
+    .standingOffers h1 {
+        grid-column: 1/ 5;
+        white-space: nowrap;
+        font-size: 28px;
+        margin-bottom: 10%;
+    }
+
+    .offer input{
+        font-size: 1rem;
+        width: 50%;
+    }
+
+    .personalOffer h3{
+        font-size: 36px;
+        color: #f4f4f4;
+    }
+
+    .offer .submitBtn{
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+
+    .personalOffer h2{
+        font-size: 28px;
+        color: #f4f4f4;
+        padding: 2px 15px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
     }
 
 }
 
 @media (max-width: 480px) {
+    .bidContainer {
+        max-width: 80%;
+        padding: 15px;
+        flex-direction: column;
+    }
 
-}
+    .standingOffers{
+        display: flex;
+    }
 
-@media (max-width: 480px) {
-  
-}
+    .standingOffers h1 {
+        grid-column: 1/ 5;
+        font-size: 20px;
+        margin-bottom: 10%;
+    }
 
-@media (min-width: 768px) and (max-width: 1440px) {
+    .offer{
+        justify-content: space-evenly;
+    }
+
+    .offer input{
+        margin-right: 2%;
+        font-size: 0.7rem;
+        width: 50%;
+    }
+
+    .personalOffer h3{
+        font-size: 24px;
+        color: #f4f4f4;
+    }
+
+    .offer .submitBtn{
+        margin-right: 2%;
+        font-size: 0.7rem;
+        padding: 8px 15px;
+    }
+
+    .personalOffer h2{
+        font-size: 18px;
+        color: #f4f4f4;
+        padding: 2px 15px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+
 }
 
 @media (min-width: 480px) {
+    .bidContainer {
+        max-width: 80%;
+        padding: 15px;
+        flex-direction: column;
+    }
+
+    .standingOffers h1 {
+        grid-column: 1/ 5;
+        font-size: 20px;
+        margin-bottom: 10%;
+    }
+
+    .offer input{
+        font-size: 0.8rem;
+        width: 50%;
+    }
+
+    .personalOffer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .personalOffer h3{
+        font-size: 20px;
+        color: #f4f4f4;
+    }
+
+    .offer .submitBtn{
+        font-size: 0.8rem;
+        padding: 8px 15px;
+    }
+
+    .personalOffer h2{
+        font-size: 20px;
+        color: #f4f4f4;
+        padding: 2px 15px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
 
 }

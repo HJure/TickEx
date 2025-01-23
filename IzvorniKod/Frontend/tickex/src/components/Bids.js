@@ -7,7 +7,7 @@ const Bids = () => {
     const [bids, setBids] = useState([]);
     const [startPrice, setStartPrice] = useState([]);
     const [isPending, setIsPending] = useState(false);
-    //const [isOwner, setIsOwner] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
     const [hasMadeBid, setHasMadeBid] = useState(false);
     const location = useLocation();
     const result = location.state?.result;
@@ -31,7 +31,7 @@ const Bids = () => {
                     const currentUserID = parseInt(localStorage.getItem("userID"));
                 
                     if (result.owner?.id === currentUserID) {
-                        //setIsOwner(true);
+                        setIsOwner(true);
                         setBids(data);
                     } else {
                         const userBids = data.filter((bid) => bid.user.id === currentUserID);
@@ -44,7 +44,7 @@ const Bids = () => {
                     const currentUserID = parseInt(localStorage.getItem("userID"));
                 
                     if (result.owner?.id === currentUserID) {
-                        //setIsOwner(true);
+                        setIsOwner(true);
                         setBids(data.bids);
                     } else {
                         const userBids = data.bids.filter((bid) => bid.user.id === currentUserID);
@@ -137,6 +137,11 @@ const Bids = () => {
                         }
                     }else if (hasMadeBid){
                         const userConfirmed = window.confirm("Nije moguće više od jednom poslati ponudu");
+                        if (!userConfirmed) {
+                            return;
+                        }
+                    }else if (isOwner){
+                        const userConfirmed = window.confirm("Nije moguće poslati ponudu ako ste vlasnik aukcije");
                         if (!userConfirmed) {
                             return;
                         }

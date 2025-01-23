@@ -25,7 +25,7 @@ public class Auction extends Ticket{
     private User winner;
     
     @Column(name = "koncijena", nullable = true)
-    private int endPrice;
+    private Integer endPrice;
 
     public int getStartPrice() {
         return startPrice;
@@ -51,11 +51,11 @@ public class Auction extends Ticket{
 		this.winner = winner;
 	}
 
-	public int getEndPrice() {
+	public Integer getEndPrice() {
 		return endPrice;
 	}
 
-	public void setEndPrice(int endPrice) {
+	public void setEndPrice(Integer endPrice) {
 		this.endPrice = endPrice;
 	}
 	

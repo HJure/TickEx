@@ -15,6 +15,7 @@ const TicketList = ({ tickets, title }) => {
                             </div>
                             <div className='eventInfo'>
                                 <h2>{ ticket.eventName }</h2>
+                                {ticket.endPrice && <h3>End Price: {ticket.endPrice}</h3>}
                                 <h3>{ticket.eventDate}</h3>
                                 <h3>{ticket.location}</h3>
                             </div>
