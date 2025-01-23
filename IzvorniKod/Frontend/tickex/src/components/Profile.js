@@ -24,7 +24,7 @@ function Profile({ profile, setProfile }) {
     const [recommendedTickets, setGenres] = useState([]);
     const [chains, setChains] = useState(null);
     const [interestedList, setInterestedList] = useState([]);
-    const [isUser, setIsUser] = useState(null);
+    /*const [isUser, setIsUser] = useState(null); */
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -375,6 +375,7 @@ function Profile({ profile, setProfile }) {
         }
     };
 
+    /*
     useEffect(() => {
         const checkIsUser = async () => {
             try {
@@ -404,6 +405,7 @@ function Profile({ profile, setProfile }) {
     if (isUser === null) {
         return <div>Učitavam...</div>;
     }
+    */
 
     const renderTicketList = () => {
         switch (activeTab) {

@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { /*useState, useEffect */} from 'react';
 import { Link } from 'react-router-dom';
 import '../style/Shop.css';
 
 const Shop = () => {
+    /*
     const [isUser, setIsUser] = useState(null);
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -38,6 +39,7 @@ const Shop = () => {
     if (isUser === null) {
         return <div>Učitavam...</div>;
     }
+    */
 
     return (
         <div className="shop-container">
