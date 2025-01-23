@@ -194,11 +194,6 @@ const TicketDetails = ({ url }) => {
 
     const handleBack = () => {
 
-        if (ticket.isExchangeAvailable !== "u prodaji" && ticket.isExchangeAvailable !== "razmjena" && ticket.isExchangeAvailable !== "aukcija") {
-            alert('Oglas više nije aktivan!');
-            return; 
-        }
-
         let newStatus = "u prodaji";
         if (ticket.price > 0) {
             newStatus = "u prodaji";
