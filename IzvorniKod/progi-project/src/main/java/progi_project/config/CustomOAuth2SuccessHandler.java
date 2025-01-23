@@ -66,7 +66,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         SecurityContextHolder.getContext().setAuthentication(newAuth);
 
-        String frontendUrl = request.getServerName().equals("localhost") ? "http://localhost:3000" : FRONTEND_URL;
+        String frontendUrl = (FRONTEND_URL != null) ? FRONTEND_URL : "http://localhost:3000";
         
         String redirectUrl;
         if (userService.emailExists(email)) {
