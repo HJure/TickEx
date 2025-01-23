@@ -55,13 +55,17 @@ const Reports = () => {
                             <button 
                                 onClick={() => handleUserClick(report.reporter.id)} 
                                 className="link-button">
-                                <strong>Prijavio:</strong> {report.reporter.imeKor} {report.reporter.prezimeKor} ({report.reporter.email}) {report.reporter.datumUla} {report.reporter.ocjena}
+                                <strong>Prijavio:</strong> {report.reporter.imeKor} {report.reporter.prezimeKor} ({report.reporter.email})
+                                <strong>Datum ulaska:</strong>{report.reported.datumUla} 
+                                <strong>Ocjena:</strong>{report.reported.ocjena}
                             </button>
                         
                             <button 
                                 onClick={() => handleUserClick(report.reported.id)} 
                                 className="link-button">
-                                <strong>Prijavljen:</strong> {report.reported.imeKor} {report.reported.prezimeKor} ({report.reported.email}) {report.reported.datumUla} {report.reported.ocjena}
+                                <strong>Prijavljen:</strong> {report.reported.imeKor} {report.reported.prezimeKor} ({report.reported.email}) 
+                                <strong>Datum ulaska:</strong>{report.reported.datumUla} 
+                                <strong>Ocjena:</strong>{report.reported.ocjena}
                             </button>
                         </div>
                         <div className='strong'>
