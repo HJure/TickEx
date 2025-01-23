@@ -11,7 +11,13 @@ const TicketList = ({ tickets, title }) => {
                     <div className="ticket-preview" key={ticket.id}>   
                         <Link to={ `/tickets/${ticket.id}` }>
                             <div className='eventType'>
-                                <h1>{(ticket.owner.id === parseInt(localStorage.getItem("user_ID")))? "kupljeno" : ticket.isExchangeAvailable }</h1>
+                                <h1>
+                                    {
+                                    (ticket.buyer.id === parseInt(localStorage.getItem("user_ID")) || ticket.winner.id === parseInt(localStorage.getItem("user_ID")))
+                                    ? "kupljeno" 
+                                    : ticket.isExchangeAvailable 
+                                    }
+                                    </h1>
                             </div>
                             <div className='eventInfo'>
                                 <h2>{ ticket.eventName }</h2>
