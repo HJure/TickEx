@@ -544,12 +544,12 @@ const TicketDetails = ({ url }) => {
                                     </button>
                                 )}
                                 {canBringBack && <button onClick={handleBack} className="delete-button">Vrati</button>}
-                                {ticket.owner.id !== parseInt(localStorage.getItem("userID")) && (
+                                {userID && ticket.owner.id !== parseInt(localStorage.getItem("userID")) && (
                                     <button className="btn-buy" onClick={() => handleReportClick(ticket, navigate)}>
                                         Prijavi korisnika
                                 </button>
                                 )}
-                                {ticket.owner.id === parseInt(localStorage.getItem("userID")) && (
+                                {userID && ticket.owner.id === parseInt(localStorage.getItem("userID")) && ticket.isExchangeAvailable === "aukcija" && (
                                     <button className="btn-goto" onClick={() => handleGoToBids(ticket, navigate)}>
                                         Pogledaj ponude
                                     </button>
