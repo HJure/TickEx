@@ -407,6 +407,14 @@ function Profile({ profile, setProfile }) {
     }
     */
 
+    useEffect(() => {
+        const selectedCategories = localStorage.getItem("selectedCategories");
+        if (selectedCategories === null) {
+            localStorage.setItem("selectedcategories", JSON.stringify([]));
+        }
+    }, [profile, isEditing, userID, backendUrl, userID]);
+    
+
     const renderTicketList = () => {
         switch (activeTab) {
             case 'myOffers':

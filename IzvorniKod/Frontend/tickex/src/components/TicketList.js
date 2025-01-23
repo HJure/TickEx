@@ -1,9 +1,7 @@
 import '../style/profile.css';
 import { Link } from "react-router-dom";
 
-
 const TicketList = ({ tickets, title }) => {
-
     return (  
         <div className="ticket-list">
             <div className="tickets">
@@ -12,12 +10,13 @@ const TicketList = ({ tickets, title }) => {
                         <Link to={ `/tickets/${ticket.id}` }>
                             <div className='eventType'>
                                 <h1>
-                                    {
-                                    (ticket.buyer.id === parseInt(localStorage.getItem("user_ID")) || ticket.winner.id === parseInt(localStorage.getItem("user_ID")))
-                                    ? "kupljeno" 
-                                    : ticket.isExchangeAvailable 
+                                    { 
+                                        (ticket.buyer && ticket.buyer.id === parseInt(localStorage.getItem("user_ID"))) || 
+                                        (ticket.winner && ticket.winner.id === parseInt(localStorage.getItem("user_ID")))
+                                            ? "kupljeno" 
+                                            : ticket.isExchangeAvailable 
                                     }
-                                    </h1>
+                                </h1>
                             </div>
                             <div className='eventInfo'>
                                 <h2>{ ticket.eventName }</h2>
@@ -32,5 +31,5 @@ const TicketList = ({ tickets, title }) => {
         </div>
     );
 }
- 
+
 export default TicketList;
