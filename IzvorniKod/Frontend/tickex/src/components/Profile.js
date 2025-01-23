@@ -24,6 +24,7 @@ function Profile({ profile, setProfile }) {
     const [recommendedTickets, setGenres] = useState([]);
     const [chains, setChains] = useState(null);
     const [interestedList, setInterestedList] = useState([]);
+    const [isUser, setIsUser] = useState(null);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -158,6 +159,7 @@ function Profile({ profile, setProfile }) {
         isAdmin();
     }, [userID, access_token, backendUrl]);
 
+    
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoaded(true);
@@ -372,6 +374,36 @@ function Profile({ profile, setProfile }) {
             console.error('Error updating profile:', error);
         }
     };
+
+    useEffect(() => {
+        const checkIsUser = async () => {
+            try {
+                const response = await fetch(`${backendUrl}/api/users/isUser`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${access_token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                setIsUser(data);
+            } catch (error) {
+                console.error('Error checking user role:', error);
+                setIsUser(false);
+            }
+        };
+
+        checkIsUser();
+    }, [access_token, backendUrl]);
+
+    if (isUser === false) {
+        return <div>Izbačeni ste sa stranice!</div>;
+    }
+
+    if (isUser === null) {
+        return <div>Učitavam...</div>;
+    }
 
     const renderTicketList = () => {
         switch (activeTab) {

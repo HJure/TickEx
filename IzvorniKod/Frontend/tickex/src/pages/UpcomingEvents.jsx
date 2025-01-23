@@ -26,7 +26,9 @@ function UpcomingEvents() {
                 ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable));
                 setTickets(filteredTickets);
             } else {
-                setTickets(tickets);
+                const filteredTickets = tickets.filter(ticket =>
+                ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable));
+                setTickets(filteredTickets);
             }
         }
     }, [tickets]);

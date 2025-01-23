@@ -56,6 +56,17 @@ public class UserController {
             return false;
     }
 
+    @GetMapping("/isUser")
+    public boolean isUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    
+        boolean isUser = authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN") || 
+                		authority.getAuthority().equals("ROLE_USER"));
+    
+        return isUser;
+    }
+
     @PostMapping("/register")
     public User registerUser(@RequestBody User user) {
         return userService.registerUser(user);
