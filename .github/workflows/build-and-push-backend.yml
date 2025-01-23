@@ -61,7 +61,7 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             BACKEND_URL=${{ secrets.BACKEND_URL }}
             FRONTEND_URL=${{ secrets.FRONTEND_URL }}
-            PASSWORD: ${{ secrets.PASSWORD }}
+            PASSWORD= ${{ secrets.PASSWORD }}
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}
