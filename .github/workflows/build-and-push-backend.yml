@@ -35,6 +35,14 @@ jobs:
           cache: 'maven'
           cache-dependency-path: 'IzvorniKod/progi-project/pom.xml'
 
+      - name: Debug Environment Variables
+        run: |
+          echo "DB_URL=$DB_URL"
+          echo "DB_USERNAME=$DB_USERNAME"
+          echo "DB_PASSWORD=$DB_PASSWORD"
+          echo "BACKEND_URL=$BACKEND_URL"
+          echo "FRONTEND_URL=$FRONTEND_URL"
+          
       - name: Maven build
         run: mvn clean package
         working-directory: IzvorniKod/progi-project
