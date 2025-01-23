@@ -51,12 +51,14 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
         
         List<String> deaktivirani = userService.getDeactivated();
-        List<SimpleGrantedAuthority> authorities = null;
+        List<SimpleGrantedAuthority> authorities;
         
         if (email.equals(adminEmail)) {
             authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else if(!deaktivirani.contains(email)){
             authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+        	authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_UNREGISTERED"));
         }
 
         // ubaci role u token
