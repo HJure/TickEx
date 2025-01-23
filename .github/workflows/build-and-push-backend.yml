@@ -20,7 +20,7 @@ jobs:
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       BACKEND_URL: ${{ secrets.BACKEND_URL }}
       FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-      password: ${{ secrets.password }}
+      PASSWORD: ${{ secrets.PASSWORD }}
       
     steps:
       - name: Clone the repository
@@ -34,14 +34,6 @@ jobs:
           architecture: x64
           cache: 'maven'
           cache-dependency-path: 'IzvorniKod/progi-project/pom.xml'
-
-      - name: Debug Environment Variables
-        run: |
-          echo "DB_URL=$DB_URL"
-          echo "DB_USERNAME=$DB_USERNAME"
-          echo "DB_PASSWORD=$DB_PASSWORD"
-          echo "BACKEND_URL=$BACKEND_URL"
-          echo "FRONTEND_URL=$FRONTEND_URL"
           
       - name: Maven build
         run: mvn clean package
@@ -69,7 +61,7 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             BACKEND_URL=${{ secrets.BACKEND_URL }}
             FRONTEND_URL=${{ secrets.FRONTEND_URL }}
-            password: ${{ secrets.password }}
+            PASSWORD: ${{ secrets.PASSWORD }}
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}
