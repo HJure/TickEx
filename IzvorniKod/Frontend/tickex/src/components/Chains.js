@@ -73,7 +73,10 @@ const Chains = ({ chains }) => {
                     const data = await response.json();
                     const usersMap = {};
                     data.forEach((user) => {
-                        usersMap[user.id] = `${user.imeKor} ${user.prezimeKor}`;
+                        usersMap[user.id] = {
+                            name: `${user.imeKor} ${user.prezimeKor}`,
+                            email: user.email,
+                        };
                     });
                     setUsers(usersMap);
                 } catch (error) {
@@ -186,7 +189,7 @@ const Chains = ({ chains }) => {
                             {chainGroup.map((chainItem, idx) => (
                                 <div key={idx} className="chain-container">
                                     <div className="chain-item">
-                                        <p>Korisnik: {users[chainItem.userId] || `ID: ${chainItem.userId}`}</p>
+                                        <p>Korisnik: {users[chainItem.userId]?.name || `ID: ${chainItem.userId}`}</p>
                                         <p>Karta: {tickets[chainItem.ticketId] || `ID: ${chainItem.ticketId}`}</p>
                                         {updatedChains[index]?.completed &&
                                             allResponsesTrue(updatedChains[index]?.response) && (

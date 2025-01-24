@@ -132,13 +132,13 @@ function Profile({ profile, setProfile }) {
                     localStorage.setItem("user_registration_date", data.datumUla);
                     localStorage.setItem("user_rating", data.ocjena);
                     localStorage.setItem("user_status", data.statusKor);
-                    localStorage.setItem("user_status", data.statusKor); 
+                    localStorage.setItem("user_admin", data.admin); 
 
                     if (!data.statusKor) {
                         setIsUser(false);
                         return;
                     }
-                    
+
                     setIsAdmin(data.admin === true);
                     setIsProfileReady(true);
                 } catch (error) {

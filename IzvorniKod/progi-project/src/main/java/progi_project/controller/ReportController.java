@@ -29,6 +29,7 @@ public class ReportController {
 
     @GetMapping("/dashboard")
     public ResponseEntity<?> getReports() {
+    	/*
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     
         boolean isAdmin = authentication.getAuthorities().stream()
@@ -40,6 +41,8 @@ public class ReportController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(List.of("Access denied: You don't have permission to view reports."));
         }
+        */
+        return ResponseEntity.ok(reportService.getTopSixReports());
     }
 
     @PostMapping

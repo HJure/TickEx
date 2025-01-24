@@ -7,6 +7,7 @@ const Reports = () => {
     const [error, setError] = useState(null);
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
     const access_token = localStorage.getItem('access_token');
+    const Admin = localStorage.getItem('user_admin');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,6 +39,10 @@ const Reports = () => {
 
     if (error) {
         return <div>{error}</div>;
+    }
+
+    if(!Admin){
+        return <div>Nemate admin ovlasti!</div>
     }
 
     const handleUserClick = (userId) => {
