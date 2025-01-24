@@ -336,7 +336,8 @@ function Profile({ profile, setProfile }) {
                 prezimeKor: lastName,                      
                 datumUla: localStorage.getItem("user_registration_date"), 
                 statusKor: true,                            
-                ocjena: numericRating
+                ocjena: numericRating,
+                admin: isAdmin
             };
     
             const response = await fetch(`${backendUrl}/api/users/${userID}`, {
@@ -492,7 +493,7 @@ function Profile({ profile, setProfile }) {
         }
     };
 
-    if(!isUser){
+    if(!isUser && isLoaded && profile && isProfileReady){
        return  <p>Izbačeni ste sa stranice</p>
     }
     
