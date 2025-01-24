@@ -61,7 +61,9 @@ const Reports = () => {
                                 onClick={() => handleUserClick(report.reporter.id)} 
                                 className="link-button">
                                 <strong>Prijavio:</strong> {report.reporter.imeKor} {report.reporter.prezimeKor} ({report.reporter.email})
-                                <strong>Datum ulaska:</strong>{report.reported.datumUla} 
+                                <br></br>
+                                <strong>Datum ulaska:</strong>{report.reported.datumUla}
+                                <br></br> 
                                 <strong>Ocjena:</strong>{report.reported.ocjena}
                             </button>
                         

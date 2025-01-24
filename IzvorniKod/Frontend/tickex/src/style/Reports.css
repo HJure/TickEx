@@ -9,6 +9,9 @@
 
 .report-card {
     width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin: 0 auto 24px;
     background: linear-gradient(135deg, #6A4FEB, #9A6DF1);
     padding: 20px;
