@@ -551,6 +551,11 @@ const TicketDetails = ({ url }) => {
                                 )}
                                 {userID && ticket.owner.id === parseInt(localStorage.getItem("userID")) && ticket.isExchangeAvailable === "aukcija" && (
                                     <button className="btn-goto" onClick={() => handleGoToBids(ticket, navigate)}>
+                                        Idi u ponude
+                                    </button>
+                                )}
+                                {userID && ticket.owner.id !== parseInt(localStorage.getItem("userID")) && ticket.isExchangeAvailable === "aukcija" && (
+                                    <button className="btn-goto" onClick={() => handleGoToBids(ticket, navigate)}>
                                         Idi u aukciju
                                     </button>
                                 )}
