@@ -553,6 +553,11 @@ const TicketDetails = ({ url }) => {
                                         Pogledaj ponude
                                     </button>
                                 )}
+                                {userID && ticket.owner.id !== parseInt(localStorage.getItem("userID")) && ticket.isExchangeAvailable === "u prodaji" && (
+                                    <button className="btn-buyTicket" onClick={() => handleGoToBids(ticket, navigate)}>
+                                        Kupi
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
