@@ -3,6 +3,7 @@ import useFetch from "./useFetch";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import '../style/ticket-details.css';
+import { handleBuyClick } from '../utils/buyButton.js';
 import StarRate from "./StarRate";
 
 const TicketDetails = ({ url }) => {
@@ -554,7 +555,7 @@ const TicketDetails = ({ url }) => {
                                     </button>
                                 )}
                                 {userID && ticket.owner.id !== parseInt(localStorage.getItem("userID")) && ticket.isExchangeAvailable === "u prodaji" && (
-                                    <button className="btn-buyTicket" onClick={() => handleGoToBids(ticket, navigate)}>
+                                    <button className="btn-buyTicket" onClick={() => handleBuyClick(ticket)}>
                                         Kupi
                                     </button>
                                 )}
