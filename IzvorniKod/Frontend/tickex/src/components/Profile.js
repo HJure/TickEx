@@ -401,7 +401,7 @@ function Profile({ profile, setProfile }) {
     useEffect(() => {
         const selectedCategories = localStorage.getItem("selectedCategories");
         if (selectedCategories === null) {
-            localStorage.setItem("selectedcategories", JSON.stringify([]));
+            localStorage.setItem("selectedCategories", JSON.stringify([]));
         }
     }, [profile, isEditing, userID, backendUrl, userID]);
     
