@@ -139,6 +139,7 @@ function Profile({ profile, setProfile }) {
                         return;
                     }
 
+                    setIsUser(true);
                     setIsAdmin(data.admin === true);
                     setIsProfileReady(true);
                 } catch (error) {
