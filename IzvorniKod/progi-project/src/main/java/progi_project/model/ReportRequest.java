@@ -5,6 +5,13 @@ public class ReportRequest {
     private int reportedId;
     private String reason;
 
+    
+
+    public ReportRequest(int reporterId, int reportedId, String reason) {
+        this.reporterId = reporterId;
+        this.reportedId = reportedId;
+        this.reason = reason;
+    }
 
     public int getReporterId() {
         return reporterId;

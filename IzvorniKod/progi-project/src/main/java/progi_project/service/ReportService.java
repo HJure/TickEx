@@ -23,7 +23,14 @@ public class ReportService {
 
     public void createReport(int reporterId, int reportedId, String reason) {
         User reporter = userRepository.findById(reporterId);
+        if (reporter == null) {
+            return;
+        }
+    
         User reported = userRepository.findById(reportedId);
+        if (reported == null) {
+            return;
+        }
 
         Report report = new Report();
         report.setId(new ReportId(reportedId, reportedId));
