@@ -1,12 +1,17 @@
 package progi_project.service;
 
-import progi_project.model.Exchange;
-import progi_project.repository.ExchangeRepository;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import progi_project.model.Chain;
+import progi_project.model.Exchange;
+import progi_project.repository.ChainRepository;
+import progi_project.repository.ExchangeRepository;
 
 @Service
 public class ExchangeService {
@@ -14,23 +19,93 @@ public class ExchangeService {
     @Autowired
     private ExchangeRepository exchangeRepository;
 
-    public Exchange createExchange(Exchange exchange) {
-        return exchangeRepository.save(exchange);
+    @Autowired
+    private ChainRepository chainRepository;
+    
+    public boolean processExchangeChain(Integer id) {
+        Exchange startExchange = exchangeRepository.findById(id);
+
+        if (startExchange == null) {
+            return false; // Ne postoji razmjena s tim ID-em
+        }
+
+        Set<Integer> visitedExchanges = new HashSet<>();
+        List<Exchange> chain = new ArrayList<>();
+        
+        boolean isValid = findExchangeChain(startExchange, startExchange, visitedExchanges, chain);
+
+        if (isValid) {
+            Integer[] idOgl = new Integer[chain.size() - 1];
+            Integer[] idKor = new Integer[chain.size() - 1];
+            for(int i = 0; i < chain.size() - 1; i++) {
+                idOgl[i] = chain.get(i).getId();
+                idKor[i] = chain.get(i).getOwner().getId();
+            }
+
+            Chain lanac = new Chain(idOgl, idKor, chain.size() - 1);
+            chainRepository.save(lanac);
+        }
+
+        return isValid;
+    }
+    
+    private boolean findExchangeChain(Exchange current, Exchange startExchange, Set<Integer> visited, List<Exchange> chain) {
+        chain.add(current);
+        visited.add(current.getId());
+        
+        List<Exchange> matches = exchangeRepository.findMatches(
+                current.getWantedEventName(),
+                current.getWantedLocation(),
+                current.getWantedDate(),
+                current.getWantedSeatNumber(),
+                current.getWantedTicketType()
+        );
+
+        for (Exchange match : matches) {
+            if (match.getId() == startExchange.getId()) {
+                chain.add(startExchange);
+                return true;
+            }
+
+            if (!visited.contains(match.getId())) {
+                if (findExchangeChain(match, startExchange, visited, chain)) {
+                    return true;
+                }
+            }
+        }
+
+        // backtracking
+        chain.remove(chain.size() - 1);
+        visited.remove(current.getId());
+        return false;
+    }
+   
+    
+    public List<Exchange> findAll(){
+    	return exchangeRepository.findAll();
     }
 
-    public Optional<Exchange> findById(Long id) {
-        return exchangeRepository.findById(id);
-    }
 
-    public List<Exchange> getAllExchanges() {
-        return exchangeRepository.findAll();
-    }
+	public Exchange save(Exchange exchange) {
+		return exchangeRepository.save(exchange);
+	}
 
-    public Exchange updateExchange(Exchange exchange) {
-        return exchangeRepository.save(exchange);
-    }
+    public Exchange updateExchange(Long id, Exchange exchange) {
+        Exchange existingExchange = exchangeRepository.findById(id).orElseThrow(() -> new RuntimeException("Exchange not found"));
+        existingExchange.setWantedEventName(exchange.getWantedEventName());
+        existingExchange.setWantedLocation(exchange.getWantedLocation());
+        existingExchange.setWantedDate(exchange.getWantedDate());
+        existingExchange.setWantedSeatNumber(exchange.getWantedSeatNumber());
+        existingExchange.setWantedTicketType(exchange.getWantedTicketType());
+        existingExchange.setEventName(exchange.getEventName());
+        existingExchange.setLocation(exchange.getLocation());
+        existingExchange.setEventDate(exchange.getEventDate());
+        existingExchange.setSeatNumber(exchange.getSeatNumber());
+        existingExchange.setTicketType(exchange.getTicketType());
+        existingExchange.setEventTypeId(exchange.getEventTypeId());
+        existingExchange.setArtistName(exchange.getArtistName());
+        return exchangeRepository.save(existingExchange);
 
-    public void deleteExchange(Long id) {
-        exchangeRepository.deleteById(id);
+        
     }
 }

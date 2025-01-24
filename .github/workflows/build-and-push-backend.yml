@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - Deployment
     paths:
       - 'IzvorniKod/progi-project/**'      # Trigger only on changes in the /backend directory
   workflow_dispatch:
@@ -14,7 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BACKEND_DEPLOY_HOOK: ${{ secrets.BACKEND_DEPLOY_HOOK }}
-
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      BACKEND_URL: ${{ secrets.BACKEND_URL }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      
     steps:
       - name: Clone the repository
         uses: actions/checkout@v4
@@ -27,7 +34,7 @@ jobs:
           architecture: x64
           cache: 'maven'
           cache-dependency-path: 'IzvorniKod/progi-project/pom.xml'
-
+          
       - name: Maven build
         run: mvn clean package
         working-directory: IzvorniKod/progi-project
@@ -48,6 +55,13 @@ jobs:
           context: ./IzvorniKod/progi-project
           push: true
           tags: ghcr.io/hjure/tickex/backend:latest
+          build-args: |
+            DB_URL=${{ secrets.DB_URL }}
+            DB_USERNAME=${{ secrets.DB_USERNAME }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            BACKEND_URL=${{ secrets.BACKEND_URL }}
+            FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+            PASSWORD= ${{ secrets.PASSWORD }}
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

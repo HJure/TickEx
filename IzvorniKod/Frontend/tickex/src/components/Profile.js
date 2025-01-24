@@ -4,15 +4,30 @@ import useFetch from './useFetch';
 import axios from 'axios';
 import TicketList from './TicketList';
 import '../style/profile.css';
-import { Link } from "react-router-dom";
+import StarRate from './StarRate'
+import Sidebar from './Sidebar';
+import Chains from './Chains';
+import EditProfile from './EditProfile';
 
-function Profile() {
-    const [profile, setProfile] = useState(null);
+function Profile({ profile, setProfile }) {
     const [email, setEmail] = useState(null);
     const [userID, setUserID] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [isProfileReady, setIsProfileReady] = useState(false); 
+    const [isProfileReady, setIsProfileReady] = useState(false);
+    const [activeTab, setActiveTab] = useState('profile'); 
+    const [isEditing, setIsEditing] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [rating, setRating] = useState('');
+    const [expiredTickets, setExpiredTickets] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [recommendedTickets, setGenres] = useState([]);
+    const [chains, setChains] = useState(null);
+    const [interestedList, setInterestedList] = useState([]);
+    const [isUser, setIsUser] = useState(null);
     const navigate = useNavigate();
+
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     let access_token = localStorage.getItem("access_token");
     if (!access_token) {
@@ -30,10 +45,13 @@ function Profile() {
         localStorage.removeItem("user_first_name");
         localStorage.removeItem("user_last_name");
         localStorage.removeItem("user_registration_date");
-
-        setProfile(null);  
-        navigate('/signup'); 
-    }, [navigate]);
+        localStorage.removeItem("user_rating");
+        localStorage.removeItem("user_status");
+       
+        setProfile(null);
+        navigate('/');
+    }, [navigate, setProfile]);
+    
 
     useEffect(() => {
         if (access_token) {
@@ -47,20 +65,21 @@ function Profile() {
                 setEmail(res.data.email);
             }).catch((err) => {
                 if (err.response && err.response.status === 401) {
-                    console.log("Token might be expired or invalid. Logging out...");
+                    //console.log("Token might be expired or invalid. Logging out...");
                     logOut();
                 } else {
                     console.error("Error fetching profile:", err);
                 }
             });
         }
-    }, [access_token, logOut]);
+    }, [access_token, logOut, setProfile]);
+    
 
     useEffect(() => {
         const fetchUserID = async () => {
             if (email) {
                 try {
-                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/getId?email=${email}`, {
+                    const response = await fetch(`${backendUrl}/api/users/getId?email=${email}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${access_token}`,
@@ -75,7 +94,7 @@ function Profile() {
 
                     const data = await response.json();
                     setUserID(data);
-                    localStorage.setItem("userID", data); 
+                    localStorage.setItem("userID", data);
                 } catch (error) {
                     console.error('Error:', error);
                 }
@@ -83,13 +102,13 @@ function Profile() {
         };
 
         fetchUserID();
-    }, [email, access_token]);
+    }, [email, access_token, backendUrl]);
 
     useEffect(() => {
         const fetchUserData = async () => {
             if (userID) {
                 try {
-                    const response = await fetch(`https://backend-3qyr.onrender.com/api/users/${userID}`, {
+                    const response = await fetch(`${backendUrl}/api/users/${userID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -103,11 +122,25 @@ function Profile() {
                     }
 
                     const data = await response.json();
+
+                    setFirstName(data.imeKor);
+                    setLastName(data.prezimeKor);
+                    setRating(data.ocjena !== 0.0 ? data.ocjena : "nema ocjenu");
                     localStorage.setItem("user_email", data.email);
                     localStorage.setItem("user_first_name", data.imeKor);
                     localStorage.setItem("user_last_name", data.prezimeKor);
                     localStorage.setItem("user_registration_date", data.datumUla);
+                    localStorage.setItem("user_rating", data.ocjena);
+                    localStorage.setItem("user_status", data.statusKor);
+                    localStorage.setItem("user_admin", data.admin); 
 
+                    if (!data.statusKor) {
+                        setIsUser(false);
+                        return;
+                    }
+
+                    setIsUser(true);
+                    setIsAdmin(data.admin === true);
                     setIsProfileReady(true);
                 } catch (error) {
                     console.error('Error:', error);
@@ -116,8 +149,9 @@ function Profile() {
         };
 
         fetchUserData();
-    }, [userID, access_token]);
+    }, [userID, access_token, backendUrl]);
 
+    
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoaded(true);
@@ -126,35 +160,357 @@ function Profile() {
         return () => clearTimeout(timer);
     }, [profile]);
 
-    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch("https://backend-3qyr.onrender.com/api/tickets");
-    const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)) : [];
+    useEffect(() => {
+        const fetchExpiredTickets = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/users/${userID}/tickets`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error while fetching expired tickets');
+                    }
+    
+                    const data = await response.json();
+                    setExpiredTickets(data.filter(ticket => ticket.isExchangeAvailable === "istekao"));
+                } catch (error) {
+                    console.error('Error fetching expired tickets:', error);
+                }
+            }
+        };
+    
+        fetchExpiredTickets();
+    }, [userID, access_token, backendUrl]);
 
+    useEffect(() => {
+        const fetchGenres = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/tickets/recommended/${userID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error fetching genres');
+                    }
+    
+                    const data = await response.json();
+                    setGenres(data);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        };
+    
+        fetchGenres();
+    }, [userID, access_token, backendUrl, isEditing]);
+
+
+    const [ticketsUrl, setTicketsUrl] = useState(null);
+
+    useEffect(() => {
+    if (userID) {
+                setTicketsUrl(`${backendUrl}/api/tickets/nothidden/${userID}`);
+            }
+        }, [userID, backendUrl]);
+
+    const { data: tickets, isPending: isTicketsPending, error: ticketsError } = useFetch(ticketsUrl);
+
+    const filteredTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
+                                    && ["u prodaji", "aukcija", "razmjena"].includes(ticket.isExchangeAvailable)) : [];
+    const purchasedTickets = tickets ? tickets.filter(ticket => ticket.buyer?.id === parseInt(userID) || 
+                                                    ticket.winner?.id === parseInt(userID)) : [];
+    const soldTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)  
+                                    && ticket.isExchangeAvailable === "prodano") : [];
+    const deletedTickets = tickets ? tickets.filter(ticket => ticket.owner.id === parseInt(userID)
+                                    && ticket.isExchangeAvailable === "obrisano") : [];
+    
+
+    const [likedTickets, setLikedTickets] = useState([]);
+    const [isFavoritesPending, setIsFavoritesPending] = useState(false);
+    const [favoritesError, setFavoritesError] = useState(null);
+
+    useEffect(() => {
+        const fetchLikedTickets = async () => {
+            if (userID) {
+                setIsFavoritesPending(true);
+                setFavoritesError(null);
+                try {
+                    const response = await fetch(`${backendUrl}/api/favorites?userId=${parseInt(userID)}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error fetching liked tickets');
+                    }
+
+                    const data = await response.json();
+                    setLikedTickets(data);
+                } catch (error) {
+                    setFavoritesError(error.message);
+                    console.error('Error fetching liked tickets:', error);
+                } finally {
+                    setIsFavoritesPending(false);
+                }
+            }
+        };
+
+        fetchLikedTickets();
+    }, [userID, access_token, backendUrl]);
+                                
+
+    useEffect(() => {
+        const fetchChains = async () => {
+            if (userID) {
+                try {
+                    const response = await fetch(`${backendUrl}/api/chain/${userID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error('Error fetching chains');
+                    }
+    
+                    const data = await response.json();
+                    setChains(data);  
+                } catch (error) {
+                    console.error('Error fetching chains:', error);
+                } 
+            }
+        };
+    
+        fetchChains();
+    }, [userID, access_token, backendUrl]);
+
+    useEffect(() => {
+        const fetchInterestedList = async () => {
+            if (!userID) return; // Osigurajte da je userID postavljen
+            try {
+                const response = await fetch(`${backendUrl}/api/vrsta-dogadaja/zainteresiran/${userID}`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch interested list");
+                }
+                const data = await response.json();
+                setInterestedList(data);
+            } catch (error) {
+                console.error("Error fetching interested list:", error);
+            }
+        };
+    
+        fetchInterestedList();
+    }, [userID, backendUrl, isEditing]);
+    
+
+    //const handleEditProfile = () => {
+    //    setIsEditing(true);
+    //};
+
+    const handleSaveChanges = async () => {
+        try {
+            const numericRating = rating === "nema ocjenu" ? 0.0 : rating;
+    
+            const updatedUserData = {
+                email: localStorage.getItem("user_email"),  
+                imeKor: firstName,                         
+                prezimeKor: lastName,                      
+                datumUla: localStorage.getItem("user_registration_date"), 
+                statusKor: true,                            
+                ocjena: numericRating,
+                admin: isAdmin
+            };
+    
+            const response = await fetch(`${backendUrl}/api/users/${userID}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${access_token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedUserData),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error response:', errorData);  
+                throw new Error('Failed to update profile');
+            }
+    
+            const data = await response.json();
+            setFirstName(data.imeKor);
+            setLastName(data.prezimeKor);
+    
+            localStorage.setItem("user_first_name", data.imeKor);
+            localStorage.setItem("user_last_name", data.prezimeKor);
+    
+            setIsEditing(false);
+            setShowEditProfile(false);
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    };
+
+    const [showEditProfile, setShowEditProfile] = useState(false);
+
+    const handleEditProfile = () => {
+        setIsEditing(true); 
+        setTimeout(() => {
+            setShowEditProfile(true); 
+        }, 1500);
+    };
+
+    const handleCancelEdit = () => {
+        setIsEditing(false);
+        setShowEditProfile(false);
+    };
+
+
+    /*
+    useEffect(() => {
+        const checkIsUser = async () => {
+            try {
+                const response = await fetch(`${backendUrl}/api/users/isUser`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${access_token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                setIsUser(data);
+            } catch (error) {
+                console.error('Error checking user role:', error);
+                setIsUser(false);
+            }
+        };
+
+        checkIsUser();
+    }, [access_token, backendUrl]);
+
+    if (isUser === false) {
+        return <div>Izbačeni ste sa stranice!</div>;
+    }
+
+    if (isUser === null) {
+        return <div>Učitavam...</div>;
+    }
+    */
+
+    useEffect(() => {
+        const selectedCategories = localStorage.getItem("selectedCategories");
+        if (selectedCategories === null) {
+            localStorage.setItem("selectedCategories", JSON.stringify([]));
+        }
+    }, [profile, isEditing, userID, backendUrl, userID]);
+    
+
+    const renderTicketList = () => {
+        switch (activeTab) {
+            case 'myOffers':
+                return <div className="my_offers" ><TicketList tickets={filteredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'purchased':
+                return <div className="my_offers" ><TicketList tickets={purchasedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'sold':
+                return <div className="my_offers" ><TicketList tickets={soldTickets} isPending={isTicketsPending} error={ticketsError} /></div>;    
+            case 'deleted':
+                return <div className="my_offers" ><TicketList tickets={deletedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'expired':
+                return <div className="my_offers" ><TicketList tickets={expiredTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'liked':
+                return <div className="my_offers" ><TicketList tickets={likedTickets} isPending={isFavoritesPending} error={favoritesError} /></div>;
+            case 'recommended':
+                return <div className="my_offers" ><TicketList tickets={recommendedTickets} isPending={isTicketsPending} error={ticketsError} /></div>;
+            case 'exchangeChains':
+                return (
+                    <div className="exchange-chains">
+                        <Chains chains={chains}/>
+                    </div>
+                );
+            case 'profile':
+                return (
+                    <div className="profile-container">
+                        <img src={profile.picture} alt="user" className="profile-image" />
+                        <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
+                        <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
+                        <p className="profile-info">Datum pridruživanja: {localStorage.getItem("user_registration_date")}</p>
+                        
+                        <h3 className="profile-subheading">Zainteresiran za:</h3>
+                            <ul className="interested-list">
+                                {interestedList.length > 0 ? (
+                                    interestedList.map((item, index) => (
+                                    <li key={index} className="interested-item">{item}</li>
+                                    ))
+                            ) : (
+                            <p className="no-interested">Nema dostupnih interesa</p>
+                        )}
+                            </ul>
+
+                        <p className="profile-info">
+                            Ocjena: {localStorage.getItem("user_rating") === "0" ? (
+                                <img src="/images/forbidden.png" alt="forbidden" className="rating-image" />
+                            ) : localStorage.getItem("user_rating")}
+                        </p>
+                        <StarRate ocjena={localStorage.getItem("user_rating")} />
+                        
+                        <button onClick={handleEditProfile}>Uredi podatke!</button>
+                        {showEditProfile && (
+                            <EditProfile
+                                firstName={firstName}
+                                lastName={lastName}
+                                setFirstName={setFirstName}
+                                setLastName={setLastName}
+                                onSave={handleSaveChanges}
+                                onCancel={handleCancelEdit}
+                            />
+                        )}
+
+                        {isAdmin ? (
+                           <button onClick={() => navigate("/reports/dashboard")}>Pregled prijava</button>
+                        ) : null }
+                    </div>
+                );
+            default:
+                return null;
+        }
+    };
+
+    if(!isUser && isLoaded && profile && isProfileReady){
+       return  <p>Izbačeni ste sa stranice</p>
+    }
+    
     return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
-            <div className="profile-container">
-                <img src={profile.picture} alt="user" className="profile-image" />
-                <h3 className="profile-heading">Korisnik prijavljen</h3>
-                <p className="profile-info">Ime: {localStorage.getItem("user_first_name")} {localStorage.getItem("user_last_name")}</p>
-                <p className="profile-info">Email adresa: {localStorage.getItem("user_email")}</p>
-                <button onClick={logOut} className="logout-button">Odjavi se</button>
-            </div>
-            <div>
+            <Sidebar className="bar" setActiveTab={setActiveTab} />
+            <div className="profile-content">
                 {ticketsError && <div className='error'>{ticketsError}</div>}
                 {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
-                <div className="my_offers_trash_container">
-                    <div className="my_offers">
-                        {tickets && <TicketList tickets={filteredTickets} title="Moje ponude:" />}
-                    </div>
-                </div>
+                {renderTicketList()}
             </div>
-            <br />
-            <br />
-            <Link to="/create" className="newBlog">Dodaj novu ulaznicu</Link>
-            <Link to="/shop" className="newBlog">Kupuj!</Link>
         </div>
     ) : (
         <p className="loading-text">Učitavam profil...</p>
     );
+    
 }
 
 export default Profile;

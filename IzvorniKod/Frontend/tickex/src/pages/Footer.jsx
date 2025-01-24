@@ -43,7 +43,7 @@ function Footer(){
                         <ul>
                             <li><a href="/">Naš tim</a></li>
                             <li><a href="/">Kontaktirajte nas</a></li>
-                            <li><a href="/">Novnosti</a></li>
+                            <li><a href="/">Novosti</a></li>
                         </ul>
                     </div>
                </div>

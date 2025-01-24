@@ -1,0 +1,143 @@
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.searchArea{
+  padding: 3% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  background: none !important;
+}
+.relink{
+    display: flex;
+    justify-content: space-evenly;
+}
+.relink h3{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+
+}
+
+.button{
+    padding: 5px 5px;
+    height: 50%;
+    align-self: center;
+    background-color: #9b4dca;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: linkFade 2s infinite alternate;
+}
+.button:hover{
+    background-color: #8e44ad;
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    color: #f4f4f4;
+}
+@keyframes linkFade {
+    0% {
+        opacity: 0.7;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.auctionContainer h2 {
+    text-align: center;
+    color: #e8a5bb;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: color 0.3s ease; 
+}
+
+.auctionContainer h2:hover {
+    color: #652670; 
+}
+
+.auctionContainer {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #c646dc;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    min-height: 200px;
+    
+  }
+
+@media (max-width: 768px) {
+    .auctionContainer {
+        max-width: 80%;
+        padding: 15px;
+    }
+
+    .auctionContainer h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .auctionContainer {
+        max-width: 80%;
+        padding: 10px;
+        margin-top: 0;
+    }
+
+    .auctionContainer h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    h3{
+        width: 60%;
+        font-size: small !important;
+    }
+
+    .button{
+        font-size: small;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+    .auctionContainer {
+        max-width: 80%;
+        padding: 25px;
+    }
+
+    .auctionContainer h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+
+}
+
+@media (min-width: 480px) {
+    h3{
+        font-size: medium !important;
+    }
+    
+    .button{
+        font-size: medium;
+    }
+}

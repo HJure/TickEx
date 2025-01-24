@@ -31,4 +31,9 @@ public class Vrsta_DogadajaService {
     public void deleteById(int id) {
         vrstaDogadajaRepository.deleteById(id);
     }
+    
+    public List<String> interestedIn(int id){
+    	return vrstaDogadajaRepository.interestedIn(id);
+    }
+    
 }

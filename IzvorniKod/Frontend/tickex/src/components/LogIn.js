@@ -4,9 +4,10 @@ import '../style/login.css';
 
 
 function Login() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     const handleLoginClick = () => {
-        window.location.href = `https://backend-3qyr.onrender.com/api/oauth2/authorization/google`;
+        window.location.href = `${backendUrl}/api/oauth2/authorization/google`;
     };
 
     return (

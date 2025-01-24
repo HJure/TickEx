@@ -43,4 +43,10 @@ public class Vrsta_DogadajaController {
         vrstaDogadajaService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+    @GetMapping("/zainteresiran/{id}")
+    public List<String> interested(@PathVariable int id) {
+        return vrstaDogadajaService.interestedIn(id);
+    }
+    
 }

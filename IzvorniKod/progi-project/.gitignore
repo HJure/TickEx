@@ -3,3 +3,5 @@
 .settings/
 .classpath
 .project
+
+/src/main/resources/application.properties

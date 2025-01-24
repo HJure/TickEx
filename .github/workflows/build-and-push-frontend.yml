@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - Deployment
     paths:
       - 'IzvorniKod/Frontend/tickex/**'      # Trigger only on changes in the /frontend directory
       
@@ -14,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FRONTEND_DEPLOY_HOOK: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
-
+      REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
     steps:
       - name: Clone the repository
         uses: actions/checkout@v3
@@ -31,7 +32,7 @@ jobs:
         working-directory: IzvorniKod/Frontend/tickex
         
       - name: Yarn build
-        run: yarn run build
+        run: REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} yarn run build
         working-directory: IzvorniKod/Frontend/tickex
 
       - name: Set up Docker Buildx

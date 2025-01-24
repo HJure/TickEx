@@ -9,8 +9,8 @@
 .landingpage-content  {
     position: absolute;
     color: #fff;  
-    text-align: center;            /* Makes the original text invisible */
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Blurs text with shadow */
+    text-align: center;            
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); 
     font-size: 36px;
     font-weight: bold;
 }
@@ -25,4 +25,58 @@
 .imageContainer img {
     height: 100%;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .landingpage-content {
+        font-size: 28px;
+        padding: 10px;
+    }
+    .landingpage-container{
+        height: 70%;
+    }
+
+    .landingpage-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .imageContainer img {
+        object-fit: cover;
+        height: 80%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .landingpage-content {
+        font-size: 22px;
+        padding: 5px;
+    }
+
+    .landingpage-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .imageContainer img {
+        object-fit: cover;
+        height: 70%;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .landingpage-content {
+        font-size: 48px;
+        padding: 20px;
+    }
+
+    .landingpage-content h3 {
+        font-size: 2.5rem;
+    }
+
+    .imageContainer img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
 }

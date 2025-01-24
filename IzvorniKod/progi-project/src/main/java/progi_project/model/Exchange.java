@@ -1,92 +1,75 @@
 package progi_project.model;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+
+
 @Entity
-public class Exchange {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(name = "razmjena")
+@PrimaryKeyJoinColumn(name = "idogl")
+public class Exchange extends Ticket{
+    	  
+	@Column(name="zeljeninazogl", nullable = false)
+    private String wantedEventName;
+	
+	@Column(name="zeljenomjesto", nullable = false)
+    private String wantedLocation;
 
-    @ManyToOne
-    @JoinColumn(name = "offerer_id")
-    private User offerer; // The user who makes the offer
+    @Column(name="zeljenidatum", nullable = false)
+    private LocalDate wantedDate;
 
-    @ManyToOne
-    @JoinColumn(name = "offeree_id")
-    private User offeree; // The user receiving the offer
+    @Column(name="zeljenibrsje", nullable = true)
+    private Integer wantedSeatNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_ticket_id")
-    private Ticket offerTicket; // Ticket being offered
+    @Column(name="zeljenavrsula", nullable = true)
+    private String wantedTicketType;
 
-    @ManyToOne
-    @JoinColumn(name = "request_ticket_id")
-    private Ticket requestTicket; // Ticket requested in exchange
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt; // Timestamp for when the offer was created
-
-    @Column(nullable = false)
-    private LocalDateTime expirationDate; // Timestamp for when the offer expires
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getOfferer() {
-        return offerer;
-    }
-
-    public void setOfferer(User offerer) {
-        this.offerer = offerer;
-    }
-
-    public User getOfferee() {
-        return offeree;
-    }
-
-    public void setOfferee(User offeree) {
-        this.offeree = offeree;
-    }
-
-    public Ticket getOfferTicket() {
-        return offerTicket;
-    }
-
-    public void setOfferTicket(Ticket offerTicket) {
-        this.offerTicket = offerTicket;
-    }
-
-    public Ticket getRequestTicket() {
-        return requestTicket;
-    }
-
-    public void setRequestTicket(Ticket requestTicket) {
-        this.requestTicket = requestTicket;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(LocalDateTime expirationDate) {
-        this.expirationDate = expirationDate;
-    }
+	public String getWantedEventName() {
+		return wantedEventName;
+	}
+	
+	public void setWantedEventName(String wantedEventName) {
+		this.wantedEventName = wantedEventName;
+	}
+	
+	public String getWantedLocation() {
+		return wantedLocation;
+	}
+	
+	public void setWantedLocation(String wantedLocation) {
+		this.wantedLocation = wantedLocation;
+	}
+	
+	public LocalDate getWantedDate() {
+		return wantedDate;
+	}
+	
+	public void setWantedDate(LocalDate wantedDate) {
+		this.wantedDate = wantedDate;
+	}
+	
+	public Integer getWantedSeatNumber() {
+		return wantedSeatNumber;
+	}
+	
+	public void setWantedSeatNumber(Integer wantedSeatNumber) {
+		this.wantedSeatNumber = wantedSeatNumber;
+	}
+	
+	public String getWantedTicketType() {
+		return wantedTicketType;
+	}
+	
+	public void setWantedTicketType(String wantedTicketType) {
+		this.wantedTicketType = wantedTicketType;
+	}
+    
 }
 
 

@@ -1,0 +1,60 @@
+.saleList h2 {
+    text-align: center;
+    color: #e8a5bb;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: color 0.3s ease; 
+}
+
+.saleList h2:hover {
+    color: #652670; 
+}
+
+.saleList {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #c646dc;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    min-height: 200px;
+    
+  }
+
+@media (max-width: 768px) {
+    .saleList {
+        max-width: 80%;
+        padding: 15px;
+    }
+
+    .saleList h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .saleList {
+        max-width: 80%;
+        padding: 10px;
+    }
+
+    .saleList h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+    .saleList {
+        max-width: 80%;
+        padding: 25px;
+    }
+
+    .saleList h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+}
