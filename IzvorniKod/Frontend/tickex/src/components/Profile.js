@@ -363,6 +363,7 @@ function Profile({ profile, setProfile }) {
             localStorage.setItem("user_last_name", data.prezimeKor);
     
             setIsEditing(false);
+            setShowEditProfile(false);
         } catch (error) {
             console.error('Error updating profile:', error);
         }
