@@ -8,6 +8,7 @@ CREATE TABLE KORISNIK
   prezKor VARCHAR(50) NOT NULL,
   datumUla DATE DEFAULT CURRENT_DATE NOT NULL,
   statusKor BOOLEAN DEFAULT TRUE NOT NULL, /*true znaci da je korisnik aktivan, false da je izbačen */
+  admin BOOLEAN DEFAULT FALSE NOT NULL,
   ocjena DECIMAL(3,2) DEFAULT 0.00 NOT NULL CHECK (ocjena >= 0.00 AND ocjena <= 5.00),
   PRIMARY KEY (idKor),
   UNIQUE (email)

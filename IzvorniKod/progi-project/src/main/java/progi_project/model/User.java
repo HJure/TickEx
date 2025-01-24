@@ -42,6 +42,9 @@ public class User {
 
     @Column(name ="statuskor",nullable = false)
     private Boolean statusKor;
+    
+    @Column(name ="admin",nullable = false)
+    private Boolean admin;
 
     @Column(name ="ocjena",nullable = false)
     private float ocjena;
@@ -127,7 +130,16 @@ public class User {
     public void setOcjena(float ocjena) {
         this.ocjena = ocjena;
     }
-    @Override
+    
+    public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
+	@Override
     public String toString() {
         return "User{" +
             "id=" + id +

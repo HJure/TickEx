@@ -390,7 +390,6 @@ const TicketDetails = ({ url }) => {
             <div className="ticket-details">
                 {isPending && <div>Učitavam...</div>}
                 {isDeleting && <div>Brišem kartu...</div>}
-                {canBringBack && <div>Vraćam kartu...</div>} 
                 {error && <div>Greška: {error}</div>}
                 {ticket && (
                     <div className="ticket-content">

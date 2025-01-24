@@ -6,6 +6,7 @@ const Chains = ({ chains }) => {
     const [updatedChains, setUpdatedChains] = useState(Array.isArray(chains) ? chains : []);
     const [users, setUsers] = useState({});
     const [tickets, setTickets] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
     const allResponsesTrue = (responses) => responses?.every(Boolean);
@@ -56,7 +57,7 @@ const Chains = ({ chains }) => {
                                 : chain
                         )
                     );
-                    alert(message);
+                    //alert(message);
                 }
             })
             .catch((error) => {
@@ -106,6 +107,7 @@ const Chains = ({ chains }) => {
 
     useEffect(() => {
         const checkAndUpdateChains = () => {
+            setIsLoading(true); 
             fetch(`${backendUrl}/api/chain/checkExpiration`, {
                 method: 'POST',
                 headers: {
@@ -141,7 +143,7 @@ const Chains = ({ chains }) => {
                                                 : prevChain
                                         )
                                     );
-                                    alert(message);
+                                    //alert(message);
                                 }
                             })
                             .catch((error) => {
@@ -151,6 +153,9 @@ const Chains = ({ chains }) => {
                 })
                 .catch((error) => {
                     console.error('Error checking chain time:', error);
+                })
+                .finally(() => {
+                    setIsLoading(false);
                 });
         };
 
@@ -173,7 +178,9 @@ const Chains = ({ chains }) => {
     return (
         <div className="chains-list">
             <div className="chains">
-                {userChains.length > 0 ? (
+                {isLoading ? (
+                    <p>Provjeravam lance...</p>
+                ) : userChains.length > 0 ? (
                     userChains.map((chainGroup, index) => (
                         <div key={index} className="chain-group">
                             {chainGroup.map((chainItem, idx) => (
@@ -181,6 +188,10 @@ const Chains = ({ chains }) => {
                                     <div className="chain-item">
                                         <p>Korisnik: {users[chainItem.userId] || `ID: ${chainItem.userId}`}</p>
                                         <p>Karta: {tickets[chainItem.ticketId] || `ID: ${chainItem.ticketId}`}</p>
+                                        {updatedChains[index]?.completed &&
+                                            allResponsesTrue(updatedChains[index]?.response) && (
+                                            <p>Email: {users[chainItem.userId]?.email || 'Email nije dostupan'}</p>
+                                            )}
                                         {!updatedChains[index]?.completed &&
                                             chainItem.userId === Number(userId) && (
                                                 <div>

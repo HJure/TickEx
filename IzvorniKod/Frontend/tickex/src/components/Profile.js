@@ -24,7 +24,7 @@ function Profile({ profile, setProfile }) {
     const [recommendedTickets, setGenres] = useState([]);
     const [chains, setChains] = useState(null);
     const [interestedList, setInterestedList] = useState([]);
-    /*const [isUser, setIsUser] = useState(null); */
+    const [isUser, setIsUser] = useState(null);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -122,6 +122,7 @@ function Profile({ profile, setProfile }) {
                     }
 
                     const data = await response.json();
+
                     setFirstName(data.imeKor);
                     setLastName(data.prezimeKor);
                     setRating(data.ocjena !== 0.0 ? data.ocjena : "nema ocjenu");
@@ -131,6 +132,14 @@ function Profile({ profile, setProfile }) {
                     localStorage.setItem("user_registration_date", data.datumUla);
                     localStorage.setItem("user_rating", data.ocjena);
                     localStorage.setItem("user_status", data.statusKor);
+                    localStorage.setItem("user_status", data.statusKor); 
+
+                    if (!data.statusKor) {
+                        setIsUser(false);
+                        return;
+                    }
+                    
+                    setIsAdmin(data.admin === true);
                     setIsProfileReady(true);
                 } catch (error) {
                     console.error('Error:', error);
@@ -138,25 +147,7 @@ function Profile({ profile, setProfile }) {
             }
         };
 
-        const isAdmin = async () => {
-            try {
-                const response = await fetch(`${backendUrl}/api/users/isAdmin`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${access_token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                });
-                const data = await response.json();
-                setIsAdmin(data);
-            } catch (error) {
-                console.error('Error fetching expired tickets:', error);
-            }
-        };
-
         fetchUserData();
-        isAdmin();
     }, [userID, access_token, backendUrl]);
 
     
@@ -486,12 +477,18 @@ function Profile({ profile, setProfile }) {
 
     return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
-            <Sidebar className="bar" setActiveTab={setActiveTab} />
-            <div className="profile-content">
-                {ticketsError && <div className='error'>{ticketsError}</div>}
-                {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
-                {renderTicketList()}
-            </div>
+            {isUser ? (
+                <p className="error-text">Izbačeni ste sa stranice</p>
+            ) : (
+                <>
+                    <Sidebar className="bar" setActiveTab={setActiveTab} />
+                    <div className="profile-content">
+                        {ticketsError && <div className='error'>{ticketsError}</div>}
+                        {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
+                        {renderTicketList()}
+                    </div>
+                </>
+            )}
         </div>
     ) : (
         <p className="loading-text">Učitavam profil...</p>

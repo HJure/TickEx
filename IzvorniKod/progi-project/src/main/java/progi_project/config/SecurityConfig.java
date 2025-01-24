@@ -32,7 +32,7 @@ public class SecurityConfig {
             	"/tickets/**", "/users/**", "/vrsta-dogadaja", "/exchanges/**", "/sales/**", "/reports", 
             	"/auctions/**","/favorites/**","/chain/**","/savePreferences/**", "/recommended/**", "/bids", "/deaktivira/**", "/emails/**","/vrsta-dogadaja/**")
             		.permitAll()
-            		.requestMatchers("/reports/dashboard").hasAuthority("ROLE_ADMIN")
+            		.requestMatchers("/reports/dashboard").permitAll()
                 .anyRequest().authenticated())
                 .oauth2Login()
                 .successHandler(customOAuth2SuccessHandler)
