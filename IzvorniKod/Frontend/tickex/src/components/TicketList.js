@@ -11,9 +11,9 @@ const TicketList = ({ tickets, title }) => {
                             <div className='eventType'>
                                 <h1>
                                     { 
-                                        (ticket.buyer && ticket.buyer.id === parseInt(localStorage.getItem("user_ID"))) || 
-                                        (ticket.winner && ticket.winner.id === parseInt(localStorage.getItem("user_ID")))
-                                            ? "kupljeno" 
+                                        (ticket.buyer && ticket.buyer.id === parseInt(localStorage.getItem("userID"))) || 
+                                        (ticket.winner && ticket.winner.id === parseInt(localStorage.getItem("userID")))
+                                            ? "kupljeno"
                                             : ticket.isExchangeAvailable 
                                     }
                                 </h1>
