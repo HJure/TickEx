@@ -366,6 +366,21 @@ function Profile({ profile, setProfile }) {
         }
     };
 
+    const [showEditProfile, setShowEditProfile] = useState(false);
+
+    const handleEditProfile = () => {
+        setIsEditing(true); 
+        setTimeout(() => {
+            setShowEditProfile(true); 
+        }, 1500);
+    };
+
+    const handleCancelEdit = () => {
+        setIsEditing(false);
+        setShowEditProfile(false);
+    };
+
+
     /*
     useEffect(() => {
         const checkIsUser = async () => {
@@ -454,17 +469,18 @@ function Profile({ profile, setProfile }) {
                         </p>
                         <StarRate ocjena={localStorage.getItem("user_rating")} />
                         
-                        <button onClick={() => setIsEditing(true)}>Uredi podatke!</button>
-                        {isEditing && (
+                        <button onClick={handleEditProfile}>Uredi podatke!</button>
+                        {showEditProfile && (
                             <EditProfile
                                 firstName={firstName}
                                 lastName={lastName}
                                 setFirstName={setFirstName}
                                 setLastName={setLastName}
                                 onSave={handleSaveChanges}
-                                onCancel={() => setIsEditing(false)}
+                                onCancel={handleCancelEdit}
                             />
                         )}
+
                         {isAdmin ? (
                            <button onClick={() => navigate("/reports/dashboard")}>Pregled prijava</button>
                         ) : null }
