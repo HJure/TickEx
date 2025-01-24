@@ -350,6 +350,14 @@
     border-radius: 10px;
   }
 
+  .ticket-details button{
+    font-size: 18px;
+    overflow: visible;
+    padding: 4px 8px;
+    justify-content: center;
+    align-items: center;
+  }
+
   .ticket-details h2 {
     font-size: 28px;
     text-align: center;
@@ -393,8 +401,8 @@
   }
 
   .button-container {
-    flex-direction: column;
-    gap: 10px;
+    min-height: auto;
+    min-width: auto;
   }
 
   .btn-buy {
@@ -404,9 +412,10 @@
   }
 
   .btn-goto {
-    margin-left: 0;
-    width: 100%;
-    text-align: center;
+    margin-left: 35%;
+    align-self: center;
+    padding: 4px 10px;
+    font-size: 28px;
   }
 }
 
@@ -430,13 +439,19 @@
     font-size: 17px;
   }
 
+  .button-container{
+    min-height: auto;
+    min-width: auto;
+  }
+
   .btn-buy {
     margin-left: auto;
     margin-right: auto;
   }
   .btn-goto {
-    margin-left: auto;
-    margin-right: auto;
+    grid-column: 3;
+    font-size: 1rem;
+    overflow: visible;
   }
 
   .hide{
