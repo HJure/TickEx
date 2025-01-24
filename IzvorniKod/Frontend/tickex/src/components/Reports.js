@@ -65,7 +65,7 @@ const Reports = () => {
                                 <strong>Datum ulaska:</strong>{report.reported.datumUla}
                                 </br>
                                 <br>
-                                <strong>Ocjena:</strong>{report.reported.ocjena}
+                                <strong>Ocjena:</strong>{parseFloat(report.reported.ocjena)}
                                 </br> 
                             </button>
                         
@@ -74,10 +74,10 @@ const Reports = () => {
                                 className="link-button">
                                 <strong>Prijavljen:</strong> {report.reported.imeKor} {report.reported.prezimeKor} ({report.reported.email}) 
                                 <br>
-                                <strong>Datum ulaska:</strong>{report.reported.datumUla}
+                                <strong>Datum ulaska:</strong> {report.reported.datumUla}
                                 </br>
                                 <br>
-                                <strong>Ocjena:</strong>{report.reported.ocjena}
+                                <strong>Ocjena:</strong> {parseFloat(report.reported.ocjena)}
                                 </br> 
                             </button>
                         </div>

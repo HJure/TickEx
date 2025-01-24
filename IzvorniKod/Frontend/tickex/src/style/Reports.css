@@ -44,6 +44,11 @@
     transition: color 0.2s ease;
 }
 
+.link-button{
+    display: flex;
+    flex-direction: column;
+}
+
 .link-button:hover {
     color: #FFDD57;
     text-shadow: 0px 0px 4px rgba(255, 221, 87, 0.7);
