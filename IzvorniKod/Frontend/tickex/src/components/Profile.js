@@ -491,11 +491,11 @@ function Profile({ profile, setProfile }) {
         }
     };
 
-    return !isLoaded || !profile || !isProfileReady ? (
-        <p className="loading-text">Učitavam profil...</p>
-    ) : !isUser ? (
-        <p className="error-text">Izbačeni ste sa stranice</p>
-    ) : (
+    if(!isUser){
+       return  <p>Izbačeni ste sa stranice</p>
+    }
+    
+    return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
             <Sidebar className="bar" setActiveTab={setActiveTab} />
             <div className="profile-content">
@@ -504,8 +504,9 @@ function Profile({ profile, setProfile }) {
                 {renderTicketList()}
             </div>
         </div>
+    ) : (
+        <p className="loading-text">Učitavam profil...</p>
     );
-
     
 }
 
