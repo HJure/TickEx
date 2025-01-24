@@ -551,7 +551,7 @@ const TicketDetails = ({ url }) => {
                                 )}
                                 {userID && ticket.owner.id === parseInt(localStorage.getItem("userID")) && ticket.isExchangeAvailable === "aukcija" && (
                                     <button className="btn-goto" onClick={() => handleGoToBids(ticket, navigate)}>
-                                        Pogledaj ponude
+                                        Idi u aukciju
                                     </button>
                                 )}
                                 {userID && ticket.owner.id !== parseInt(localStorage.getItem("userID")) && ticket.isExchangeAvailable === "u prodaji" && (

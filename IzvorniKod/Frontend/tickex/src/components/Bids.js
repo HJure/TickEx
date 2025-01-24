@@ -104,6 +104,9 @@ const Bids = () => {
 
     return(
         <>
+        <div className="aukcijaPonude">
+            AUKCIJA
+        </div>
         <div className="standingOffers">
             <h1>Trenutne ponude</h1>
         </div>
