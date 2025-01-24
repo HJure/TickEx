@@ -7,7 +7,7 @@ const Reports = () => {
     const [error, setError] = useState(null);
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
     const access_token = localStorage.getItem('access_token');
-    const Admin = localStorage.getItem('user_admin');
+    const Admin = localStorage.getItem('user_admin') === 'true';
     const navigate = useNavigate();
 
     useEffect(() => {

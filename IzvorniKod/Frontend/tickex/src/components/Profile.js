@@ -491,24 +491,22 @@ function Profile({ profile, setProfile }) {
         }
     };
 
-    return isLoaded && profile && isProfileReady ? (
-        <div className='profilediv'>
-            {isUser ? (
-                <p className="error-text">Izbačeni ste sa stranice</p>
-            ) : (
-                <>
-                    <Sidebar className="bar" setActiveTab={setActiveTab} />
-                    <div className="profile-content">
-                        {ticketsError && <div className='error'>{ticketsError}</div>}
-                        {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
-                        {renderTicketList()}
-                    </div>
-                </>
-            )}
-        </div>
-    ) : (
+    return !isLoaded || !profile || !isProfileReady ? (
         <p className="loading-text">Učitavam profil...</p>
+    ) : !isUser ? (
+        <p className="error-text">Izbačeni ste sa stranice</p>
+    ) : (
+        <div className='profilediv'>
+            <Sidebar className="bar" setActiveTab={setActiveTab} />
+            <div className="profile-content">
+                {ticketsError && <div className='error'>{ticketsError}</div>}
+                {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
+                {renderTicketList()}
+            </div>
+        </div>
     );
+
+    
 }
 
 export default Profile;
