@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import progi_project.model.Sale;
 import progi_project.model.Ticket;
 import progi_project.model.User;
-import progi_project.service.FavoriteService;
 import progi_project.service.ReportService;
 import progi_project.service.TicketService;
 import progi_project.service.UserService;
@@ -140,4 +139,3 @@ public class UserController {
     }
     
 }
-

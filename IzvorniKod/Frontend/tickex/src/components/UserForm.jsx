@@ -26,7 +26,7 @@ const UserForm = () => {
     const submitFunction = (e) => {
         e.preventDefault();
         const datumUla = new Date().toISOString().split('T')[0];
-        const user = { email, imeKor, prezimeKor, datumUla, statusKor: true, ocjena: 0.0, admin: false };
+        const user = { email, imeKor, prezimeKor, datumUla, preferences };
         setIsPending(true);
 
         fetch(`${backendUrl}/api/users/register`, {
