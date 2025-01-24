@@ -24,6 +24,7 @@ function Profile({ profile, setProfile }) {
     const [recommendedTickets, setGenres] = useState([]);
     const [chains, setChains] = useState(null);
     const [interestedList, setInterestedList] = useState([]);
+    const [isUser, setIsUser] = useState(null);
     const navigate = useNavigate();
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
@@ -121,6 +122,7 @@ function Profile({ profile, setProfile }) {
                     }
 
                     const data = await response.json();
+
                     setFirstName(data.imeKor);
                     setLastName(data.prezimeKor);
                     setRating(data.ocjena !== 0.0 ? data.ocjena : "nema ocjenu");
@@ -130,6 +132,14 @@ function Profile({ profile, setProfile }) {
                     localStorage.setItem("user_registration_date", data.datumUla);
                     localStorage.setItem("user_rating", data.ocjena);
                     localStorage.setItem("user_status", data.statusKor);
+                    localStorage.setItem("user_admin", data.admin); 
+
+                    if (!data.statusKor) {
+                        setIsUser(false);
+                        return;
+                    }
+
+                    setIsAdmin(data.admin === true);
                     setIsProfileReady(true);
                 } catch (error) {
                     console.error('Error:', error);
@@ -137,27 +147,10 @@ function Profile({ profile, setProfile }) {
             }
         };
 
-        const isAdmin = async () => {
-            try {
-                const response = await fetch(`${backendUrl}/api/users/isAdmin`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${access_token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                });
-                const data = await response.json();
-                setIsAdmin(data);
-            } catch (error) {
-                console.error('Error fetching expired tickets:', error);
-            }
-        };
-
         fetchUserData();
-        isAdmin();
     }, [userID, access_token, backendUrl]);
 
+    
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoaded(true);
@@ -328,9 +321,9 @@ function Profile({ profile, setProfile }) {
     }, [userID, backendUrl, isEditing]);
     
 
-    const handleEditProfile = () => {
-        setIsEditing(true);
-    };
+    //const handleEditProfile = () => {
+    //    setIsEditing(true);
+    //};
 
     const handleSaveChanges = async () => {
         try {
@@ -372,6 +365,61 @@ function Profile({ profile, setProfile }) {
             console.error('Error updating profile:', error);
         }
     };
+
+    const [showEditProfile, setShowEditProfile] = useState(false);
+
+    const handleEditProfile = () => {
+        setIsEditing(true); 
+        setTimeout(() => {
+            setShowEditProfile(true); 
+        }, 1500);
+    };
+
+    const handleCancelEdit = () => {
+        setIsEditing(false);
+        setShowEditProfile(false);
+    };
+
+
+    /*
+    useEffect(() => {
+        const checkIsUser = async () => {
+            try {
+                const response = await fetch(`${backendUrl}/api/users/isUser`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${access_token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                setIsUser(data);
+            } catch (error) {
+                console.error('Error checking user role:', error);
+                setIsUser(false);
+            }
+        };
+
+        checkIsUser();
+    }, [access_token, backendUrl]);
+
+    if (isUser === false) {
+        return <div>Izbačeni ste sa stranice!</div>;
+    }
+
+    if (isUser === null) {
+        return <div>Učitavam...</div>;
+    }
+    */
+
+    useEffect(() => {
+        const selectedCategories = localStorage.getItem("selectedCategories");
+        if (selectedCategories === null) {
+            localStorage.setItem("selectedCategories", JSON.stringify([]));
+        }
+    }, [profile, isEditing, userID, backendUrl, userID]);
+    
 
     const renderTicketList = () => {
         switch (activeTab) {
@@ -421,17 +469,18 @@ function Profile({ profile, setProfile }) {
                         </p>
                         <StarRate ocjena={localStorage.getItem("user_rating")} />
                         
-                        <button onClick={() => setIsEditing(true)}>Uredi podatke!</button>
-                        {isEditing && (
+                        <button onClick={handleEditProfile}>Uredi podatke!</button>
+                        {showEditProfile && (
                             <EditProfile
                                 firstName={firstName}
                                 lastName={lastName}
                                 setFirstName={setFirstName}
                                 setLastName={setLastName}
                                 onSave={handleSaveChanges}
-                                onCancel={() => setIsEditing(false)}
+                                onCancel={handleCancelEdit}
                             />
                         )}
+
                         {isAdmin ? (
                            <button onClick={() => navigate("/reports/dashboard")}>Pregled prijava</button>
                         ) : null }
@@ -444,12 +493,18 @@ function Profile({ profile, setProfile }) {
 
     return isLoaded && profile && isProfileReady ? (
         <div className='profilediv'>
-            <Sidebar className="bar" setActiveTab={setActiveTab} />
-            <div className="profile-content">
-                {ticketsError && <div className='error'>{ticketsError}</div>}
-                {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
-                {renderTicketList()}
-            </div>
+            {isUser ? (
+                <p className="error-text">Izbačeni ste sa stranice</p>
+            ) : (
+                <>
+                    <Sidebar className="bar" setActiveTab={setActiveTab} />
+                    <div className="profile-content">
+                        {ticketsError && <div className='error'>{ticketsError}</div>}
+                        {isTicketsPending && <div className='loading'>Učitavam ulaznice...</div>}
+                        {renderTicketList()}
+                    </div>
+                </>
+            )}
         </div>
     ) : (
         <p className="loading-text">Učitavam profil...</p>
